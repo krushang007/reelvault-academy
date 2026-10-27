@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scaling LLM Inference: Serving 1 Million Users on a Single GPU with vLLM, PagedAttention & Continuous Batching</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · System-Architecture</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-system-architecture">System-Architecture</a></nav>
+
+  <p class="kicker">AI · System-Architecture</p>
+  <h1>Scaling LLM Inference: Serving 1 Million Users on a Single GPU with vLLM, PagedAttention & Continuous Batching</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        In AI Systems Engineering interviews, a premier question asks: <em>"Your customer support AI bot has 1,000,000 users, but your startup budget permits only 1 physical GPU. How do you maximize concurrent throughput without queue crashes or purchasing 50 additional H100 clusters?"</em>
+      </p>
+      <p>
+        Junior engineers instinctively respond by recommending horizontal GPU clustering. However, senior AI infrastructure engineers understand that default naive HuggingFace or PyTorch inference wastes up to <strong>80% of GPU compute and memory bandwidth</strong> due to sequential generation, static batch padding, and contiguous KV-cache allocation. 
+      </p>
+      <p>
+        In this breakdown, AI educator Laxmikant presents the 4 core systems innovations (championed by frameworks like <strong>vLLM</strong> and <strong>TensorRT-LLM</strong>) that extract maximum concurrency from constrained GPU hardware.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DeYbkzTKO_0/frame_003.jpg" alt="The AI System Design Interview Challenge" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: The Challenge: Maximizing throughput for 1M users on a single GPU.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeYbkzTKO_0/frame_009.jpg" alt="Continuous Batching Iteration Level Scheduling" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: Fix 1 - Continuous Batching: Swapping finished requests dynamically at the token level.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeYbkzTKO_0/frame_015.jpg" alt="PagedAttention and Dynamic KV Cache Paging" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: Fix 2 - PagedAttention: Virtual memory paging for KV cache eliminates 80% fragmentation.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeYbkzTKO_0/frame_021.jpg" alt="Weight Quantization to Free VRAM for KV Cache" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 4: Fix 3 - Quantization: Compressing weights to 8-bit or 4-bit frees VRAM for concurrent user context.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeYbkzTKO_0/frame_027.jpg" alt="Memory Bandwidth Bound Nature of Autoregressive LLMs" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 5: The Twist: LLM inference is memory-bandwidth bound; batching amortizes weight loading.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeYbkzTKO_0/frame_033.jpg" alt="The 4 Part Interview Architecture Blueprint" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 6: The Production Solution: Continuous Batching + PagedAttention + Quantization + Token Queue.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-4-pillars-of-high-throughput-llm-serving"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The 4 Pillars of High-Throughput LLM Serving</span></h2>
+
+      <h3>1. Continuous Batching (Iteration-Level Scheduling)</h3>
+      <p>
+        <strong>The Problem with Static Batching:</strong> If user A requests a 10-word response and user B requests a 500-word essay, traditional batching forces user A's slot to sit idle with empty padding tokens for 490 iterations until user B finishes.
+      </p>
+      <p>
+        <strong>The Continuous Batching Solution:</strong> Implemented in vLLM, continuous batching operates like a metro train: at every single token-generation step, completed requests exit the batch immediately, and waiting requests from the arrival queue take their place. GPU compute cores maintain 100% saturation without wasted padding.
+      </p>
+
+      <h3>2. PagedAttention: Virtual Memory for the KV Cache</h3>
+      <p>
+        In autoregressive transformers, previously generated Key and Value vectors must be preserved in GPU memory (the <strong>KV Cache</strong>).
+      </p>
+      <ul>
+        <li><strong>Static Pre-Allocation (Naive):</strong> PyTorch pre-allocates contiguous memory for each request based on maximum context window (e.g. 4,096 tokens). Because most requests only use 200 tokens, 60%–80% of VRAM is locked in unused internal fragmentation.</li>
+        <li><strong>PagedAttention (vLLM):</strong> Inspired by OS virtual memory paging, PagedAttention stores KV cache in non-contiguous physical memory blocks (pages). Pages are allocated dynamically on-demand, enabling <strong>2x to 4x higher concurrency</strong> on identical VRAM.</li>
+      </ul>
+
+      <h3>3. Model Weight Quantization (AWQ / GPTQ / FP8)</h3>
+      <p>
+        In an 80GB GPU, loading a 70B parameter model in standard FP16 (16-bit) requires $\approx 140\text{ GB}$ (exceeding single-card capacity).
+      </p>
+      <p>
+        Quantizing weights to 8-bit (FP8) or 4-bit (AWQ / GPTQ) compresses the model footprint to ~35–40 GB, leaving the remaining 40+ GB of high-speed VRAM entirely dedicated to housing concurrent user KV cache sessions.
+      </p>
+
+      <h3>4. The Memory-Bandwidth Twist: Why Batching is "Free"</h3>
+      <p>
+        Autoregressive generation is fundamentally <strong>memory-bandwidth bound</strong>, not compute bound:
+      </p>
+      <blockquote>
+        For every individual token generated, the GPU must fetch all 8 to 70 billion parameters from High Bandwidth Memory (HBM) into its on-chip SRAM compute units.
+      </blockquote>
+      <p>
+        Whether the GPU processes 1 user or 32 users in a batch, loading the model weights across the internal memory bus takes nearly the exact same amount of time. Therefore, increasing batch size up to the memory limit amortizes memory transfer latency, making incremental concurrent users nearly free from a compute perspective.
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="DeEtELPvodg-seven-ai-engineering-design-patterns.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Seven Ai Engineering Design Patterns</span></a>
+    <a href="Dedaacnhq82-five-stages-of-ai-engineering-prompt-context-agent-harness-loop.html" class="pager-next"><span>Next: Five Stages Of Ai Engineering Prompt Con</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

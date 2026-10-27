@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>High-Throughput Multimodal Document Parsing System Design</title>
+<!--
+  learning-meta:
+  shortcode: De8XiOgA7x4
+  kind: reel
+  url: https://www.instagram.com/reel/De8XiOgA7x4/
+  author: glueinfo6006
+  posted_at: 2026-10-26
+  shared_at: 2026-10-26
+  language: hi
+  sources: video, audio
+  promotional: false
+  tags: document-ai, multimodal, ocr, system-design, docling, colpali, layoutlm
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · Document-AI</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-document-ai">Document-AI</a></nav>
+
+  <p class="kicker">AI · Document-AI</p>
+  <h1>High-Throughput Multimodal Document Parsing System Design</h1>
+
+  
+  <p class="meta">
+    <span><a href="https://www.instagram.com/reel/De8XiOgA7x4/">Reel</a> by @glueinfo6006</span>
+    <span>89 s</span><span>Hindi</span><span>shared 26 Oct 2026</span>
+  </p>
+
+
+  
+
+  <p class="crumbs"><a href="../../index.html">Library</a> / AI / Document-AI</p>
+  
+  
+
+  <p class="summary">An architectural solution to a senior Multimodal AI Engineer interview scenario: ingesting 500,000+ financial invoices and medical records daily without suffering the 20-second latency and 10x cloud billing penalty of brute-force Vision LLMs. The design introduces a 2-tier layout-aware pipeline: 50ms structural segmentation via Docling/LayoutLMv3 that serializes multi-column tables into structured Markdown/JSON (elevating accuracy from 61% to 99%), followed by Region-of-Interest (RoI) cropping and ColPali visual patch embeddings to slash latency and API overhead by 80%.</p>
+
+  <figure>
+    <img src="assets/De8XiOgA7x4/01-14-structured-markdown-solution.jpg" alt="Architecture diagram showing Docling and LayoutLMv3 segmenting an invoice into title, text, table, and handwriting in 50ms">
+    <figcaption>01:14 — Layer 1 layout-aware architecture: Docling / LayoutLMv3 identifies visual document regions in 50ms, routing prose to fast non-LLM parsers and tables into structured Markdown.</figcaption>
+  </figure>
+
+  <h2 id="steps"><span class="h-ico"><i data-lucide="sparkles" class="ico"></i></span><span class="h-text">Steps</span></h2>
+  <ol>
+    <li><strong>Recognize OCR 1D Flattening Failure:</strong> Standard optical character recognition (OCR) flattens 2D visual layouts into sequential linear text, blending adjacent table columns (rates, quantities, totals) and causing downstream LLMs to extract inaccurate values (e.g. extracting ₹8,000 instead of ₹12,450). <em class="src">(00:14–00:26)</em></li>
+    <li><strong>Avoid Full-Page Vision LLM Ingestion:</strong> Ingesting raw high-resolution page images directly into multimodal Vision LLMs incurs severe production penalties: ~20 seconds of latency per page and a 10x API cost multiplier at 500,000+ daily volume. <em class="src">(00:27–00:38)</em></li>
+    <li><strong>Deploy Layer 1 — Layout-Aware Document Parsing:</strong> Use a lightweight visual layout model (such as <code>Docling</code> or <code>LayoutLMv3</code>) that parses page topology in 50ms into explicit bounding regions: Titles, Text, Tables, and Handwritten Notes. <em class="src">(00:54–01:05)</em></li>
+    <li><strong>Structure Tables into Markdown/JSON:</strong> Route plain body text to fast deterministic parsers (milliseconds, zero LLM cost). Convert complex multi-column grids into structured Markdown (<code>| Item | Qty | Amount |</code>) or JSON schemas prior to LLM submission, increasing extraction accuracy from 61% to 99%. <em class="src">(01:06–01:19)</em></li>
+    <li><strong>Deploy Layer 2 — RoI Cropping &amp; ColPali Embeddings:</strong> To achieve a target 80% reduction in latency and compute, extract specific visual Regions of Interest (RoI) and compute patch-level multi-vector visual representations via <code>ColPali</code> rather than vectorizing entire page canvases. <em class="src">(01:20–01:28)</em></li>
+  </ol>
+
+  <figure>
+    <img src="assets/De8XiOgA7x4/00-24-ocr-mixing-error.jpg" alt="Normal OCR mixing columns on an invoice, causing AI to extract wrong figure of 8,000 instead of 12,450">
+    <figcaption>00:24 — The baseline failure: standard OCR collapses columns, producing erroneous data extraction.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="assets/De8XiOgA7x4/00-34-vision-llm-cost-latency.jpg" alt="Graph showing 20s latency per file and 10x cloud bill when sending every high-res page to Vision LLM">
+    <figcaption>00:34 — The brute-force Vision LLM bottleneck: 20s per document and 10x cloud bills at scale.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="assets/De8XiOgA7x4/01-27-roi-cropping-colpali.jpg" alt="Layer 2 showing Region of Interest cropping with ColPali patch embeddings for 80% cost reduction">
+    <figcaption>01:27 — Layer 2 optimization: RoI bounding-box cropping with ColPali patch visual embeddings.</figcaption>
+  </figure>
+
+  <h2 id="verbatim"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Verbatim</span></h2>
+  <table>
+    <tr><th>When</th><th>Where</th><th>Text</th></tr>
+    <tr><td>00:00–00:02</td><td>screen</td><td class="verbatim">HIDDEN TECH · MULTIMODAL AI ENGINEER · INTERVIEW 11<br>Multimodal AI Engineer. 40 LPA interview.</td></tr>
+    <tr><td>00:07–00:11</td><td>screen</td><td class="verbatim">Lakhs of invoices + medical PDFs. Daily.<br>DOCS SCANNED / DAY: 500,000+<br>FINANCIAL INVOICES · MEDICAL PDFs</td></tr>
+    <tr><td>00:14–00:17</td><td>screen</td><td class="verbatim">Multi-column tables. Handwritten notes.<br>HARD CASES: multi-column tables, handwritten notes</td></tr>
+    <tr><td>00:20–00:25</td><td>screen</td><td class="verbatim">Normal OCR mixes rows and columns.<br>NORMAL OCR OUTPUT: rows + columns mixed<br>AI extracts wrong figures.<br>AI EXTRACTED TOTAL: ₹8,000 ✕ (Actual: ₹12,450)</td></tr>
+    <tr><td>00:28–00:38</td><td>screen</td><td class="verbatim">Every page to a Vision LLM?<br>every page -> high-res image -> VISION LLM (expensive - per image)<br>20s per file. 10x cloud bill.</td></tr>
+    <tr><td>00:40–00:44</td><td>screen</td><td class="verbatim">Most say: another OCR or compress images.<br>NAIVE: ANOTHER OCR TOOL (same flat text) · COMPRESS IMAGES (numbers get blurry)</td></tr>
+    <tr><td>00:54–01:05</td><td>screen</td><td class="verbatim">Layer 1: Layout-Aware Document Parsing<br>Docling · LayoutLMv3<br>Page structure detected in 50ms.<br>IN PLAIN ENGLISH - LAYER 1: First understand the page. Then read it. A tiny model maps title, text, table, notes.</td></tr>
+    <tr><td>01:08–01:19</td><td>screen</td><td class="verbatim">Plain text goes to a fast parser.<br>TEXT - FAST PARSER (no LLM needed · milliseconds)<br>Tables become Markdown / JSON.<br>TABLE - STRUCTURED MARKDOWN: | Item | Qty | Amount | ... -> LLM<br>No mixing. Accuracy 99%.<br>EXTRACTION ACCURACY: 61% -> 75% -> 93% -> 99%</td></tr>
+    <tr><td>01:22–01:28</td><td>screen</td><td class="verbatim">Layer 2: -80% latency and cost.<br>LATENCY: 20s (Target: -80%) · API COST: 10x (Target: -80%)<br>RoI Cropping + ColPali embeddings.<br>ColPali · patch embeddings<br>IN PLAIN ENGLISH - LAYER 2: Find the hard parts of the page first. Cut both the wait and the bill.</td></tr>
+  </table>
+
+  <h2 id="tools-amp-links"><span class="h-ico"><i data-lucide="wrench" class="ico"></i></span><span class="h-text">Tools &amp; links</span></h2>
+  <ul>
+    <li><strong>Docling</strong> — Lightweight document layout analysis &amp; PDF-to-Markdown engine by IBM — <a href="https://github.com/DS4SD/docling">github.com/DS4SD/docling</a></li>
+    <li><strong>LayoutLMv3</strong> — Multimodal pre-trained model for visually rich document understanding — <a href="https://github.com/microsoft/unilm/tree/master/layoutlmv3">github.com/microsoft/unilm</a></li>
+    <li><strong>ColPali</strong> — Efficient document retrieval using multi-vector vision language models on image patches — <a href="https://github.com/illuin-tech/colpali">github.com/illuin-tech/colpali</a></li>
+    <li><strong>Creator profile</strong> — @glueinfo6006 (Glue Info) — <a href="https://www.instagram.com/glueinfo6006/">instagram.com/glueinfo6006</a></li>
+  </ul>
+
+  <h2 id="try-this"><span class="h-ico"><i data-lucide="sparkles" class="ico"></i></span><span class="h-text">Try this</span></h2>
+  <ul>
+    <li>Benchmark <code>Docling</code> on a messy multi-column invoice PDF to verify table preservation before piping content into an LLM.</li>
+    <li>Implement RoI bounding box cropping on dense document sections to evaluate token cost reduction against full-page vision API calls.</li>
+  </ul>
+
+  <h2 id="open-questions"><span class="h-ico"><i data-lucide="help-circle" class="ico"></i></span><span class="h-text">Open questions</span></h2>
+  <p class="note">The reel presents a high-level system design architecture for 500,000+ daily documents. In production, handwriting recognition ("Dr. note") typically requires specialized fine-tuned models or targeted VLM crops, as layout models primarily delineate regions rather than transcribe cursive medical handwriting.</p>
+
+  
+  <nav class="pager">
+    <a href="../Design-Tokens/DepAa2_hPHQ-url-to-design-md-token-extractor-ai-coding-agents.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Url To Design Md Token Extractor Ai Codi</span></a>
+    <a href="../LLM-Architecture/Ddt-a1Ys8jd-how-llms-are-built-data-tokenization-transformer-pretraining-sft-serving.html" class="pager-next"><span>Next: A1Ys8Jd How Llms Are Built Data Tokeniza</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

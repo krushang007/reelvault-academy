@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 7 Essential AI Engineering Design Patterns: From Semantic Caching to Agentic Evals</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · System-Architecture</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-system-architecture">System-Architecture</a></nav>
+
+  <p class="kicker">AI · System-Architecture</p>
+  <h1>The 7 Essential AI Engineering Design Patterns: From Semantic Caching to Agentic Evals</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        As machine learning shifts from training custom foundational models to deploying LLM-powered applications, senior software engineering interviews have standardized around <strong>AI Systems Architecture</strong>. Building reliable, cost-effective, and safe generative AI applications requires moving beyond naive prompt engineering and implementing established architectural design patterns.
+      </p>
+      <p>
+        In this reference guide, software engineer TheCodingShef outlines the 7 core design patterns required to take prototype LLM applications into production-grade enterprise deployment.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DeEtELPvodg/frame_002.jpg" alt="7 AI Engineering Design Patterns Overview" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: The foundational 7 AI system patterns tested in engineering rounds.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeEtELPvodg/frame_004.jpg" alt="Core Pattern List RAG Semantic Caching Observability" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: The pattern spectrum: Data retrieval, latency optimization, and governance.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeEtELPvodg/frame_008.jpg" alt="In-depth Design Pattern Matrix" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: System integration matrix from inference caching to continuous feedback loops.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeEtELPvodg/frame_010.jpg" alt="AI Design Patterns Architecture Guide" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 4: Complete architecture manual for production AI systems.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-7-production-ai-design-patterns"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">The 7 Production AI Design Patterns</span></h2>
+
+      <h3>1. Retrieval-Augmented Generation (RAG)</h3>
+      <p>
+        Grounds foundation models on dynamic, proprietary external data without expensive fine-tuning. Combines semantic vector search (cosine similarity on embeddings), hybrid keyword BM25 retrieval, and reciprocal rank fusion (RRF) to inject high-precision context into the model's working window.
+      </p>
+
+      <h3>2. Prompt & Semantic Caching</h3>
+      <p>
+        <strong>The Problem:</strong> Exact string match caching (e.g. standard Redis key-value) misses semantically identical questions (<em>"What is the return policy?"</em> vs <em>"How do I return an item?"</em>).
+      </p>
+      <p>
+        <strong>The Pattern:</strong> Semantic caching embeds the incoming query and searches a vector cache. If the cosine similarity score exceeds a strict threshold (e.g. 0.95), the system returns the cached answer instantly. This cuts inference latency from 2,000ms to 20ms and slashes API token costs by 40%–70%.
+      </p>
+
+      <h3>3. Observability & Tracing (OpenInference / OpenTelemetry)</h3>
+      <p>
+        Unlike deterministic codebases with straightforward stack traces, non-deterministic agent workflows generate multi-hop tool execution graphs. Observability platforms (Langfuse, Arize Phoenix, Arize) capture:
+      </p>
+      <ul>
+        <li>Exact token counts (prompt, completion, cached).</li>
+        <li>Sub-span tool latencies (database queries, web scraping, external APIs).</li>
+        <li>Full prompt-response audit trails for post-mortem hallucination debugging.</li>
+      </ul>
+
+      <h3>4. Fine-Tuning & Model Distillation (LoRA / QLoRA)</h3>
+      <p>
+        Deploying frontier models (GPT-4o, Claude 3.5 Sonnet) for narrow, repetitive classification or extraction tasks is economically unsustainable. By distilling frontier model outputs into compact 8B open-weight models (Llama 3, Mistral) via Parameter-Efficient Fine-Tuning (PEFT/LoRA), teams achieve 10x lower inference latency at 95% lower cost.
+      </p>
+
+      <h3>5. User Feedback Loops & Data Flywheels</h3>
+      <p>
+        Captures explicit user interactions (thumbs up/down, accepted code suggestions, copied text) alongside implicit signals (regeneration button clicks, immediate session abandonment). This telemetry is stored in structured evaluation datasets to curate fine-tuning candidates and track regression benchmarks over time.
+      </p>
+
+      <h3>6. Agentic Evaluations (Evals & LLM-as-a-Judge)</h3>
+      <p>
+        Never deploy prompt or model changes based on subjective vibes. Establish automated evaluation harnesses:
+      </p>
+      <ul>
+        <li><strong>Deterministic assertions:</strong> JSON schema validity, regex pattern compliance, latency budgets.</li>
+        <li><strong>LLM-as-a-Judge:</strong> Using frontier models with rubric-based scoring to evaluate faithfulness, toxicity, and answer relevance on every commit.</li>
+      </ul>
+
+      <h3>7. Defensive Guardrails (Input & Output Filtering)</h3>
+      <p>
+        Positioned at both the ingestion and egress boundaries of the LLM pipeline (e.g. NeMo Guardrails, Llama Guard):
+      </p>
+      <ul>
+        <li><strong>Ingress Guardrails:</strong> Detect prompt injection, jailbreak vectors, and PII leakage before data reaches the model.</li>
+        <li><strong>Egress Guardrails:</strong> Validate that output contains no hallucinated unauthorized promises (e.g. unauthorized discounts or refund commitments), harmful content, or leaked API secrets.</li>
+      </ul>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="DdgwI6voxz6-five-open-source-repos-for-building-autonomous-ai-agents.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Five Open Source Repos For Building Auto</span></a>
+    <a href="DeYbkzTKO_0-scaling-llm-inference-1m-users-one-gpu-vllm.html" class="pager-next"><span>Next: Scaling Llm Inference 1M Users One Gpu V</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

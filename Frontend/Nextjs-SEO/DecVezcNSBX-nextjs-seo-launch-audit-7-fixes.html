@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Next.js App Router Production SEO Audit: The 7-Step Pre-Launch Checklist</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#frontend" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Frontend</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Frontend · Nextjs-SEO</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#frontend">Frontend</a> / <a href="../../index.html#frontend-nextjs-seo">Nextjs-SEO</a></nav>
+
+  <p class="kicker">Frontend · Nextjs-SEO</p>
+  <h1>Next.js App Router Production SEO Audit: The 7-Step Pre-Launch Checklist</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        Building modern web applications with Next.js App Router provides server-side rendering, streaming HTML, and dynamic metadata out of the box. However, deploying a Next.js application without a rigorous technical SEO audit frequently introduces hidden indexation and ranking penalties. In a production launch audit of 22 content pages, developer Abhay Vachhani discovered 9 major technical SEO defects caused by improper metadata inheritance, missing canonical definitions, thin taxonomy crawling, and unoptimized Core Web Vitals profiling.
+      </p>
+      <p>
+        This guide documents the comprehensive 7-step Next.js SEO checklist, technical code implementations for Next.js App Router (<code>app/robots.ts</code>, <code>app/sitemap.ts</code>, dynamic metadata, and JSON-LD schema), and critical pitfalls to avoid prior to public launch.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DecVezcNSBX/frame_006.jpg" alt="Next.js SEO Launch Audit Introduction" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: Auditing 22 Next.js pages revealed 9 critical SEO defects prior to launch.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DecVezcNSBX/frame_011.jpg" alt="Canonical URL Configuration in Root Layout Pitfall" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: The Canonical Trap—Never place a static canonical URL in the root layout.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DecVezcNSBX/frame_014.jpg" alt="Content Hierarchy and Alt Text Enforcement" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: Enforcing semantic heading hierarchy and Next.js Image alt requirements.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DecVezcNSBX/frame_020.jpg" alt="App Router programmatic sitemap and robots code" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 4: Programmatic sitemap, robots, and JSON-LD integration in Next.js.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-7-step-nextjs-seo-checklist"><span class="h-ico"><i data-lucide="sparkles" class="ico"></i></span><span class="h-text">The 7-Step Next.js SEO Checklist</span></h2>
+
+      <h3>1. Title Optimization (50–60 Characters)</h3>
+      <p>
+        Search engines truncate title tags exceeding ~600 pixels (roughly 50 to 60 characters). Titles must be descriptive, keyword-aligned, and strictly formatted using Next.js metadata templates:
+      </p>
+      <pre><code>// app/layout.tsx
+export const metadata: Metadata = {
+  title: {
+    default: 'TxtNode — Technical Writing Platform',
+    template: '%s | TxtNode'
+  }
+};</code></pre>
+
+      <h3>2. Unique Meta Descriptions (120–160 Characters)</h3>
+      <p>
+        Every route must define a tailored description between 120 and 160 characters. Duplicate or boilerplate descriptions degrade click-through rates (CTR) in search engine result pages (SERPs).
+      </p>
+
+      <h3>3. The Canonical URL Rule: Never in Root Layout</h3>
+      <p>
+        <strong>The Fatal Trap:</strong> Defining a static canonical URL in <code>app/layout.tsx</code> causes every subpage, article, and category in the application to declare the root domain (<code>https://example.com/</code>) as its canonical source. Google will subsequently de-index all internal routes as duplicates of the home page.
+      </p>
+      <p>
+        <strong>The Solution:</strong> Define dynamic canonicals either per-page via <code>generateMetadata</code> or set the <code>metadataBase</code> in the root layout and use relative paths:
+      </p>
+      <pre><code>// app/layout.tsx
+export const metadata: Metadata = {
+  metadataBase: new URL('https://txtnode.com'),
+};
+
+// app/blog/[slug]/page.tsx
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const post = await getPost(params.slug);
+  return {
+    title: post.title,
+    description: post.summary,
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
+  };
+}</code></pre>
+
+      <h3>4. Internal Link Auditing & Self-Referencing 404s</h3>
+      <p>
+        Dynamic routing often creates silent link rot when categories or tags reference nonexistent slugs. Crawlers encountering internal 404s waste crawl budget and downgrade site trust. Run automated crawl audits using tools like Screaming Frog or custom Playwright smoke tests before deployment.
+      </p>
+
+      <h3>5. Semantic Hierarchy & Image Alt Text</h3>
+      <ul>
+        <li><strong>Single <code>&lt;h1&gt;</code> per Route:</strong> The main page title must be the sole <code>&lt;h1&gt;</code> element. Subsections must strictly follow <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> order.</li>
+        <li><strong>Strict Alt Attributes:</strong> Use <code>next/image</code> with meaningful descriptive text rather than decorative or empty strings.</li>
+      </ul>
+
+      <h3>6. Thin Taxonomy Pruning (The "Under 3 Posts" Rule)</h3>
+      <p>
+        Tag and category pages containing fewer than 3 published articles present "thin content" signals to search engines. If a tag or category page does not yet have substantive indexable value, prevent search indexing while allowing search bots to follow links:
+      </p>
+      <pre><code>// app/tags/[tag]/page.tsx
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const posts = await getPostsByTag(params.tag);
+  const isThin = posts.length < 3;
+  
+  return {
+    title: `Articles tagged ${params.tag}`,
+    robots: {
+      index: !isThin,
+      follow: true,
+    },
+  };
+}</code></pre>
+
+      <h3>7. App Router Native APIs: Robots, Sitemap & JSON-LD</h3>
+      <p>
+        Next.js App Router eliminates static XML sitemaps and txt files in favor of type-safe TypeScript endpoints:
+      </p>
+      <pre><code>// app/robots.ts
+import { MetadataRoute } from 'next';
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: ['/admin/', '/api/private/'],
+    },
+    sitemap: 'https://txtnode.com/sitemap.xml',
+  };
+}
+
+// app/sitemap.ts
+import { MetadataRoute } from 'next';
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getAllPosts();
+  const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `https://txtnode.com/blog/${post.slug}`,
+    lastModified: new Date(post.updatedAt),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
+
+  return [
+    {
+      url: 'https://txtnode.com',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 1.0,
+    },
+    ...postEntries,
+  ];
+}</code></pre>
+
+      <h2 id="core-web-vitals-audit-tip"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Core Web Vitals Audit Tip</span></h2>
+      <p>
+        <strong>Never measure Core Web Vitals on <code>npm run dev</code>!</strong> The development server includes hot-module replacement (HMR), unminified bundles, and React dev tools overhead that report artificially degraded LCP and INP scores. Always run <code>next build && next start</code> or audit on an edge preview deployment before consulting Google PageSpeed Insights.
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../Generative-Art/DeeUdkgCHzM-p5-brush-natural-hand-drawn-textures-p5js-claude.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: P5 Brush Natural Hand Drawn Textures P5J</span></a>
+    <a href="../Vibe-Coding/DdshHpFpqdi-five-tools-to-turn-claude-code-into-ten-k-ui-design-system.html" class="pager-next"><span>Next: Five Tools To Turn Claude Code Into Ten </span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

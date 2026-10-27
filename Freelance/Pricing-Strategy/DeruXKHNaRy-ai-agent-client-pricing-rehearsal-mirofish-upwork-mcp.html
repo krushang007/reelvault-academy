@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Multi-Agent Client Pricing Rehearsal: Upwork MCP, GPT Researcher & MiroFish Simulation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#freelance" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Freelance</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Freelance · Pricing-Strategy</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#freelance">Freelance</a> / <a href="../../index.html#freelance-pricing-strategy">Pricing-Strategy</a></nav>
+
+  <p class="kicker">Freelance · Pricing-Strategy</p>
+  <h1>AI Multi-Agent Client Pricing Rehearsal: Upwork MCP, GPT Researcher & MiroFish Simulation</h1>
+
+  
+
+  
+
+  <div class="breadcrumb">
+      <a href="../../index.html">← All Learnings</a> / <a href="../../index.html#Freelance">Freelance</a> / Pricing Strategy
+    </div>
+
+    
+
+    <div class="metadata">
+      <span><strong>Source:</strong> Instagram Reel</span>
+      <span><strong>Creator:</strong> <a href="https://www.instagram.com/madetoscale2026/" target="_blank" rel="noopener">@madetoscale2026</a> (MadeToScale)</span>
+      <span><strong>Shortcode:</strong> <code>DeruXKHNaRy</code></span>
+      <span><strong>Verified:</strong> Audio & Video Demonstration Verified</span>
+    </div>
+
+    <div class="summary-box">
+      <h3>Key Takeaways</h3>
+      <ul>
+        <li><strong>Stop Guessing Freelance Quotes:</strong> Guessing quotes creates asymmetric downside: quoting too low (e.g. ₹25,000) raises quality doubts or locks in unprofitable work; quoting too high (e.g. ₹90,000) causes clients to ghost due to budget ceilings.</li>
+        <li><strong>The Rehearsal Framework:</strong> Instead of guessing, simulate client stakeholder reactions across 50 autonomous AI personas (Founder, CFO, Marketing Lead) testing 3 distinct price tiers.</li>
+        <li><strong>Automated Client Ingestion via Upwork MCP:</strong> Connect Claude to Upwork via official HTTP MCP to extract verified client spend history, hire rate, location, and job specs automatically.</li>
+        <li><strong>Multi-Source Deep Research:</strong> Use GPT Researcher across 20+ web sources (Crunchbase, LinkedIn, news, GitHub) to discover unstated budget signals, funding stages, and hiring velocity.</li>
+        <li><strong>MiroFish Organizational Simulation:</strong> Build an OASIS/GraphRAG-powered organizational graph in MiroFish, running multi-round consensus voting across executive personas to identify the profit-maximizing quote.</li>
+      </ul>
+    </div>
+
+    <h2 id="the-flaw-of-traditional-freelance-pricing"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Flaw of Traditional Freelance Pricing</span></h2>
+    <p>
+      When quoting on custom software, design, or marketing projects, freelancers routinely make uncalibrated guesses.
+    </p>
+    <ul>
+      <li><strong>Underbidding (&le; ₹30,000):</strong> Triggers negative selection heuristics. Serious founders assume low pricing indicates junior skills, outsourced labor, or low technical standards.</li>
+      <li><strong>Overbidding (&ge; ₹80,000):</strong> Hits hard departmental budget ceilings set by finance/CFO gatekeepers, terminating conversations before technical review.</li>
+      <li><strong>Calibrated Strike Price (₹55,000):</strong> Balances quality credibility with departmental runway, winning consensus approval across all stakeholder archetypes.</li>
+    </ul>
+
+    <h2 id="the-4-step-multi-agent-pricing-pipeline"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">The 4-Step Multi-Agent Pricing Pipeline</span></h2>
+
+    <div class="media-card">
+      <img src="assets/DeruXKHNaRy/05-full-workflow-steps.jpg" alt="Full 4-Step Pricing Rehearsal Flow">
+      <div class="media-card-caption">
+        <strong>Figure 1:</strong> The 4-step workflow: Upwork MCP &rarr; GPT Researcher &rarr; MiroFish Persona Simulation &rarr; Objection-Hedged Quote.
+      </div>
+    </div>
+
+    <h3>Step 1: Ingest Client Intelligence via Upwork Official MCP</h3>
+    <p>
+      Connect Claude directly to the Upwork ecosystem using Claude's Model Context Protocol (MCP) transport:
+    </p>
+    <div class="code-block" style="background: rgba(0,0,0,0.6); padding: 1rem; border-radius: 6px; font-family: monospace; border: 1px solid rgba(255,255,255,0.1);">
+      <code style="color: #4ade80;">$ claude mcp add --transport http upwork https://mcp.upwork.com/mcp</code>
+    </div>
+
+    <div class="media-card">
+      <img src="assets/DeruXKHNaRy/01-upwork-mcp-setup.jpg" alt="Upwork MCP Terminal Setup in Claude">
+      <div class="media-card-caption">
+        <strong>Figure 2:</strong> Adding Upwork official HTTP MCP server to Claude via a single terminal command.
+      </div>
+    </div>
+
+    <p>Claude immediately queries the target job post and parses structured metadata:</p>
+    <ul>
+      <li><strong>Client Spend History:</strong> Total historical spend (e.g. $48,000+ USD).</li>
+      <li><strong>Hire Rate & Velocity:</strong> 72% hire rate with 31 completed contracts.</li>
+      <li><strong>Geography & Timezone:</strong> Austin, Texas, US.</li>
+      <li><strong>Stated Scope:</strong> Next.js dashboard + landing page for health-tech startup.</li>
+    </ul>
+
+    <h3>Step 2: Deep Corporate Background via GPT Researcher</h3>
+    <p>
+      Using <code>GPT Researcher</code> via MCP, run an automated sweep across 24 public data sources (Company Website, Crunchbase, Careers Page, GitHub repos, Reddit, and X).
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DeruXKHNaRy/02-gpt-researcher-brief.jpg" alt="GPT Researcher Client Brief Output">
+      <div class="media-card-caption">
+        <strong>Figure 3:</strong> GPT Researcher synthesizes real-time intelligence into a standardized <code>client-brief.md</code> file in under 2 minutes.
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Signal Field</th>
+            <th>Extracted Fact</th>
+            <th>Strategic Pricing Implication</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Recent Funding</strong></td>
+            <td>Raised $4.0M Seed round (March 2026)</td>
+            <td>Capital availability is high; not constrained by bootstrapping.</td>
+          </tr>
+          <tr>
+            <td><strong>Team Expansion</strong></td>
+            <td>Actively hiring 3 senior developers right now</td>
+            <td>High opportunity cost; speed to market is prioritized over penny-pinching.</td>
+          </tr>
+          <tr>
+            <td><strong>Competitor Proposals</strong></td>
+            <td>2 external agencies already pitched</td>
+            <td>Need to differentiate on agility and immediate sprint commencement.</td>
+          </tr>
+          <tr>
+            <td><strong>Budget Signal</strong></td>
+            <td>Mid-range enterprise tier; requires rapid delivery</td>
+            <td>Extreme discount will look suspicious; enterprise premium will require board approval.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Step 3: Multi-Agent Persona Simulation via MiroFish</h3>
+    <p>
+      The synthesized <code>client-brief.md</code> is ingested into <strong>MiroFish</strong> (an open-source multi-agent simulation framework built on OASIS, Zep memory, and GraphRAG):
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DeruXKHNaRy/03-mirofish-knowledge-graph.jpg" alt="MiroFish Knowledge Graph & Stakeholder Personas">
+      <div class="media-card-caption">
+        <strong>Figure 4:</strong> MiroFish automatically constructs an organizational knowledge graph mapping competing executive incentives (Founder vs CFO vs Marketing Head).
+      </div>
+    </div>
+
+    <p>
+      MiroFish instantiates 50 autonomous agent clones divided proportionally:
+    </p>
+    <ul>
+      <li><strong>17 Founder Personas:</strong> Prioritize shipping speed, product polish, and visionary alignment.</li>
+      <li><strong>17 CFO Personas:</strong> Guard runway, enforce quarterly department allocations, and flag cost creep.</li>
+      <li><strong>16 Marketing Personas:</strong> Demand aggressive Q1 launch deadlines and high visual conversions.</li>
+    </ul>
+
+    <h3>Step 4: The 3-Tier Price Rehearsal</h3>
+    <p>
+      The simulation subjects all 50 agent personas to 3 rounds of voting across three proposed pricing tiers:
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DeruXKHNaRy/04-pricing-simulation-results.jpg" alt="MiroFish Pricing Simulation Results">
+      <div class="media-card-caption">
+        <strong>Figure 5:</strong> Rehearsal results: ₹80k rejected by CFOs (12% votes), ₹30k doubted by Founders (24% votes), ₹55k achieves overwhelming consensus (64% votes).
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Proposed Tier</th>
+            <th>Simulation Vote %</th>
+            <th>Primary Persona Feedback</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>₹80,000 (Premium)</strong></td>
+            <td>12% Support</td>
+            <td><em>"Over our budget for this quarter."</em> — CFO Persona</td>
+            <td><strong>Rejected:</strong> Hard budget barrier.</td>
+          </tr>
+          <tr>
+            <td><strong>₹30,000 (Budget)</strong></td>
+            <td>24% Support</td>
+            <td><em>"This cheap? Quality pe shak hai. Might be junior work."</em> — Founder Persona</td>
+            <td><strong>Suspicious:</strong> Undermines professional credibility.</td>
+          </tr>
+          <tr>
+            <td><strong>₹55,000 (Calibrated)</strong></td>
+            <td><strong>64% Consensus</strong></td>
+            <td><em>"Fair price. Addresses Q1 timeline. Let's start Monday."</em> — Founder & Marketing</td>
+            <td><strong>Winning Quote:</strong> Optimal risk-reward balance.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="final-proposal-formulation"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Final Proposal Formulation</span></h2>
+    <p>
+      By pre-simulating stakeholder objections, the freelancer submits the winning ₹55,000 proposal accompanied by defensive assurances addressing both CFO and Marketing concerns:
+    </p>
+    <ul>
+      <li><strong>Milestone Phasing:</strong> 50% upfront, 50% on verified production deployment (satisfies CFO cash flow rules).</li>
+      <li><strong>Guaranteed Sprint Velocity:</strong> Staged delivery schedule guaranteeing MVP readiness 10 days before the Q1 marketing campaign launch (satisfies Marketing Head).</li>
+      <li><strong>Architecture Quality Guarantee:</strong> Modern Next.js 16 + TypeScript stack with automated linting and component tests (satisfies Founder quality expectations).</li>
+    </ul>
+
+    <div class="summary-box">
+      <h3>Original Source Reference</h3>
+      <p>
+        Instagram Reel: <a href="https://www.instagram.com/reel/DeruXKHNaRy/" target="_blank" rel="noopener">https://www.instagram.com/reel/DeruXKHNaRy/</a><br>
+        Creator: <strong>@madetoscale2026</strong> (MadeToScale)<br>
+        Caption: <em>"Freelancers, price guess karna band karo. Rehearse karo. Client ko quote bhejne se pehle maine apna price 50 AI clients pe test kiya..."</em>
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../Government-Tenders/De9hvMeAiA_-gem-portal-creative-tenders.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Gem Portal Creative Tenders</span></a>
+    
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

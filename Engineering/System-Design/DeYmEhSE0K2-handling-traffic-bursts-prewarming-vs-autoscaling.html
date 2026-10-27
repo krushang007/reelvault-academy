@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handling Instant 1-Crore Traffic Bursts: Why Reactive Auto-Scaling Fails & How Pre-Warming Works</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#engineering" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Engineering</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Engineering · System-Design</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#engineering">Engineering</a> / <a href="../../index.html#engineering-system-design">System-Design</a></nav>
+
+  <p class="kicker">Engineering · System-Design</p>
+  <h1>Handling Instant 1-Crore Traffic Bursts: Why Reactive Auto-Scaling Fails & How Pre-Warming Works</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        In high-scale distributed systems interviews (such as designing Hotstar, JioCinema, or YouTube Live for a major cricket match), interviewers ask: <em>"When Virat Kohli walks out to bat, 10 million concurrent users flood the live streaming platform in under 60 seconds. How do you design the infrastructure to prevent catastrophic downtime?"</em>
+      </p>
+      <p>
+        Most candidates answer: <em>"We configure Horizontal Pod Autoscaling (HPA) in Kubernetes or AWS Auto Scaling Groups (ASG)."</em> This answer leads to immediate failure. Auto-scaling is inherently <strong>reactive</strong>. It requires metrics collection, threshold breach evaluation, VM provisioning, container image pulling, and JVM/Node warm-up—a process that takes 2 to 5 minutes. During sudden 10-second traffic surges, reactive auto-scaling arrives long after the database connection pool has crashed and cascading 504 Gateway Timeouts have occurred.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DeYmEhSE0K2/frame_006.jpg" alt="Traffic Spikes Exposing Reactive Autoscaling Lag" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: The Reactive Trap: Traffic spikes instantly while autoscalers take minutes to boot.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeYmEhSE0K2/frame_012.jpg" alt="Autoscaling Lag vs Instant User Surges" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: The Latency Gap: Container provisioning time leaves users facing buffering.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeYmEhSE0K2/frame_015.jpg" alt="Pre-warmed Fleet Provisioning Before Match Events" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: The Production Solution: Scheduled Fleet Pre-Warming + Autoscaling as backstop.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-real-world-analogy-the-halwai-principle"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Real-World Analogy: The "Halwai" Principle</span></h2>
+      <blockquote>
+        "Relying solely on reactive auto-scaling during a known major event is like waiting for 500 wedding guests to arrive at the door before calling the caterer (halwai) to start cooking food. Smart hosts prepare the feast well in advance."
+      </blockquote>
+
+      <h2 id="the-production-architecture-for-sudden-flash-traffic"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">The Production Architecture for Sudden Flash Traffic</span></h2>
+
+      <h3>1. Scheduled Fleet Pre-Warming</h3>
+      <p>
+        Major traffic spikes in entertainment, sports, or flash sales (Black Friday, IPL, Super Bowl) are predictable in time. Rather than waiting for CPU thresholds:
+      </p>
+      <ul>
+        <li><strong>Scheduled Scaling Actions:</strong> Pre-scale Kubernetes node groups and serverless concurrency quotas 15 to 30 minutes prior to scheduled game start times.</li>
+        <li><strong>Connection Pool Pre-Heating:</strong> Initialize database connections, Redis socket pools, and JIT-compiled caches before opening ingress gates.</li>
+      </ul>
+
+      <h3>2. Edge CDN Shielding (Stale-While-Revalidate)</h3>
+      <p>
+        90% of user requests during a live sporting event are identical (video manifest files, current score ticker, static UI assets). 
+      </p>
+      <ul>
+        <li>Serve HLS / DASH video segment playlists from geographically distributed Edge CDNs (Akamai, Cloudflare).</li>
+        <li>Use <code>Cache-Control: public, max-age=1, stale-while-revalidate=5</code> to collapse 10,000,000 score queries into a single origin hit every second.</li>
+      </ul>
+
+      <h3>3. WebSocket / SSE Multiplexing</h3>
+      <p>
+        Never allow 10 million mobile apps to poll an HTTP <code>/api/score</code> endpoint every 3 seconds ($3.33 \text{ million requests/sec}$).
+      </p>
+      <p>
+        Instead, maintain persistent Server-Sent Events (SSE) or WebSocket connections terminated at lightweight edge proxy layers (e.g. Envoy or Nginx). When a ball is bowled, publish a single message to a Redis Pub/Sub or Apache Kafka topic, which broadcasts downward to all connected clients over existing open TCP sockets.
+      </p>
+
+      <h3>4. Autoscaling as the Backstop, Not the Plan</h3>
+      <p>
+        Auto-scaling should never be the primary defense against instantaneous flash spikes. Its proper architectural role is an <strong>elastic backstop</strong>: absorbing unforeseen baseline growth that exceeds pre-warmed estimates and gracefully de-provisioning expensive compute capacity once peak viewership subsides.
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="De1hhJBp1O6-hot-key-problem-write-behind-caching-redis-db.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Hot Key Problem Write Behind Caching Red</span></a>
+    <a href="DegPVfBCW18-how-instagram-scaled-postgres-to-3-billion-users.html" class="pager-next"><span>Next: How Instagram Scaled Postgres To 3 Billi</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

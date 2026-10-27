@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM System Design: Vocabulary Size vs. Context Window & KV Cache Memory Sizing</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · System-Architecture</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-system-architecture">System-Architecture</a></nav>
+
+  <p class="kicker">AI · System-Architecture</p>
+  <h1>LLM System Design: Vocabulary Size vs. Context Window & KV Cache Memory Sizing</h1>
+
+  
+
+  
+
+  <div class="breadcrumb">
+      <a href="../../index.html">← All Learnings</a> / <a href="../../index.html#AI">AI</a> / System Architecture
+    </div>
+
+    
+
+    <div class="metadata">
+      <span><strong>Source:</strong> Instagram Reel (LLM Interview 003)</span>
+      <span><strong>Creator:</strong> <a href="https://www.instagram.com/laxmikant.kgptalkie/" target="_blank" rel="noopener">@laxmikant.kgptalkie</a> (Laxmi Kant | AI Engineer | KGP Talkie)</span>
+      <span><strong>Shortcode:</strong> <code>DejSW8AP9nB</code></span>
+      <span><strong>Verified:</strong> Video & Mathematical Derivations Verified</span>
+    </div>
+
+    <div class="summary-box">
+      <h3>Key Takeaways</h3>
+      <ul>
+        <li><strong>The Fundamental Interview Question:</strong> When architecting an LLM, what is the mathematical trade-off between expanding the tokenizer vocabulary size ($V$) versus expanding the maximum context window ($L$)?</li>
+        <li><strong>Where the Cost is Paid:</strong> The vocabulary cost is paid <em>once</em> statically in model parameters (embedding and unembedding matrices). The context window cost is paid <em>dynamically on every request</em> in quadratic attention compute and linearly exploding Key-Value (KV) cache memory.</li>
+        <li><strong>Tokenizer Vocabulary Expansion:</strong> Going from 32K (Llama 2) to 128K (Llama 3) compresses token count by up to 15% (especially in non-Latin scripts like Hindi), reducing decode steps. However, it adds ~400 million float parameters to the input embedding table ($4096 \times 96,000$) and induces representation sparsity for rare tokens.</li>
+        <li><strong>The 16 GB Per-User KV Cache Trap:</strong> In Llama 3 8B, the KV cache consumes $\approx 128\text{ KB}$ per token. At full 128K context, storing the KV cache requires <strong>~16 GB of VRAM for a single concurrent user</strong> before allocating model weights.</li>
+        <li><strong>The Million-Token Fallacy:</strong> Expanding vocabulary to 1M tokens with $d_{model}=4096$ would dedicate over 4.1 billion parameters (over 50% of an 8B model) solely to lookup tables, with catastrophic logit-softmax latency and diminishing compression returns.</li>
+      </ul>
+    </div>
+
+    <h2 id="the-core-architectural-dilemma"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Core Architectural Dilemma</span></h2>
+    <p>
+      In AI engineering interviews and foundation model pre-training design doc reviews, junior candidates frequently answer: <em>"Bigger is better, let's maximize both vocabulary and context window."</em>
+      Senior architects evaluate trade-offs based on <strong>memory allocation mechanics and operational runtime costs</strong>.
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DejSW8AP9nB/01-vocab-vs-context.jpg" alt="Vocabulary vs Longer Context Tradeoff">
+      <div class="media-card-caption">
+        <strong>Figure 1:</strong> The foundational LLM pre-training design question: expanding tokenizer vocabulary vs extending attention context length.
+      </div>
+    </div>
+
+    <h2 id="1-expanding-tokenizer-vocabulary-v"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">1. Expanding Tokenizer Vocabulary ($V$)</span></h2>
+
+    <h3>The Wins:</h3>
+    <ul>
+      <li><strong>Higher Compression Ratio:</strong> Subword algorithms (BPE, WordPiece, Unigram) merge frequent character combinations into single tokens. Sentences require fewer discrete tokens to represent.</li>
+      <li><strong>Fewer Autoregressive Decode Steps:</strong> Since text generates in fewer tokens, inference latency and generation costs drop proportionally.</li>
+      <li><strong>Multilingual Parity:</strong> Llama 2 (32K vocabulary) severely fragmented non-English languages (Hindi, Bengali, Arabic), requiring 3–5 tokens per word. Llama 3 (128K vocabulary) reduced Hindi token counts by up to 15–25%, significantly lowering API serving bills.</li>
+    </ul>
+
+    <h3>The Costs:</h3>
+    <ul>
+      <li><strong>Embedding & Projection Matrix Bloat:</strong> Each token requires an embedding vector of dimension $d_{model}$ in the input table and output LM head:
+        <div class="formula-box" style="background: rgba(255,255,255,0.04); padding: 1rem; border-radius: 6px; font-family: monospace; margin: 0.75rem 0;">
+          Added Parameters = &Delta;V &times; d_model = (128,000 - 32,000) &times; 4,096 &approx; 393,216,000 parameters
+        </div>
+      </li>
+      <li><strong>Rare Token Representation Sparsity:</strong> Expanding to hundreds of thousands of tokens introduces long-tail rare tokens that appear infrequently during pre-training, resulting in under-optimized, noisy embedding representations.</li>
+      <li><strong>Final Logit Softmax Bottleneck:</strong> Computing $\text{Softmax}(h \cdot W^T)$ over $V$ logits at every token generation step increases memory bandwidth and GPU compute overhead.</li>
+    </ul>
+
+    <h2 id="2-expanding-context-window-length-l"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">2. Expanding Context Window Length ($L$)</span></h2>
+
+    <div class="media-card">
+      <img src="assets/DejSW8AP9nB/02-longer-context-win.jpg" alt="Longer Context Window Capabilities">
+      <div class="media-card-caption">
+        <strong>Figure 2:</strong> Long context enables multi-file codebase reasoning and entire document grounding at the cost of per-request compute.
+      </div>
+    </div>
+
+    <h3>The Wins:</h3>
+    <ul>
+      <li>Direct ingestion of large codebases, multi-turn chat trajectories, and legal/financial document archives without chunking and lossy RAG retrieval.</li>
+    </ul>
+
+    <h3>The Costs & The 16 GB KV Cache Calculation:</h3>
+    <p>
+      Unlike vocabulary size, which is paid once in model weights, context window memory is instantiated <strong>dynamically on every user request</strong>.
+    </p>
+
+    <div class="formula-box" style="background: rgba(255,255,255,0.04); padding: 1.25rem; border-radius: 8px; font-family: monospace; margin: 1rem 0; line-height: 1.6;">
+      <p style="margin: 0; color: #38bdf8; font-weight: bold;">KV Cache Memory per Request Formula:</p>
+      <p style="margin: 0.5rem 0 0 0; color: #f1f5f9;">
+        Memory = 2 &times; N_layers &times; N_kv_heads &times; d_head &times; Context_Length &times; Bytes_per_element
+      </p>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Architecture Variable</th>
+            <th>Llama 3 8B Value</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Number of Layers ($N_{layers}$)</strong></td>
+            <td>32</td>
+            <td>Transformer decoder blocks</td>
+          </tr>
+          <tr>
+            <td><strong>KV Attention Heads ($N_{kv\_heads}$)</strong></td>
+            <td>8</td>
+            <td>Grouped Query Attention (GQA)</td>
+          </tr>
+          <tr>
+            <td><strong>Head Dimension ($d_{head}$)</strong></td>
+            <td>128</td>
+            <td>$d_{model} / N_{q\_heads} = 4096 / 32$</td>
+          </tr>
+          <tr>
+            <td><strong>Precision Format</strong></td>
+            <td>16-bit (FP16/BF16)</td>
+            <td>2 bytes per parameter</td>
+          </tr>
+          <tr>
+            <td><strong>KV Cache per Token</strong></td>
+            <td><strong>131,072 bytes (~128 KB)</strong></td>
+            <td>$2 \times 32 \times 8 \times 128 \times 2$ bytes</td>
+          </tr>
+          <tr>
+            <td><strong>128K Context KV Cache</strong></td>
+            <td><strong>16.38 GB VRAM</strong></td>
+            <td>$128,000 \times 128\text{ KB}$ for 1 single user request</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="media-card">
+      <img src="assets/DejSW8AP9nB/03-hire-or-maybe-tradeoff.jpg" alt="Hire or Maybe Candidate Evaluation">
+      <div class="media-card-caption">
+        <strong>Figure 3:</strong> What separates hire from candidate: Recognizing that vocabulary cost is paid once in parameters, whereas context cost is paid dynamically on every request.
+      </div>
+    </div>
+
+    <h2 id="3-the-million-token-thought-experiment"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">3. The Million-Token Thought Experiment</span></h2>
+    <p>
+      Why not build a 1,000,000-token tokenizer vocabulary?
+    </p>
+    <ul>
+      <li>At $d_{model} = 4096$, a 1M vocabulary requires:
+        $$1,000,000 \times 4096 \times 2 \text{ bytes (FP16)} \approx 8.19 \text{ GB}$$
+        just to store the input embedding weights, accounting for over 4.1 billion parameters—<strong>more than 50% of an 8B model's capacity</strong> consumed by lookup tables rather than self-attention reasoning layers.
+      </li>
+      <li>Diminishing Returns: Zipf's law dictates that beyond ~100K–150K subwords, additional tokens correspond to ultra-specific n-grams with negligible corpus-wide compression benefits.</li>
+    </ul>
+
+    <h2 id="summary-architecture-rule"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Summary Architecture Rule</span></h2>
+    <div class="summary-box" style="border-left: 4px solid #38bdf8;">
+      <p style="margin: 0; font-size: 1.05rem; font-weight: 500; color: #f1f5f9;">
+        <strong>"Grow the vocabulary while subword compression yields measurable throughput gains, and scale the context window strictly to the requirements of the inference task with KV cache quantization (FP8/INT4) or vLLM PagedAttention."</strong>
+      </p>
+    </div>
+
+    <div class="summary-box">
+      <h3>Original Source Reference</h3>
+      <p>
+        Instagram Reel: <a href="https://www.instagram.com/reel/DejSW8AP9nB/" target="_blank" rel="noopener">https://www.instagram.com/reel/DejSW8AP9nB/</a><br>
+        Creator: <strong>@laxmikant.kgptalkie</strong> (Laxmi Kant | AI Engineer | KGP Talkie)<br>
+        Series: <em>LLM Interview 003 — Tokenizer vs Context Window</em>
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="Dedaacnhq82-five-stages-of-ai-engineering-prompt-context-agent-harness-loop.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Five Stages Of Ai Engineering Prompt Con</span></a>
+    <a href="DetQefisiL1-the-5-core-problems-of-ai-engineering.html" class="pager-next"><span>Next: The 5 Core Problems Of Ai Engineering</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

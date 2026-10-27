@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google ARTEMIS: Open-Source Android Automation Agent via MCP (google/artemis)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · Mobile-Agents</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-mobile-agents">Mobile-Agents</a></nav>
+
+  <p class="kicker">AI · Mobile-Agents</p>
+  <h1>Google ARTEMIS: Open-Source Android Automation Agent via MCP (google/artemis)</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        Building autonomous agents for desktop and web browsers has matured rapidly, but automated interaction with native mobile operating systems has historically been notoriously brittle due to dynamic UI hierarchies, variable screen resolutions, and strict OS permissions.
+      </p>
+      <p>
+        <strong>ARTEMIS</strong> (<code>google/artemis</code>) is Google’s open-source mobile automation agent framework. It bridges multimodal foundation models with Android devices via the <strong>Android Debug Bridge (ADB)</strong>, achieving a &gt;99% task completion rate on the rigorous <em>AndroidWorld</em> benchmark.
+      </p>
+      <p>
+        Crucially for software engineering workflows, ARTEMIS ships with a native <strong>Model Context Protocol (MCP)</strong> server, allowing AI coding environments (Claude Code, OpenAI Codex, Cursor, Windsurf, Google Antigravity) to autonomously test, navigate, and debug physical Android devices and emulators during development.
+      </p>
+
+      <h2 id="core-visual-architecture-console"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Core Visual Architecture & Console</span></h2>
+      <div class="image-grid">
+        <figure>
+          <img src="assets/DehEdBbgQFZ/frame_004.jpg" alt="Natural Language Prompting to Real Android Execution">
+          <figcaption>Prompt-to-device execution: Natural language queries translated into real ADB gesture streams on a physical Android phone.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DehEdBbgQFZ/frame_008.jpg" alt="CLI Execution via uv run artemis">
+          <figcaption>Terminal execution using modern Python tooling: <code>uv run artemis run "..."</code>.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DehEdBbgQFZ/frame_018.jpg" alt="ARTEMIS MCP Server and IDE Integration">
+          <figcaption>Native MCP server exposing mobile tools with 1-click auto-configuration for Claude Code, Codex, and Cursor.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DehEdBbgQFZ/frame_022.jpg" alt="Pro Mode Tri-Tier Multi-Agent System Design">
+          <figcaption>Pro Mode architecture: Planner (<code>task_plan.md</code>) &rarr; Operator (UI interaction) &rarr; Checker (verification loop).</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DehEdBbgQFZ/frame_028.jpg" alt="Automated Mobile QA Testing Console">
+          <figcaption>ARTEMIS console: Real-time UI inspection, screen state captures, and automated release regression auditing.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="mcp-integration-giving-ai-coding-tools-android-access"><span class="h-ico"><i data-lucide="wrench" class="ico"></i></span><span class="h-text">MCP Integration: Giving AI Coding Tools Android Access</span></h2>
+      <p>
+        Through the Model Context Protocol, ARTEMIS exposes a suite of specialized mobile agent tools directly to your IDE’s assistant context:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>MCP Tool Name</th>
+            <th>Parameters</th>
+            <th>Operational Capability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>mobile_run_task</code></td>
+            <td><code>prompt</code>, <code>mode</code> (flash | pro), <code>device_id</code></td>
+            <td>Dispatches high-level instructions to the target Android phone or emulator instance.</td>
+          </tr>
+          <tr>
+            <td><code>mobile_manage_task</code></td>
+            <td><code>task_id</code>, <code>action</code> (pause, abort, inspect)</td>
+            <td>Controls ongoing mobile agent sessions with asynchronous lifecycle management.</td>
+          </tr>
+          <tr>
+            <td><code>mobile_get_device_state</code></td>
+            <td><code>device_id</code>, <code>capture_screenshot</code> (bool)</td>
+            <td>Queries current foreground activity, view hierarchy XML, and visual viewport screenshot.</td>
+          </tr>
+          <tr>
+            <td><code>mobile_inspect_trace</code></td>
+            <td><code>task_id</code>, <code>include_logs</code> (bool)</td>
+            <td>Retrieves complete step-by-step reasoning logs, ADB touch coordinates, and error diagnostics.</td>
+          </tr>
+          <tr>
+            <td><code>mobile_diagnose</code></td>
+            <td><code>device_id</code></td>
+            <td>Runs ADB connectivity checks, USB debugging verification, and permission validation.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Auto-Configuring MCP for AI Coding Agents</h3>
+      <pre><code># Install and link ARTEMIS MCP server to all detected coding harnesses
+uv run artemis mcp --install all
+
+# Or start the standalone stdio server manually
+python -m mcp_server</code></pre>
+
+      <h2 id="dual-execution-engines-flash-vs-pro-mode"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Dual Execution Engines: Flash vs. Pro Mode</span></h2>
+      <p>ARTEMIS provides two specialized execution strategies depending on the latency and complexity profile of the task:</p>
+
+      <h3>1. Flash Mode (~2–5 seconds per step)</h3>
+      <ul>
+        <li><strong>Reactive Single-Agent Loop:</strong> Uses a fast vision model to interpret current screen state, determine the next atomic action (tap, swipe, input text), and immediately execute it via ADB.</li>
+        <li><strong>Best For:</strong> Simple navigation (e.g., <em>"open Settings and check battery percentage"</em>, <em>"turn off Wi-Fi"</em>, <em>"launch YouTube and play the first video"</em>).</li>
+      </ul>
+
+      <h3>2. Pro Mode (~15–40 seconds per step)</h3>
+      <ul>
+        <li><strong>Tri-Tier Multi-Agent Coordination:</strong>
+          <ol>
+            <li><strong>Planner:</strong> Deconstructs the goal into a stateful Markdown specification (<code>task_plan.md</code>) outlining sequential preconditions and checkpoints.</li>
+            <li><strong>Operator:</strong> Executes low-level gesture primitives (taps, drags, keyboard input, intent broadcasts).</li>
+            <li><strong>Checker:</strong> Takes screen captures post-action to verify that UI mutations match expected state. If an unexpected dialogue or crash occurs, it halts and triggers autonomous backtracking.</li>
+          </ol>
+        </li>
+        <li><strong>Best For:</strong> Multi-step workflows (e.g., configuring multi-stop driving routes in Google Maps, filling multi-page checkout funnels, testing user onboarding).</li>
+      </ul>
+
+      <h2 id="multi-agent-architecture-flow"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Multi-Agent Architecture Flow</span></h2>
+      <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                       Task Request                          │
+│   "Configure multi-stop route: SF -> Oakland -> Berkeley"   │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                       Planner Agent                         │
+│  - Synthesizes stateful execution roadmap `task_plan.md`   │
+│  - Establishes verification conditions for each waypoint    │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      Operator Agent                         │
+│  - Inspects accessibility node hierarchy + UI screenshot    │
+│  - Translates goal to ADB coordinates (tap, input, swipe)   │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                       Checker Agent                         │
+│  - Evaluates post-interaction screen capture                │
+│  - Confirms stop added? Yes &rarr; proceed | No &rarr; retry/backtrack │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 Completion & Diagnostic Log                 │
+│  Outputs complete trace, duration metrics, and video run    │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+
+      <h2 id="engineering-applications-for-mobile-teams"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Engineering Applications for Mobile Teams</span></h2>
+      <ul>
+        <li><strong>Autonomous Release QA:</strong> Replaces tedious manual smoke testing by installing fresh APK builds, logging in with staging credentials, tapping through every screen, and detecting unhandled crashes or modal traps.</li>
+        <li><strong>Automated Visual Regression:</strong> Captures synchronized multi-resolution screenshots across physical Android devices to detect layout overflow and clipping.</li>
+        <li><strong>Synthetic User Emulation:</strong> Tests complex user journeys under varying network and localization conditions without writing brittle Appium scripts.</li>
+      </ul>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../Legal-Licensing/Dd_g0MapbN4-open-source-ai-model-licensing-commercial-vs-research-traps.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Open Source Ai Model Licensing Commercia</span></a>
+    <a href="../Prompt-Engineering/Dd8Ep1mzQ7b-anthropic-five-part-master-prompt-architecture.html" class="pager-next"><span>Next: Anthropic Five Part Master Prompt Archit</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

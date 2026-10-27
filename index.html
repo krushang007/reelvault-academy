@@ -1,0 +1,1585 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReelVault Knowledge Academy — High-Signal Engineering & Growth Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_assets/style.css">
+<style>
+  .track-section { margin-top: 56px; padding-top: 16px; }
+  .track-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .topic-group { margin-bottom: 24px; }
+  .topic-group h3 { font-size: 15px; font-weight: 700; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; margin: 18px 0 8px; font-family: var(--sans); }
+  ul.note-list { list-style: none; padding-left: 0; margin: 0; }
+  li.note-item {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 10px 14px; margin: 4px 0; border-radius: 8px;
+    background: var(--bg-soft); border: 1px solid var(--rule);
+    font-size: 16px; line-height: 1.5; font-family: var(--serif);
+    transition: all 0.15s ease;
+  }
+  li.note-item:hover {
+    background: var(--bg);
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+  li.note-item a {
+    color: var(--ink); text-decoration: none; font-weight: 500; font-family: var(--sans); font-size: 15px;
+  }
+  li.note-item a:hover {
+    color: var(--accent); text-decoration: underline;
+  }
+  .shortcode-tag {
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    padding: 2px 6px; border-radius: 4px;
+    background: var(--rule); color: var(--ink-3); flex: none;
+  }
+  .note-author {
+    color: var(--ink-3); font-size: 13px; font-family: var(--sans); margin-left: auto; flex: none;
+  }
+</style>
+</head>
+<body data-root-rel="">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="index.html" class="topbar-link active"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="_taxonomy.md" class="topbar-link"><i data-lucide="book-marked" class="ico"></i> Taxonomy</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Academy Portal</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">Core Tracks</div>
+  <ol id="toc">
+    <li><a href="#ai">AI</a></li><li><a href="#business">Business</a></li><li><a href="#career">Career</a></li><li><a href="#design">Design</a></li><li><a href="#engineering">Engineering</a></li><li><a href="#finance">Finance</a></li><li><a href="#freelance">Freelance</a></li><li><a href="#frontend">Frontend</a></li><li><a href="#marketing">Marketing</a></li><li><a href="#meta-ads">Meta-Ads</a></li><li><a href="#product">Product</a></li><li><a href="#system-design">System-Design</a></li><li><a href="#video-creation">Video-Creation</a></li>
+  </ol>
+</nav>
+
+<main class="article">
+<p class="kicker">Practitioner Engineering &amp; Growth Curriculum</p>
+<h1>ReelVault Knowledge Academy</h1>
+<p class="subtitle">First-principles curricula, production architecture blueprints, and high-signal growth playbooks extracted from real-world practitioner reels.</p>
+<div class="meta">
+  <span>113 Production Notes</span>
+  <span>66 Specialized Topics</span>
+  <span>13 Core Tracks</span>
+  <span>87 Noise-Filtered Reels</span>
+</div>
+
+<div class="portal-hero">
+  <div class="portal-stats">
+    <span class="stat-pill"><i data-lucide="graduation-cap"></i> 13 Core Tracks</span>
+    <span class="stat-pill"><i data-lucide="book-open"></i> 113 Active Deep-Dive Notes</span>
+    <span class="stat-pill"><i data-lucide="layers"></i> 440+ Architecture Frames</span>
+    <span class="stat-pill"><i data-lucide="zap"></i> Zero Fluff · Production-First</span>
+  </div>
+  <p style="font-size: 1.15rem; line-height: 1.6; color: var(--ink-2); margin-bottom: 24px;">
+    An engineering curriculum platform and reference library for systems engineers, AI builders, and growth founders.
+    Every note extracts verbatim code, parameters, architecture diagrams, and actionable steps directly from practitioner reels.
+  </p>
+
+  <div class="portal-search-wrap">
+    <i data-lucide="search"></i>
+    <input type="text" id="course-filter-input" class="portal-search-input" placeholder="Search notes, systems, AI agents, Claude skills, SQL, or Meta Ads... (Press / to focus)" />
+  </div>
+</div>
+
+<h2 class="track" id="all-courses"><span class="h-ico"><i data-lucide="layout-grid" class="ico"></i></span><span class="h-text">Curriculum Pathways</span></h2>
+<div class="portal-grid" id="portal-courses-grid">
+  
+        <a href="#ai" class="course-card" data-category="Foundations &amp; Autonomous Agents">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="brain" class="ico"></i></div>
+            <span class="course-badge badge-complete">27 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Foundations &amp; Autonomous Agents</div>
+          <h3 class="course-card-title">Artificial Intelligence &amp; Agents</h3>
+          <p class="course-card-desc">Real-time voice AI system design, ColPali vision-language RAG, Claude Code agent skills, LLM pre-training pipelines, and open-source agent runtimes.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 14 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#business" class="course-card" data-category="Finance &amp; Scaling">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="building-2" class="ico"></i></div>
+            <span class="course-badge badge-complete">6 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Finance &amp; Scaling</div>
+          <h3 class="course-card-title">Venture Capital &amp; Unit Economics</h3>
+          <p class="course-card-desc">10-slide Kae Capital investor pitch decks, YC &amp; a16z RFS alignment, mobile game AdMob vs ROAS economics, and India DPDP compliance checklists.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 4 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#career" class="course-card" data-category="Engineering Leadership">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="graduation-cap" class="ico"></i></div>
+            <span class="course-badge badge-complete">5 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Engineering Leadership</div>
+          <h3 class="course-card-title">Software Engineering Career Strategy</h3>
+          <p class="course-card-desc">Deep technical mastery habits, 2-month engineering job switch roadmaps, Indian employment law resignation clauses, and Claude Code job search automation.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 3 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#design" class="course-card" data-category="Design Systems &amp; Aesthetics">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="palette" class="ico"></i></div>
+            <span class="course-badge badge-complete">4 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Design Systems &amp; Aesthetics</div>
+          <h3 class="course-card-title">Visual Design &amp; Creative Direction</h3>
+          <p class="course-card-desc">The 22 visual design styles taxonomy, the 1 Hero 2 Supporting hierarchy law, editorial font pairing rules, and curated web inspiration archives.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 3 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#engineering" class="course-card" data-category="Infrastructure &amp; DevSecOps">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="shield-check" class="ico"></i></div>
+            <span class="course-badge badge-complete">9 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Infrastructure &amp; DevSecOps</div>
+          <h3 class="course-card-title">Cloud Security &amp; Production Readiness</h3>
+          <p class="course-card-desc">AWS server hardening, Nginx rate limiting, ClamAV quarantine pipelines, Cloudflare WAF, structured logging, and post-launch verification suites.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 5 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#finance" class="course-card" data-category="Financial Engineering">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="coins" class="ico"></i></div>
+            <span class="course-badge badge-complete">2 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Financial Engineering</div>
+          <h3 class="course-card-title">Quant Trading &amp; Bank Negotiations</h3>
+          <p class="course-card-desc">Statistical arbitrage mean reversion with Z-score thresholds, and RBI Master Circular loan fee waiver negotiation blueprints.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 2 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#freelance" class="course-card" data-category="Commercial Strategy">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="briefcase" class="ico"></i></div>
+            <span class="course-badge badge-complete">8 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Commercial Strategy</div>
+          <h3 class="course-card-title">Freelance &amp; Agency Client Acquisition</h3>
+          <p class="course-card-desc">Google Maps 5-star review cold pitching hooks, GeM government tender bidding, AI rate simulation rehearsals, and Clay.com lead scraping.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 5 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#frontend" class="course-card" data-category="Interface Engineering">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="layout" class="ico"></i></div>
+            <span class="course-badge badge-complete">6 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Interface Engineering</div>
+          <h3 class="course-card-title">Modern Frontend &amp; Web Animation</h3>
+          <p class="course-card-desc">StringTune lightweight GSAP alternative, Framer Motion vibe-coding stack, Next.js pre-launch SEO audits, and AI video keyframe scrubbed animations.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 4 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#marketing" class="course-card" data-category="Growth &amp; Organic Search">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="trending-up" class="ico"></i></div>
+            <span class="course-badge badge-complete">16 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Growth &amp; Organic Search</div>
+          <h3 class="course-card-title">B2B Marketing, GEO &amp; Technical SEO</h3>
+          <p class="course-card-desc">Generative Engine Optimization (GEO) 8-tactic tier list, Google Search Console CTR hidden opportunity queries, and LinkedIn founder-led content engines.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 8 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#meta-ads" class="course-card" data-category="Performance Marketing">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="target" class="ico"></i></div>
+            <span class="course-badge badge-complete">16 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Performance Marketing</div>
+          <h3 class="course-card-title">Meta Ads &amp; Paid Acquisition</h3>
+          <p class="course-card-desc">Full-funnel ABO testing matrices, competitor audience scraping, Conversions API (CAPI) offline loops, and Mumbai luxury geo-targeting.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 8 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#product" class="course-card" data-category="Product Management">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="rocket" class="ico"></i></div>
+            <span class="course-badge badge-complete">1 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Product Management</div>
+          <h3 class="course-card-title">Product Validation &amp; Launch Strategy</h3>
+          <p class="course-card-desc">Pre-launch customer validation using synthetic AI customer focus groups (MiroFish) and unvarnished persona feedback loops.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 1 hour</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#system-design" class="course-card" data-category="High-Scale Backend Systems">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="network" class="ico"></i></div>
+            <span class="course-badge badge-complete">8 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">High-Scale Backend Systems</div>
+          <h3 class="course-card-title">Distributed Systems &amp; Architecture</h3>
+          <p class="course-card-desc">HyperLogLog probabilistic counting, Uber H3 geospatial indexing, GitHub Merkle diffing, offline-first local SSOT, and high-concurrency flash sale locks.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 6 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+        <a href="#video-creation" class="course-card" data-category="Creative Automation">
+          <div class="course-card-header">
+            <div class="course-card-icon"><i data-lucide="video" class="ico"></i></div>
+            <span class="course-badge badge-complete">5 Notes · Complete</span>
+          </div>
+          <div class="course-card-category">Creative Automation</div>
+          <h3 class="course-card-title">Video Creation &amp; AI Explainers</h3>
+          <p class="course-card-desc">Autonomous faceless AI reel engines (Claude Code + Remotion + Whisper), and HyperFrames HTML/CSS/FFmpeg programmatic motion graphics.</p>
+          <div class="course-card-footer">
+            <span><i data-lucide="clock" class="ico" style="vertical-align:middle;margin-right:3px;"></i> 3 hours</span>
+            <span class="course-card-action">View Track <i data-lucide="arrow-right" class="ico"></i></span>
+          </div>
+        </a>
+        
+</div>
+
+<aside class="box box-codebase" style="margin-top: 40px; margin-bottom: 40px;">
+  <div class="box-label"><i data-lucide="code-xml" class="ico"></i> Real-World Production Pedagogy</div>
+  <div class="box-title">Calibrated for Senior Engineers &amp; Growth Builders</div>
+  <p>Every note features 2–3 minute scannable mental models, high-contrast architecture diagrams, full verbatim code tables with timestamps, and actionable next steps. All 87 generic promotional items, comedy skits, and empty listicles were rejected to ensure 100% signal density.</p>
+</aside>
+
+<div id="track-directory">
+  
+        <section class="track-section" id="ai">
+          <h2 class="track-header" id="track-ai">
+            <span class="h-ico"><i data-lucide="brain" class="ico"></i></span>
+            <span class="h-text">Artificial Intelligence &amp; Agents</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">27 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="ai-3d-generation">3D-Generation</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="tripo ai: single-image to 3d mesh generation, ultra 8k topology &amp;amp; smart mesh game-engine export  ai 3d-generation">
+                  <span class="shortcode-tag">DeW3Xuzgx50</span>
+                  <a href="AI/3D-Generation/DeW3Xuzgx50-tripo-ai-image-to-3d-model-mesh-generation.html">Tripo AI: Single-Image to 3D Mesh Generation, Ultra 8K Topology &amp;amp; Smart Mesh Game-Engine Export</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-antigravity-skills">Antigravity-Skills</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="3 essential antigravity plugins: gsd, ralph loop, and coderabbit  ai antigravity-skills">
+                  <span class="shortcode-tag">DeNF9WGoDZh</span>
+                  <a href="AI/Antigravity-Skills/DeNF9WGoDZh-antigravity-plugins-gsd-ralph-loop-coderabbit.html">3 Essential Antigravity Plugins: GSD, Ralph Loop, and CodeRabbit</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="ai stickman video director: open-source antigravity agent skill for veo 3 explainer animations  ai antigravity-skills">
+                  <span class="shortcode-tag">DehZalFh1uQ</span>
+                  <a href="AI/Antigravity-Skills/DehZalFh1uQ-stickman-video-director-antigravity-skill-veo-3.html">AI Stickman Video Director: Open-Source Antigravity Agent Skill for Veo 3 Explainer Animations</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-claude-skills">Claude-Skills</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="the 11 modular claude skills suite for autonomous linkedin content &amp; audience operations  ai claude-skills">
+                  <span class="shortcode-tag">Dd</span>
+                  <a href="AI/Claude-Skills/Dd-QYzDyjs_-eleven-claude-skills-suite-for-autonomous-linkedin-operations.html">The 11 Modular Claude Skills Suite for Autonomous LinkedIn Content &amp; Audience Operations</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="zenith.chat: anthropic hackathon winner&#x27;s 181-skill claude code &amp; agentshield architecture  ai claude-skills">
+                  <span class="shortcode-tag">Ddg0DEYPN2l</span>
+                  <a href="AI/Claude-Skills/Ddg0DEYPN2l-zenith-chat-anthropic-hackathon-claude-code-skills-system.html">Zenith.Chat: Anthropic Hackathon Winner&#x27;s 181-Skill Claude Code &amp; AgentShield Architecture</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="top 10 claude design skills for web and ui design  ai claude-skills">
+                  <span class="shortcode-tag">De4hPgpte4X</span>
+                  <a href="AI/Claude-Skills/De4hPgpte4X-top-10-claude-design-skills.html">Top 10 Claude Design Skills for Web and UI Design</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="4 essential claude code plugins for 10x vibe coding: ponytail, superpowers, omniroute &amp; skills  ai claude-skills">
+                  <span class="shortcode-tag">DeCBp8eNay3</span>
+                  <a href="AI/Claude-Skills/DeCBp8eNay3-four-claude-code-plugins-for-vibe-coding-ponytail-superpowers-omniroute.html">4 Essential Claude Code Plugins for 10x Vibe Coding: Ponytail, Superpowers, OmniRoute &amp; Skills</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="anthropic claude for startups: realistic eligibility criteria &amp; $25k api credit checklist @namansoni.ai ai claude-skills">
+                  <span class="shortcode-tag">DeRrAqXtuxP</span>
+                  <a href="AI/Claude-Skills/DeRrAqXtuxP-anthropic-claude-for-startups-credits-eligibility.html">Anthropic Claude for Startups: Realistic Eligibility Criteria &amp; $25K API Credit Checklist</a>
+                  <span class="note-author">— @namansoni.ai</span>
+                </li>
+                
+                <li class="note-item" data-search="turning claude code into a full development team: 5 modular tools and mcp extensions @namansoni.ai (naman soni) ai claude-skills">
+                  <span class="shortcode-tag">Deb0eDDhsyJ</span>
+                  <a href="AI/Claude-Skills/Deb0eDDhsyJ-turn-claude-code-into-full-dev-team-5-tools.html">Turning Claude Code into a Full Development Team: 5 Modular Tools and MCP Extensions</a>
+                  <span class="note-author">— @namansoni.ai (Naman Soni)</span>
+                </li>
+                
+                <li class="note-item" data-search="12 free claude agent skills for linkedin automation (sergebulayev/linkedin-skills)  ai claude-skills">
+                  <span class="shortcode-tag">DehhEpgtqHY</span>
+                  <a href="AI/Claude-Skills/DehhEpgtqHY-12-claude-agent-skills-linkedin-automation.html">12 Free Claude Agent Skills for LinkedIn Automation (sergebulayev/linkedin-skills)</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-coding-agents">Coding-Agents</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="gravitas: open-source reliability runtime for antigravity &amp; gemini coding agents (udaysharmadev/gravitas) @udaysharmaaaaa ai coding-agents">
+                  <span class="shortcode-tag">Defa4pfTlp4</span>
+                  <a href="AI/Coding-Agents/Defa4pfTlp4-gravitas-reliability-runtime-antigravity-gemini.html">GRAVITAS: Open-Source Reliability Runtime for Antigravity &amp; Gemini Coding Agents (udaysharmadev/Gravitas)</a>
+                  <span class="note-author">— @udaysharmaaaaa</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-design-tokens">Design-Tokens</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="automated url-to-design.md extraction: grounding ai coding agents with precise design tokens  ai design-tokens">
+                  <span class="shortcode-tag">DepAa2_hPHQ</span>
+                  <a href="AI/Design-Tokens/DepAa2_hPHQ-url-to-design-md-token-extractor-ai-coding-agents.html">Automated URL-to-DESIGN.md Extraction: Grounding AI Coding Agents with Precise Design Tokens</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-document-ai">Document-AI</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="high-throughput multimodal document parsing system design  ai document-ai">
+                  <span class="shortcode-tag">De8XiOgA7x4</span>
+                  <a href="AI/Document-AI/De8XiOgA7x4-multimodal-document-parsing-system-design.html">High-Throughput Multimodal Document Parsing System Design</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-llm-architecture">LLM-Architecture</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="how large language models are actually built: the 6-stage engineering pipeline  ai llm-architecture">
+                  <span class="shortcode-tag">Ddt</span>
+                  <a href="AI/LLM-Architecture/Ddt-a1Ys8jd-how-llms-are-built-data-tokenization-transformer-pretraining-sft-serving.html">How Large Language Models Are Actually Built: The 6-Stage Engineering Pipeline</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-legal-licensing">Legal-Licensing</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="open-source ai licensing: the commercial vs non-commercial liability trap  ai legal-licensing">
+                  <span class="shortcode-tag">Dd_g0MapbN4</span>
+                  <a href="AI/Legal-Licensing/Dd_g0MapbN4-open-source-ai-model-licensing-commercial-vs-research-traps.html">Open-Source AI Licensing: The Commercial vs Non-Commercial Liability Trap</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-mobile-agents">Mobile-Agents</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="google artemis: open-source android automation agent via mcp (google/artemis) @princegupta.ai ai mobile-agents">
+                  <span class="shortcode-tag">DehEdBbgQFZ</span>
+                  <a href="AI/Mobile-Agents/DehEdBbgQFZ-google-artemis-open-source-android-agent-mcp.html">Google ARTEMIS: Open-Source Android Automation Agent via MCP (google/artemis)</a>
+                  <span class="note-author">— @princegupta.ai</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-prompt-engineering">Prompt-Engineering</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="anthropic&#x27;s 5-part master prompt architecture for claude code &amp; vibe coding  ai prompt-engineering">
+                  <span class="shortcode-tag">Dd8Ep1mzQ7b</span>
+                  <a href="AI/Prompt-Engineering/Dd8Ep1mzQ7b-anthropic-five-part-master-prompt-architecture.html">Anthropic&#x27;s 5-Part Master Prompt Architecture for Claude Code &amp; Vibe Coding</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-rag-architecture">RAG-Architecture</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="colpali: multi-vector vision-language retrieval for complex pdfs, tables &amp; charts  ai rag-architecture">
+                  <span class="shortcode-tag">DcJYvFmIjmn</span>
+                  <a href="AI/RAG-Architecture/DcJYvFmIjmn-colpali-multi-vector-vision-language-rag-paligemma.html">ColPali: Multi-Vector Vision-Language Retrieval for Complex PDFs, Tables &amp; Charts</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-system-architecture">System-Architecture</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="production ai observability: the 8-step llm evaluation &amp; trace lifecycle  ai system-architecture">
+                  <span class="shortcode-tag">DX0u_BzuAGm</span>
+                  <a href="AI/System-Architecture/DX0u_BzuAGm-eight-step-production-ai-observability-llm-evals.html">Production AI Observability: The 8-Step LLM Evaluation &amp; Trace Lifecycle</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="google antigravity: role specialist subagents, context persistence &amp; custom rules architecture  ai system-architecture">
+                  <span class="shortcode-tag">Dd33sv7sGBT</span>
+                  <a href="AI/System-Architecture/Dd33sv7sGBT-antigravity-specialist-modes-subagent-memory-architecture.html">Google Antigravity: Role Specialist Subagents, Context Persistence &amp; Custom Rules Architecture</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="5 open-source repositories for building autonomous multi-agent ai systems  ai system-architecture">
+                  <span class="shortcode-tag">DdgwI6voxz6</span>
+                  <a href="AI/System-Architecture/DdgwI6voxz6-five-open-source-repos-for-building-autonomous-ai-agents.html">5 Open-Source Repositories for Building Autonomous Multi-Agent AI Systems</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="the 7 essential ai engineering design patterns: from semantic caching to agentic evals @the_codingshef ai system-architecture">
+                  <span class="shortcode-tag">DeEtELPvodg</span>
+                  <a href="AI/System-Architecture/DeEtELPvodg-seven-ai-engineering-design-patterns.html">The 7 Essential AI Engineering Design Patterns: From Semantic Caching to Agentic Evals</a>
+                  <span class="note-author">— @the_codingshef</span>
+                </li>
+                
+                <li class="note-item" data-search="scaling llm inference: serving 1 million users on a single gpu with vllm, pagedattention &amp; continuous batching @laxmikant.kgptalkie.hindi ai system-architecture">
+                  <span class="shortcode-tag">DeYbkzTKO_0</span>
+                  <a href="AI/System-Architecture/DeYbkzTKO_0-scaling-llm-inference-1m-users-one-gpu-vllm.html">Scaling LLM Inference: Serving 1 Million Users on a Single GPU with vLLM, PagedAttention &amp; Continuous Batching</a>
+                  <span class="note-author">— @laxmikant.kgptalkie.hindi</span>
+                </li>
+                
+                <li class="note-item" data-search="the five evolutions of ai engineering: prompt, context, agent, harness &amp; loop engineering @nandanverse.io ai system-architecture">
+                  <span class="shortcode-tag">Dedaacnhq82</span>
+                  <a href="AI/System-Architecture/Dedaacnhq82-five-stages-of-ai-engineering-prompt-context-agent-harness-loop.html">The Five Evolutions of AI Engineering: Prompt, Context, Agent, Harness &amp; Loop Engineering</a>
+                  <span class="note-author">— @nandanverse.io</span>
+                </li>
+                
+                <li class="note-item" data-search="llm system design: vocabulary size vs. context window &amp; kv cache memory sizing  ai system-architecture">
+                  <span class="shortcode-tag">DejSW8AP9nB</span>
+                  <a href="AI/System-Architecture/DejSW8AP9nB-llm-architecture-tradeoff-vocabulary-size-vs-context-window-kv-cache.html">LLM System Design: Vocabulary Size vs. Context Window &amp; KV Cache Memory Sizing</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="the 5 core problems of ai engineering: context, cost, evaluation, guardrails &amp;amp; agent loops  ai system-architecture">
+                  <span class="shortcode-tag">DetQefisiL1</span>
+                  <a href="AI/System-Architecture/DetQefisiL1-the-5-core-problems-of-ai-engineering.html">The 5 Core Problems of AI Engineering: Context, Cost, Evaluation, Guardrails &amp;amp; Agent Loops</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="ai-voice-agents">Voice-Agents</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="real-time conversational voice ai system design: sub-300ms latency &amp;amp; barge-in interrupt architecture  ai voice-agents">
+                  <span class="shortcode-tag">De3aRzHArun</span>
+                  <a href="AI/Voice-Agents/De3aRzHArun-real-time-voice-ai-agent-system-design.html">Real-Time Conversational Voice AI System Design: Sub-300ms Latency &amp;amp; Barge-In Interrupt Architecture</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="business">
+          <h2 class="track-header" id="track-business">
+            <span class="h-ico"><i data-lucide="building-2" class="ico"></i></span>
+            <span class="h-text">Venture Capital &amp; Unit Economics</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">6 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="business-digital-products">Digital-Products</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="ai digital product launch blueprint: chatgpt structuring prompt, canva design &amp;amp; superprofile payment automation  business digital-products">
+                  <span class="shortcode-tag">DeeV3GkiCvc</span>
+                  <a href="Business/Digital-Products/DeeV3GkiCvc-chatgpt-canva-superprofile-digital-product-blueprint.html">AI Digital Product Launch Blueprint: ChatGPT Structuring Prompt, Canva Design &amp;amp; SuperProfile Payment Automation</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="business-pitch-deck">Pitch-Deck</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="the 10-slide investor pitch deck formula: sasha mirchandani (kae capital) framework  business pitch-deck">
+                  <span class="shortcode-tag">DewZIjaTgnv</span>
+                  <a href="Business/Pitch-Deck/DewZIjaTgnv-10-slide-investor-pitch-deck-formula.html">The 10-Slide Investor Pitch Deck Formula: Sasha Mirchandani (Kae Capital) Framework</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="business-unit-economics">Unit-Economics</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="mobile game unit economics: google admob revenue vs paid user acquisition roas @pradeep.agi business unit-economics">
+                  <span class="shortcode-tag">DeRXHb2y506</span>
+                  <a href="Business/Unit-Economics/DeRXHb2y506-mobile-game-admob-roas-paid-ua-unit-economics.html">Mobile Game Unit Economics: Google AdMob Revenue vs Paid User Acquisition ROAS</a>
+                  <span class="note-author">— @pradeep.agi</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="business-venture-capital">Venture-Capital</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="the vc wishlist playbook: how to build for y combinator rfs &amp; a16z big ideas @startupgully business venture-capital">
+                  <span class="shortcode-tag">DebKopJxEQS</span>
+                  <a href="Business/Venture-Capital/DebKopJxEQS-vc-wishlist-playbook-yc-rfs-a16z-funding.html">The VC Wishlist Playbook: How to Build for Y Combinator RFS &amp; a16z Big Ideas</a>
+                  <span class="note-author">— @startupgully</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="business-website-compliance">Website-Compliance</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="6 legal &amp; compliance traps in vibe-coded ai apps: the &quot;per-violation&quot; statutory risk matrix @adilet.fndr business website-compliance">
+                  <span class="shortcode-tag">DdyqycEINNe</span>
+                  <a href="Business/Website-Compliance/DdyqycEINNe-six-legal-traps-in-vibe-coded-ai-apps.html">6 Legal &amp; Compliance Traps in Vibe-Coded AI Apps: The &quot;Per-Violation&quot; Statutory Risk Matrix</a>
+                  <span class="note-author">— @adilet.fndr</span>
+                </li>
+                
+                <li class="note-item" data-search="india dpdp act website compliance: the 8-point checklist to avoid up to ₹250 crore penalties  business website-compliance">
+                  <span class="shortcode-tag">De32y8dz0Q6</span>
+                  <a href="Business/Website-Compliance/De32y8dz0Q6-india-dpdp-act-8-point-website-checklist.html">India DPDP Act Website Compliance: The 8-Point Checklist to Avoid Up to ₹250 Crore Penalties</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="career">
+          <h2 class="track-header" id="track-career">
+            <span class="h-ico"><i data-lucide="graduation-cap" class="ico"></i></span>
+            <span class="h-text">Software Engineering Career Strategy</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">5 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="career-employment-rights">Employment-Rights</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="3 critical resignation clauses under indian employment law: full settlement, forced exits &amp; epfo  career employment-rights">
+                  <span class="shortcode-tag">Demtd7OtE8O</span>
+                  <a href="Career/Employment-Rights/Demtd7OtE8O-3-critical-resignation-clauses-indian-employment-law.html">3 Critical Resignation Clauses Under Indian Employment Law: Full Settlement, Forced Exits &amp; EPFO</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="career-engineering-practices">Engineering-Practices</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="10 high-leverage habits for deep software engineering mastery  career engineering-practices">
+                  <span class="shortcode-tag">DewyFUGzXuy</span>
+                  <a href="Career/Engineering-Practices/DewyFUGzXuy-10-habits-for-deep-software-engineering-mastery.html">10 High-Leverage Habits for Deep Software Engineering Mastery</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="career-job-switch">Job-Switch</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="automating job applications with claude code: the ai-job-search agent framework  career job-switch">
+                  <span class="shortcode-tag">De4Lyf7JYqG</span>
+                  <a href="Career/Job-Switch/De4Lyf7JYqG-claude-code-ai-job-search-automation.html">Automating Job Applications with Claude Code: The ai-job-search Agent Framework</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="2-month software engineering job switch &amp;amp; placement roadmap  career job-switch">
+                  <span class="shortcode-tag">De8lwGRqDf4</span>
+                  <a href="Career/Job-Switch/De8lwGRqDf4-software-engineer-2-month-job-switch-roadmap.html">2-Month Software Engineering Job Switch &amp;amp; Placement Roadmap</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="funded startup job infiltration: crunchbase signals, wellfound verification &amp;amp; direct linkedin outreach  career job-switch">
+                  <span class="shortcode-tag">Dezo0i3TVVi</span>
+                  <a href="Career/Job-Switch/Dezo0i3TVVi-funded-startup-job-search-crunchbase-wellfound-linkedin.html">Funded Startup Job Infiltration: Crunchbase Signals, Wellfound Verification &amp;amp; Direct LinkedIn Outreach</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="design">
+          <h2 class="track-header" id="track-design">
+            <span class="h-ico"><i data-lucide="palette" class="ico"></i></span>
+            <span class="h-text">Visual Design &amp; Creative Direction</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">4 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="design-typography">Typography</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="5 high-contrast font pairings for modern design projects  design typography">
+                  <span class="shortcode-tag">DeJ3BsREYPr</span>
+                  <a href="Design/Typography/DeJ3BsREYPr-5-versatile-font-pairings.html">5 High-Contrast Font Pairings for Modern Design Projects</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="design-visual-hierarchy">Visual-Hierarchy</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="visual hierarchy: the &quot;1 hero, 2 supporting, rest quiet&quot; design law  design visual-hierarchy">
+                  <span class="shortcode-tag">DeEvY_7xHjb</span>
+                  <a href="Design/Visual-Hierarchy/DeEvY_7xHjb-visual-hierarchy-one-hero-two-supporting-rule.html">Visual Hierarchy: The &quot;1 Hero, 2 Supporting, Rest Quiet&quot; Design Law</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="design-visual-styles">Visual-Styles</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="the 22 visual design styles: complete taxonomy &amp; creative direction guide  design visual-styles">
+                  <span class="shortcode-tag">Ddk09yCNf4m</span>
+                  <a href="Design/Visual-Styles/Ddk09yCNf4m-twenty-two-visual-design-styles-creative-direction.html">The 22 Visual Design Styles: Complete Taxonomy &amp; Creative Direction Guide</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="design-web-inspiration">Web-Inspiration</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="4 go-to web design inspiration directories: godly, land-book, httpster &amp;amp; siteinspire  design web-inspiration">
+                  <span class="shortcode-tag">DeZ29VnuxWp</span>
+                  <a href="Design/Web-Inspiration/DeZ29VnuxWp-4-curated-web-design-inspiration-directories.html">4 Go-To Web Design Inspiration Directories: Godly, Land-book, Httpster &amp;amp; Siteinspire</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="engineering">
+          <h2 class="track-header" id="track-engineering">
+            <span class="h-ico"><i data-lucide="shield-check" class="ico"></i></span>
+            <span class="h-text">Cloud Security &amp; Production Readiness</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">9 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="engineering-cloud-security">Cloud-Security</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="aws production hardening: nginx rate limiting, clamav file quarantine &amp; cloudflare waf  engineering cloud-security">
+                  <span class="shortcode-tag">DeHtWQNTWF7</span>
+                  <a href="Engineering/Cloud-Security/DeHtWQNTWF7-aws-server-hardening-nginx-rate-limiting-clamav-quarantine.html">AWS Production Hardening: Nginx Rate Limiting, ClamAV File Quarantine &amp; Cloudflare WAF</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="engineering-production-readiness">Production-Readiness</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="website post-launch verification: the 4-tool diagnostic &amp; health suite  engineering production-readiness">
+                  <span class="shortcode-tag">Dd4d0n3oEuy</span>
+                  <a href="Engineering/Production-Readiness/Dd4d0n3oEuy-website-post-launch-verification-suite-gsc-clarity-screaming-frog.html">Website Post-Launch Verification: The 4-Tool Diagnostic &amp; Health Suite</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="the 20-point security hardening checklist for ai-generated &amp; vibe-coded web apps @himanshu.exploresss engineering production-readiness">
+                  <span class="shortcode-tag">DeM46Iay29L</span>
+                  <a href="Engineering/Production-Readiness/DeM46Iay29L-twenty-point-ai-web-app-security-hardening-checklist.html">The 20-Point Security Hardening Checklist for AI-Generated &amp; Vibe-Coded Web Apps</a>
+                  <span class="note-author">— @himanshu.exploresss</span>
+                </li>
+                
+                <li class="note-item" data-search="production backend logging architecture: morgan vs winston in node.js @sparxprep.in engineering production-readiness">
+                  <span class="shortcode-tag">DeZE43ABTIp</span>
+                  <a href="Engineering/Production-Readiness/DeZE43ABTIp-production-logging-morgan-winston-node-js.html">Production Backend Logging Architecture: Morgan vs Winston in Node.js</a>
+                  <span class="note-author">— @sparxprep.in</span>
+                </li>
+                
+                <li class="note-item" data-search="vibe coding gets the demo, system design saves 3 am: the 111-point production readiness checklist  engineering production-readiness">
+                  <span class="shortcode-tag">Dejl2VjiX5L</span>
+                  <a href="Engineering/Production-Readiness/Dejl2VjiX5L-111-point-production-readiness-checklist-vibe-coding-audit.html">Vibe Coding Gets the Demo, System Design Saves 3 AM: The 111-Point Production Readiness Checklist</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="engineering-system-design">System-Design</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="microsoft system design interview: solving the token refresh stampede race condition @xdankit engineering system-design">
+                  <span class="shortcode-tag">Ddt8znUtkZ0</span>
+                  <a href="Engineering/System-Design/Ddt8znUtkZ0-microsoft-interview-token-refresh-stampede-mutex-queue.html">Microsoft System Design Interview: Solving the Token Refresh Stampede Race Condition</a>
+                  <span class="note-author">— @xdankit</span>
+                </li>
+                
+                <li class="note-item" data-search="hot key / hot row problem &amp;amp; write-behind caching with redis for high-throughput writes  engineering system-design">
+                  <span class="shortcode-tag">De1hhJBp1O6</span>
+                  <a href="Engineering/System-Design/De1hhJBp1O6-hot-key-problem-write-behind-caching-redis-db.html">Hot Key / Hot Row Problem &amp;amp; Write-Behind Caching with Redis for High-Throughput Writes</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="handling instant 1-crore traffic bursts: why reactive auto-scaling fails &amp; how pre-warming works @backend.wala engineering system-design">
+                  <span class="shortcode-tag">DeYmEhSE0K2</span>
+                  <a href="Engineering/System-Design/DeYmEhSE0K2-handling-traffic-bursts-prewarming-vs-autoscaling.html">Handling Instant 1-Crore Traffic Bursts: Why Reactive Auto-Scaling Fails &amp; How Pre-Warming Works</a>
+                  <span class="note-author">— @backend.wala</span>
+                </li>
+                
+                <li class="note-item" data-search="how instagram scaled postgresql to 3 billion users: the 6-stage architecture evolution  engineering system-design">
+                  <span class="shortcode-tag">DegPVfBCW18</span>
+                  <a href="Engineering/System-Design/DegPVfBCW18-how-instagram-scaled-postgres-to-3-billion-users.html">How Instagram Scaled PostgreSQL to 3 Billion Users: The 6-Stage Architecture Evolution</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="finance">
+          <h2 class="track-header" id="track-finance">
+            <span class="h-ico"><i data-lucide="coins" class="ico"></i></span>
+            <span class="h-text">Quant Trading &amp; Bank Negotiations</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">2 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="finance-banking-negotiation">Banking-Negotiation</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="how to save ₹3 lakhs on bank loans: rbi guidelines &amp; fee negotiation playbook  finance banking-negotiation">
+                  <span class="shortcode-tag">Deji</span>
+                  <a href="Finance/Banking-Negotiation/Deji-_FOme2-bank-loan-charge-negotiation-rbi-guidelines.html">How to Save ₹3 Lakhs on Bank Loans: RBI Guidelines &amp; Fee Negotiation Playbook</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="finance-quant-trading">Quant-Trading</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="mean reversion &amp; z-score trading: statistical arbitrage &amp; falling knife defense  finance quant-trading">
+                  <span class="shortcode-tag">Det_sAFyGdQ</span>
+                  <a href="Finance/Quant-Trading/Det_sAFyGdQ-mean-reversion-z-score-quant-strategy.html">Mean Reversion &amp; Z-Score Trading: Statistical Arbitrage &amp; Falling Knife Defense</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="freelance">
+          <h2 class="track-header" id="track-freelance">
+            <span class="h-ico"><i data-lucide="briefcase" class="ico"></i></span>
+            <span class="h-text">Freelance &amp; Agency Client Acquisition</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">8 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="freelance-client-acquisition">Client-Acquisition</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="clay.com local business lead engine: google maps scraping &amp; ai qualification scoring @helloveeru freelance client-acquisition">
+                  <span class="shortcode-tag">DZNRQC</span>
+                  <a href="Freelance/Client-Acquisition/DZNRQC-H-je-clay-google-maps-smb-lead-scraping-ai-qualification.html">Clay.com Local Business Lead Engine: Google Maps Scraping &amp; AI Qualification Scoring</a>
+                  <span class="note-author">— @helloveeru</span>
+                </li>
+                
+                <li class="note-item" data-search="local web design cold call script &amp; rapid mockup closing playbook @cecelia_builds freelance client-acquisition">
+                  <span class="shortcode-tag">Dc4COA4JxUo</span>
+                  <a href="Freelance/Client-Acquisition/Dc4COA4JxUo-cold-call-script-no-website-local-business-pitch.html">Local Web Design Cold Call Script &amp; Rapid Mockup Closing Playbook</a>
+                  <span class="note-author">— @cecelia_builds</span>
+                </li>
+                
+                <li class="note-item" data-search="the 3-prompt freelance client engine: targeted research, value-led cold dms &amp;amp; non-desperate follow-ups  freelance client-acquisition">
+                  <span class="shortcode-tag">De3ls3MStkQ</span>
+                  <a href="Freelance/Client-Acquisition/De3ls3MStkQ-chatgpt-3-prompt-client-acquisition-engine.html">The 3-Prompt Freelance Client Engine: Targeted Research, Value-Led Cold DMs &amp;amp; Non-Desperate Follow-Ups</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="the 5-star review cold pitch &amp; retainer structure for google maps smbs  freelance client-acquisition">
+                  <span class="shortcode-tag">DeHGT1ETon5</span>
+                  <a href="Freelance/Client-Acquisition/DeHGT1ETon5-five-star-review-cold-call-pitch-smb-retainer.html">The 5-Star Review Cold Pitch &amp; Retainer Structure for Google Maps SMBs</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="5 high-ticket client sales call rules: status framing &amp; active listening @realtoronaharley freelance client-acquisition">
+                  <span class="shortcode-tag">DeWT0FWgR6f</span>
+                  <a href="Freelance/Client-Acquisition/DeWT0FWgR6f-five-client-sales-call-rules-status-framing.html">5 High-Ticket Client Sales Call Rules: Status Framing &amp; Active Listening</a>
+                  <span class="note-author">— @realtoronaharley</span>
+                </li>
+                
+                <li class="note-item" data-search="the 4-prompt freelance client acquisition playbook: from zero leads to first paying client  freelance client-acquisition">
+                  <span class="shortcode-tag">DeoYELDtNvi</span>
+                  <a href="Freelance/Client-Acquisition/DeoYELDtNvi-chatgpt-freelance-client-outreach-playbook.html">The 4-Prompt Freelance Client Acquisition Playbook: From Zero Leads to First Paying Client</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="freelance-government-tenders">Government-Tenders</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="finding video/design tenders on india&#x27;s gem portal  freelance government-tenders">
+                  <span class="shortcode-tag">De9hvMeAiA_</span>
+                  <a href="Freelance/Government-Tenders/De9hvMeAiA_-gem-portal-creative-tenders.html">Finding video/design tenders on India&#x27;s GeM portal</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="freelance-pricing-strategy">Pricing-Strategy</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="ai multi-agent client pricing rehearsal: upwork mcp, gpt researcher &amp; mirofish simulation  freelance pricing-strategy">
+                  <span class="shortcode-tag">DeruXKHNaRy</span>
+                  <a href="Freelance/Pricing-Strategy/DeruXKHNaRy-ai-agent-client-pricing-rehearsal-mirofish-upwork-mcp.html">AI Multi-Agent Client Pricing Rehearsal: Upwork MCP, GPT Researcher &amp; MiroFish Simulation</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="frontend">
+          <h2 class="track-header" id="track-frontend">
+            <span class="h-ico"><i data-lucide="layout" class="ico"></i></span>
+            <span class="h-text">Modern Frontend &amp; Web Animation</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">6 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="frontend-generative-art">Generative-Art</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="p5.brush: natural hand-drawn textures &amp; watercolor simulation in p5.js (acamposuribe/p5.brush) @thevibefounder.bharat frontend generative-art">
+                  <span class="shortcode-tag">DeeUdkgCHzM</span>
+                  <a href="Frontend/Generative-Art/DeeUdkgCHzM-p5-brush-natural-hand-drawn-textures-p5js-claude.html">p5.brush: Natural Hand-Drawn Textures &amp; Watercolor Simulation in p5.js (acamposuribe/p5.brush)</a>
+                  <span class="note-author">— @thevibefounder.bharat</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="frontend-nextjs-seo">Nextjs-SEO</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="next.js app router production seo audit: the 7-step pre-launch checklist @abhay_vachhani_28 (txtnode) frontend nextjs-seo">
+                  <span class="shortcode-tag">DecVezcNSBX</span>
+                  <a href="Frontend/Nextjs-SEO/DecVezcNSBX-nextjs-seo-launch-audit-7-fixes.html">Next.js App Router Production SEO Audit: The 7-Step Pre-Launch Checklist</a>
+                  <span class="note-author">— @abhay_vachhani_28 (txtnode)</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="frontend-vibe-coding">Vibe-Coding</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="from 2006 html to $10k ui: 5 essential tools for claude code vibe coders  frontend vibe-coding">
+                  <span class="shortcode-tag">DdshHpFpqdi</span>
+                  <a href="Frontend/Vibe-Coding/DdshHpFpqdi-five-tools-to-turn-claude-code-into-ten-k-ui-design-system.html">From 2006 HTML to $10K UI: 5 Essential Tools for Claude Code Vibe Coders</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="vibe-coding stack: claude code + framer motion + ui ux pro max pipeline  frontend vibe-coding">
+                  <span class="shortcode-tag">DeExZDCJJNj</span>
+                  <a href="Frontend/Vibe-Coding/DeExZDCJJNj-claude-code-framer-motion-ui-ux-pro-max-pipeline.html">Vibe-Coding Stack: Claude Code + Framer Motion + UI UX Pro Max Pipeline</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="frontend-web-animation">Web-Animation</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="stringtune: lightweight gsap alternative for modern web scroll &amp; cursor animations  frontend web-animation">
+                  <span class="shortcode-tag">Dd30poYhlfP</span>
+                  <a href="Frontend/Web-Animation/Dd30poYhlfP-stringtune-lightweight-scroll-animation-library.html">StringTune: Lightweight GSAP Alternative for Modern Web Scroll &amp; Cursor Animations</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="cinematic 3d scroll animations via 2 keyframes &amp; ai video scrubbing  frontend web-animation">
+                  <span class="shortcode-tag">DdJZ4wHxuLS</span>
+                  <a href="Frontend/Web-Animation/DdJZ4wHxuLS-no-code-3d-scroll-animations-keyframes-ai-interpolation.html">Cinematic 3D Scroll Animations via 2 Keyframes &amp; AI Video Scrubbing</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="marketing">
+          <h2 class="track-header" id="track-marketing">
+            <span class="h-ico"><i data-lucide="trending-up" class="ico"></i></span>
+            <span class="h-text">B2B Marketing, GEO &amp; Technical SEO</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">16 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="marketing-client-positioning">Client-Positioning</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="client positioning: the &quot;you&#x27;ll enjoy working with us if&quot; qualification framework  marketing client-positioning">
+                  <span class="shortcode-tag">Da1AU0nhCbI</span>
+                  <a href="Marketing/Client-Positioning/Da1AU0nhCbI-stop-describing-services-ideal-client-qualification-filter.html">Client Positioning: The &quot;You&#x27;ll Enjoy Working With Us If&quot; Qualification Framework</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="marketing-competitor-research">Competitor-Research</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="unlocking competitor meta ad spend &amp;amp; revenue via the spendo chrome extension  marketing competitor-research">
+                  <span class="shortcode-tag">De6JhGhNkT0</span>
+                  <a href="Marketing/Competitor-Research/De6JhGhNkT0-spendo-meta-ads-library-spend-insights.html">Unlocking Competitor Meta Ad Spend &amp;amp; Revenue via the Spendo Chrome Extension</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="auditing competitor google ads via google ads transparency center  marketing competitor-research">
+                  <span class="shortcode-tag">De6nkapDnkc</span>
+                  <a href="Marketing/Competitor-Research/De6nkapDnkc-competitor-google-ads-transparency-center.html">Auditing Competitor Google Ads via Google Ads Transparency Center</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="marketing-conversion-optimization">Conversion-Optimization</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="21 website conversion killers: neil patel&#x27;s production cro audit checklist @neilpatel marketing conversion-optimization">
+                  <span class="shortcode-tag">DeeeXU8yPWd</span>
+                  <a href="Marketing/Conversion-Optimization/DeeeXU8yPWd-21-website-conversion-killers-cro-checklist.html">21 Website Conversion Killers: Neil Patel&#x27;s Production CRO Audit Checklist</a>
+                  <span class="note-author">— @neilpatel</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="marketing-linkedin-content">LinkedIn-Content</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="the slay framework: high-retention storytelling for organic linkedin posts  marketing linkedin-content">
+                  <span class="shortcode-tag">DdpfZsxChaJ</span>
+                  <a href="Marketing/LinkedIn-Content/DdpfZsxChaJ-slay-framework-viral-linkedin-copywriting.html">The SLAY Framework: High-Retention Storytelling for Organic LinkedIn Posts</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="bootstrapping to $25m arr via founder-led content: guillaume moubeche&#x27;s linkedin playbook @abhijeetawsarmal marketing linkedin-content">
+                  <span class="shortcode-tag">DeO2FRPgk1h</span>
+                  <a href="Marketing/LinkedIn-Content/DeO2FRPgk1h-guillaume-moubeche-25m-bootstrapped-saas-linkedin-playbook.html">Bootstrapping to $25M ARR via Founder-Led Content: Guillaume Moubeche&#x27;s LinkedIn Playbook</a>
+                  <span class="note-author">— @abhijeetawsarmal</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="marketing-linkedin-outbound">LinkedIn-Outbound</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="signal-based b2b linkedin outbound engine  marketing linkedin-outbound">
+                  <span class="shortcode-tag">DcdL99tsdjP</span>
+                  <a href="Marketing/LinkedIn-Outbound/DcdL99tsdjP-b2b-linkedin-intent-outbound-engine.html">Signal-Based B2B LinkedIn Outbound Engine</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="marketing-local-business">Local-Business</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="hospital digital marketing proposal playbook: ₹45,000/month retainer funnel for local healthcare @adswithamrut marketing local-business">
+                  <span class="shortcode-tag">Da7E</span>
+                  <a href="Marketing/Local-Business/Da7E-EHpOb9-hospital-digital-marketing-proposal-tier2-agency-playbook.html">Hospital Digital Marketing Proposal Playbook: ₹45,000/Month Retainer Funnel for Local Healthcare</a>
+                  <span class="note-author">— @adswithamrut</span>
+                </li>
+                
+                <li class="note-item" data-search="the 9-grid content pillar framework for local cafes &amp;amp; restaurants  marketing local-business">
+                  <span class="shortcode-tag">De4TCe6zZOM</span>
+                  <a href="Marketing/Local-Business/De4TCe6zZOM-cafe-instagram-9-grid-content-pillar-framework.html">The 9-Grid Content Pillar Framework for Local Cafes &amp;amp; Restaurants</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="3-pillar local service acquisition funnel: transforming views into bookings  marketing local-business">
+                  <span class="shortcode-tag">De8VZGKhLtx</span>
+                  <a href="Marketing/Local-Business/De8VZGKhLtx-local-salon-appointment-marketing-funnel.html">3-Pillar Local Service Acquisition Funnel: Transforming Views into Bookings</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="marketing-product-launch">Product-Launch</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="100+ free platforms &amp;amp; subreddits to launch your startup  marketing product-launch">
+                  <span class="shortcode-tag">De634PNSr71</span>
+                  <a href="Marketing/Product-Launch/De634PNSr71-100-places-to-post-your-startup.html">100+ Free Platforms &amp;amp; Subreddits to Launch Your Startup</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="marketing-seo">SEO</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="google search console ctr optimization: unlocking hidden opportunity keywords  marketing seo">
+                  <span class="shortcode-tag">DdlmqJbTMq2</span>
+                  <a href="Marketing/SEO/DdlmqJbTMq2-google-search-console-ctr-hidden-opportunity-keywords.html">Google Search Console CTR Optimization: Unlocking Hidden Opportunity Keywords</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="geo (generative engine optimization): the 8-tactic tier list for ai search citations  marketing seo">
+                  <span class="shortcode-tag">DeAon6WzIc0</span>
+                  <a href="Marketing/SEO/DeAon6WzIc0-geo-generative-engine-optimization-8-tactics-tier-list.html">GEO (Generative Engine Optimization): The 8-Tactic Tier List for AI Search Citations</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="marketing-seo-backlinks">SEO-Backlinks</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="passive link building: earning dr 82+ editorial backlinks via original statistics pages  marketing seo-backlinks">
+                  <span class="shortcode-tag">DebhQyog4bX</span>
+                  <a href="Marketing/SEO-Backlinks/DebhQyog4bX-passive-backlinks-via-original-statistics-pages.html">Passive Link Building: Earning DR 82+ Editorial Backlinks via Original Statistics Pages</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="marketing-technical-seo">Technical-SEO</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="moving from page 2 to page 1 on google: internal link siloing &amp;amp; search operator discovery  marketing technical-seo">
+                  <span class="shortcode-tag">Dewd1yKmAHf</span>
+                  <a href="Marketing/Technical-SEO/Dewd1yKmAHf-google-page-2-to-page-1-internal-linking-siloing.html">Moving from Page 2 to Page 1 on Google: Internal Link Siloing &amp;amp; Search Operator Discovery</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="5 critical post-launch indexing steps: search console, sitemaps, llms.txt, open graph &amp;amp; bing  marketing technical-seo">
+                  <span class="shortcode-tag">DeysZepu2s7</span>
+                  <a href="Marketing/Technical-SEO/DeysZepu2s7-5-website-launch-indexing-must-dos.html">5 Critical Post-Launch Indexing Steps: Search Console, Sitemaps, llms.txt, Open Graph &amp;amp; Bing</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="meta-ads">
+          <h2 class="track-header" id="track-meta-ads">
+            <span class="h-ico"><i data-lucide="target" class="ico"></i></span>
+            <span class="h-text">Meta Ads &amp; Paid Acquisition</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">16 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="meta-ads-ai-targeting">AI-Targeting</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="using meta&#x27;s &#x27;describe your audience&#x27; ai feature with chatgpt  meta-ads ai-targeting">
+                  <span class="shortcode-tag">De9aE</span>
+                  <a href="Meta-Ads/AI-Targeting/De9aE-hzwWT-meta-describe-your-audience-ai-prompt.html">Using Meta&#x27;s &#x27;Describe Your Audience&#x27; AI Feature with ChatGPT</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="meta-ads-ad-copywriting">Ad-Copywriting</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="less sells more: applying hick&#x27;s law to fix overloaded meta ad scripts  meta-ads ad-copywriting">
+                  <span class="shortcode-tag">DbdkulLhATM</span>
+                  <a href="Meta-Ads/Ad-Copywriting/DbdkulLhATM-less-sells-more-hicks-law-ad-scripting.html">Less Sells More: Applying Hick&#x27;s Law to Fix Overloaded Meta Ad Scripts</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="meta-ads-audience-targeting">Audience-Targeting</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="competitor audience extraction &amp; meta custom match / 1% lookalike scaling  meta-ads audience-targeting">
+                  <span class="shortcode-tag">DeBPtvEz3sj</span>
+                  <a href="Meta-Ads/Audience-Targeting/DeBPtvEz3sj-competitor-audience-scraping-meta-custom-match-lookalikes.html">Competitor Audience Extraction &amp; Meta Custom Match / 1% Lookalike Scaling</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="meta-ads-campaign-structure">Campaign-Structure</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="full-funnel meta ads structure for 20x+ roas in e-commerce apparel  meta-ads campaign-structure">
+                  <span class="shortcode-tag">DZpbvnZyJNM</span>
+                  <a href="Meta-Ads/Campaign-Structure/DZpbvnZyJNM-apparel-meta-ads-funnel-20x-roas.html">Full-Funnel Meta Ads Structure for 20X+ ROAS in E-Commerce Apparel</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="low-budget meta ads setup: 7 essential settings to fix zero sales on &amp;#8377;500/day  meta-ads campaign-structure">
+                  <span class="shortcode-tag">De8fow5CAMK</span>
+                  <a href="Meta-Ads/Campaign-Structure/De8fow5CAMK-low-budget-meta-adset-settings-zero-sales-fix.html">Low-Budget Meta Ads Setup: 7 Essential Settings to Fix Zero Sales on &amp;#8377;500/Day</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="why doubling meta ad budget halves roas: audience segment breakdown &amp; cold scaling discipline @munnasamjhao meta-ads campaign-structure">
+                  <span class="shortcode-tag">DeWVWJiTnyt</span>
+                  <a href="Meta-Ads/Campaign-Structure/DeWVWJiTnyt-why-doubling-budget-halves-roas-meta-audience-segments.html">Why Doubling Meta Ad Budget Halves ROAS: Audience Segment Breakdown &amp; Cold Scaling Discipline</a>
+                  <span class="note-author">— @munnasamjhao</span>
+                </li>
+                
+                <li class="note-item" data-search="prepaid e-commerce meta ads architecture: 18-format abo matrix for 22x roas @themamtacreator meta-ads campaign-structure">
+                  <span class="shortcode-tag">DedWVZzy5xx</span>
+                  <a href="Meta-Ads/Campaign-Structure/DedWVZzy5xx-prepaid-ecom-18-format-abo-testing-matrix.html">Prepaid E-Commerce Meta Ads Architecture: 18-Format ABO Matrix for 22X ROAS</a>
+                  <span class="note-author">— @themamtacreator</span>
+                </li>
+                
+                <li class="note-item" data-search="the 30-day new brand meta ads launch plan: ₹18,000 testing budget vs ₹1,50,000 burn  meta-ads campaign-structure">
+                  <span class="shortcode-tag">DerWIWdzLbO</span>
+                  <a href="Meta-Ads/Campaign-Structure/DerWIWdzLbO-30-day-new-brand-meta-ad-launch-budget.html">The 30-Day New Brand Meta Ads Launch Plan: ₹18,000 Testing Budget vs ₹1,50,000 Burn</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="meta-ads-creative-testing">Creative-Testing</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="the &amp;#8377;1,000/day meta ads creative testing playbook: 5 angles, decision logic &amp;amp; scaling rules  meta-ads creative-testing">
+                  <span class="shortcode-tag">De39PKDBnxY</span>
+                  <a href="Meta-Ads/Creative-Testing/De39PKDBnxY-1000-day-broad-meta-creative-testing-playbook.html">The &amp;#8377;1,000/Day Meta Ads Creative Testing Playbook: 5 Angles, Decision Logic &amp;amp; Scaling Rules</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="5 high-converting static meta ad formats: newspaper, whatsapp, reviews, problem-solution &amp;amp; reddit  meta-ads creative-testing">
+                  <span class="shortcode-tag">De4OcHrPULO</span>
+                  <a href="Meta-Ads/Creative-Testing/De4OcHrPULO-5-high-converting-static-meta-ad-types.html">5 High-Converting Static Meta Ad Formats: Newspaper, WhatsApp, Reviews, Problem-Solution &amp;amp; Reddit</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="meta-ads-creator-marketplace">Creator-Marketplace</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="meta creator marketing hub: discovering influencers via first-party audience overlap  meta-ads creator-marketplace">
+                  <span class="shortcode-tag">DeHorOrAB2t</span>
+                  <a href="Meta-Ads/Creator-Marketplace/DeHorOrAB2t-meta-creator-marketing-hub-audience-overlap.html">Meta Creator Marketing Hub: Discovering Influencers via First-Party Audience Overlap</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="meta-ads-foundations">Foundations</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="10 core concepts to master meta ads: tracking, funnels, economics &amp;amp; creative optimization  meta-ads foundations">
+                  <span class="shortcode-tag">Dd6mYS4zFaU</span>
+                  <a href="Meta-Ads/Foundations/Dd6mYS4zFaU-10-core-concepts-to-master-meta-ads.html">10 Core Concepts to Master Meta Ads: Tracking, Funnels, Economics &amp;amp; Creative Optimization</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="crm + meta conversions api (capi): closing the offline lead-to-customer attribution loop  meta-ads foundations">
+                  <span class="shortcode-tag">De4UVcDy7dY</span>
+                  <a href="Meta-Ads/Foundations/De4UVcDy7dY-crm-capi-lead-qualification-feedback-loop.html">CRM + Meta Conversions API (CAPI): Closing the Offline Lead-to-Customer Attribution Loop</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="meta-ads-location-targeting">Location-Targeting</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="meta ads geo-targeting setup for mumbai&#x27;s premium &amp;amp; luxury audiences  meta-ads location-targeting">
+                  <span class="shortcode-tag">Ddo8tOGP0Z8</span>
+                  <a href="Meta-Ads/Location-Targeting/Ddo8tOGP0Z8-mumbai-premium-audience-meta-ads-targeting.html">Meta Ads Geo-Targeting Setup for Mumbai&#x27;s Premium &amp;amp; Luxury Audiences</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="competitor geo-hijacking: the burger king geofencing playbook via meta ads pin-drop  meta-ads location-targeting">
+                  <span class="shortcode-tag">DeHng5UzqRC</span>
+                  <a href="Meta-Ads/Location-Targeting/DeHng5UzqRC-competitor-geofencing-pin-drop-hijacking.html">Competitor Geo-Hijacking: The Burger King Geofencing Playbook via Meta Ads Pin-Drop</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="meta-ads-performance-metrics">Performance-Metrics</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="6 profitability metrics that actually matter in meta ads  meta-ads performance-metrics">
+                  <span class="shortcode-tag">Det5ai6DXBS</span>
+                  <a href="Meta-Ads/Performance-Metrics/Det5ai6DXBS-meta-ads-profitability-metrics-dashboard.html">6 Profitability Metrics That Actually Matter in Meta Ads</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="product">
+          <h2 class="track-header" id="track-product">
+            <span class="h-ico"><i data-lucide="rocket" class="ico"></i></span>
+            <span class="h-text">Product Validation &amp; Launch Strategy</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">1 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="product-launch-strategy">Launch-Strategy</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="mirofish: pre-launch validation via synthetic ai customer focus groups  product launch-strategy">
+                  <span class="shortcode-tag">DeFcjEyGN9z</span>
+                  <a href="Product/Launch-Strategy/DeFcjEyGN9z-mirofish-synthetic-ai-customer-focus-group-testing.html">MiroFish: Pre-Launch Validation via Synthetic AI Customer Focus Groups</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="system-design">
+          <h2 class="track-header" id="track-system-design">
+            <span class="h-ico"><i data-lucide="network" class="ico"></i></span>
+            <span class="h-text">Distributed Systems &amp; Architecture</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">8 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="system-design-cloud-architecture">Cloud-Architecture</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="what happens when you type a url and hit enter? the complete aws cloud architecture @itsduology system-design cloud-architecture">
+                  <span class="shortcode-tag">DeRSi7jhDa0</span>
+                  <a href="System-Design/Cloud-Architecture/DeRSi7jhDa0-what-happens-when-you-hit-url-complete-aws-architecture.html">What Happens When You Type a URL and Hit Enter? The Complete AWS Cloud Architecture</a>
+                  <span class="note-author">— @itsduology</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="system-design-data-structures">Data-Structures</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="how github diffs millions of lines in milliseconds: merkle trees &amp; subtree pruning @dietcokecode system-design data-structures">
+                  <span class="shortcode-tag">Db3Aj55x1rD</span>
+                  <a href="System-Design/Data-Structures/Db3Aj55x1rD-how-github-diffs-millions-of-lines-merkle-trees.html">How GitHub Diffs Millions of Lines in Milliseconds: Merkle Trees &amp; Subtree Pruning</a>
+                  <span class="note-author">— @dietcokecode</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="system-design-distributed-locks">Distributed-Locks</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="e-commerce flash sale system design: 1.5m req/sec, zero overselling &amp; inventory locking @fewshot.studio system-design distributed-locks">
+                  <span class="shortcode-tag">DeHXy4Cx5Vm</span>
+                  <a href="System-Design/Distributed-Locks/DeHXy4Cx5Vm-ecommerce-flash-sale-system-design-zero-overselling-redis-kafka.html">E-Commerce Flash Sale System Design: 1.5M Req/Sec, Zero Overselling &amp; Inventory Locking</a>
+                  <span class="note-author">— @fewshot.studio</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="system-design-in-memory-databases">In-Memory-Databases</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="why redis is single-threaded and lightning fast: i/o multiplexing, zero locks &amp; the keys * trap @interviewtrap.in system-design in-memory-databases">
+                  <span class="shortcode-tag">DeTD0G2onBi</span>
+                  <a href="System-Design/In-Memory-Databases/DeTD0G2onBi-why-redis-is-single-threaded-and-lightning-fast.html">Why Redis is Single-Threaded and Lightning Fast: I/O Multiplexing, Zero Locks &amp; The KEYS * Trap</a>
+                  <span class="note-author">— @interviewtrap.in</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="system-design-offline-first">Offline-First</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="offline-first architecture: local db as ssot, reliable background sync &amp; idempotency keys @the_codingshef system-design offline-first">
+                  <span class="shortcode-tag">DeUR2CxPWB0</span>
+                  <a href="System-Design/Offline-First/DeUR2CxPWB0-offline-first-architecture-local-db-rbs-idempotency.html">Offline-First Architecture: Local DB as SSOT, Reliable Background Sync &amp; Idempotency Keys</a>
+                  <span class="note-author">— @the_codingshef</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="system-design-probabilistic-data-structures">Probabilistic-Data-Structures</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="how instagram counts unique reel views at scale: hyperloglog &amp; redis probabilistic cardinality @backendlore system-design probabilistic-data-structures">
+                  <span class="shortcode-tag">DeYDUrQy</span>
+                  <a href="System-Design/Probabilistic-Data-Structures/DeYDUrQy-cR-how-instagram-counts-unique-reel-views-hyperloglog-redis.html">How Instagram Counts Unique Reel Views at Scale: HyperLogLog &amp; Redis Probabilistic Cardinality</a>
+                  <span class="note-author">— @backendlore</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="system-design-security-architecture">Security-Architecture</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="enterprise secrets management: architectural separation, dynamic rotation &amp; workload identity @rahulrajatsingh_ system-design security-architecture">
+                  <span class="shortcode-tag">DeJIze4gXqd</span>
+                  <a href="System-Design/Security-Architecture/DeJIze4gXqd-secrets-management-architecture-rotation-workload-identity.html">Enterprise Secrets Management: Architectural Separation, Dynamic Rotation &amp; Workload Identity</a>
+                  <span class="note-author">— @rahulrajatsingh_</span>
+                </li>
+                
+              </ul>
+            </div>
+            
+            <div class="topic-group">
+              <h3 id="system-design-spatial-indexing">Spatial-Indexing</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="how uber matches drivers in seconds: h3 hexagonal spatial indexing &amp; batch bipartite matching @wajahathussain.engineer system-design spatial-indexing">
+                  <span class="shortcode-tag">DdiPvtsskCQ</span>
+                  <a href="System-Design/Spatial-Indexing/DdiPvtsskCQ-uber-h3-hexagonal-spatial-index-batch-matching.html">How Uber Matches Drivers in Seconds: H3 Hexagonal Spatial Indexing &amp; Batch Bipartite Matching</a>
+                  <span class="note-author">— @wajahathussain.engineer</span>
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+        <section class="track-section" id="video-creation">
+          <h2 class="track-header" id="track-video-creation">
+            <span class="h-ico"><i data-lucide="video" class="ico"></i></span>
+            <span class="h-text">Video Creation &amp; AI Explainers</span>
+            <span style="font-size: 13px; font-weight: normal; color: var(--ink-3); margin-left: auto;">5 notes</span>
+          </h2>
+        
+            <div class="topic-group">
+              <h3 id="video-creation-ai-explainers">AI-Explainers</h3>
+              <ul class="note-list">
+            
+                <li class="note-item" data-search="autonomous faceless ai reel engine: claude code agents, openai cedar voice, whisper word timings &amp;amp; remotion  video-creation ai-explainers">
+                  <span class="shortcode-tag">De1BifbTDCl</span>
+                  <a href="Video-Creation/AI-Explainers/De1BifbTDCl-claude-code-openai-voice-remotion-automated-reel-engine.html">Autonomous Faceless AI Reel Engine: Claude Code Agents, OpenAI Cedar Voice, Whisper Word Timings &amp;amp; Remotion</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="hyperframes: open-source deterministic video generation from html, css &amp;amp; ffmpeg  video-creation ai-explainers">
+                  <span class="shortcode-tag">De3tQ_QlFi_</span>
+                  <a href="Video-Creation/AI-Explainers/De3tQ_QlFi_-hyperframes-heygen-html-css-video-engine.html">HyperFrames: Open-Source Deterministic Video Generation from HTML, CSS &amp;amp; FFmpeg</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="programmatic short-form video generation: the claude code-to-video engine  video-creation ai-explainers">
+                  <span class="shortcode-tag">De6cx6MRxbZ</span>
+                  <a href="Video-Creation/AI-Explainers/De6cx6MRxbZ-programmatic-reels-engine-claude-skills.html">Programmatic Short-Form Video Generation: The Claude Code-to-Video Engine</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="5 open-source claude motion graphics skills: hyperframes, onetake, collage, animation base &amp;amp; lemo opuscar  video-creation ai-explainers">
+                  <span class="shortcode-tag">DebprD8TMlR</span>
+                  <a href="Video-Creation/AI-Explainers/DebprD8TMlR-5-claude-skills-code-driven-motion-graphics.html">5 Open-Source Claude Motion Graphics Skills: HyperFrames, OneTake, Collage, Animation Base &amp;amp; Lemo Opuscar</a>
+                  
+                </li>
+                
+                <li class="note-item" data-search="6 animated explainer video patterns with claude opus  video-creation ai-explainers">
+                  <span class="shortcode-tag">Ded</span>
+                  <a href="Video-Creation/AI-Explainers/Ded-wGdmOio-claude-opus-animated-explainer-prompts.html">6 Animated Explainer Video Patterns with Claude Opus</a>
+                  
+                </li>
+                
+              </ul>
+            </div>
+            </section>
+</div>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="_assets/search-index.js"></script>
+<script src="_assets/course.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (window.lucide) lucide.createIcons();
+
+    var filterInput = document.getElementById("course-filter-input");
+    var cardsGrid = document.getElementById("portal-courses-grid");
+    var noteItems = Array.from(document.querySelectorAll(".note-item"));
+    var topicGroups = Array.from(document.querySelectorAll(".topic-group"));
+    var trackSections = Array.from(document.querySelectorAll(".track-section"));
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "/" && document.activeElement !== filterInput) {
+        e.preventDefault();
+        filterInput.focus();
+      }
+    });
+
+    if (filterInput) {
+      filterInput.addEventListener("input", function(e) {
+        var q = e.target.value.toLowerCase().trim();
+
+        // Filter cards
+        var cards = cardsGrid.querySelectorAll(".course-card");
+        cards.forEach(function(card) {
+          var text = card.textContent.toLowerCase();
+          card.style.display = (!q || text.indexOf(q) !== -1) ? "flex" : "none";
+        });
+
+        // Filter notes
+        noteItems.forEach(function(item) {
+          var searchData = item.getAttribute("data-search") || "";
+          var matches = !q || searchData.indexOf(q) !== -1;
+          item.style.display = matches ? "flex" : "none";
+        });
+
+        topicGroups.forEach(function(group) {
+          var visibleNotes = Array.from(group.querySelectorAll(".note-item")).some(function(item) {
+            return item.style.display !== "none";
+          });
+          group.style.display = visibleNotes ? "" : "none";
+        });
+
+        trackSections.forEach(function(sec) {
+          var visibleTopics = Array.from(sec.querySelectorAll(".topic-group")).some(function(group) {
+            return group.style.display !== "none";
+          });
+          sec.style.display = visibleTopics ? "" : "none";
+        });
+      });
+    }
+  });
+</script>
+</body>
+</html>

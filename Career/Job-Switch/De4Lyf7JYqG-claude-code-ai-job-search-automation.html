@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automating Job Applications with Claude Code: The ai-job-search Agent Framework</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#career" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Career</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Career · Job-Switch</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#career">Career</a> / <a href="../../index.html#career-job-switch">Job-Switch</a></nav>
+
+  <p class="kicker">Career · Job-Switch</p>
+  <h1>Automating Job Applications with Claude Code: The ai-job-search Agent Framework</h1>
+
+  
+  <p class="meta">
+    <span>Mayank Verma (@an.idiotic_soul)</span> &bull; <span>2026-10-25</span> &bull; <a href="https://www.instagram.com/reel/De4Lyf7JYqG/">Original Reel</a>
+  </p>
+
+
+  
+
+  <p class="summary">An open-source agentic job application pipeline (<code>ai-job-search</code>, 64.3k+ GitHub stars) built on the Claude Code CLI. Originally developed by Mads Lorentzen following a corporate layoff, the framework runs locally on your machine to continuously discover job openings, evaluate role compatibility, dynamically tailor resumes/CVs to individual job descriptions, generate customized cover letters, formulate interview prep dossiers, and autonomously submit applications.</p>
+
+  <figure class="hero">
+    <img src="assets/De4Lyf7JYqG/00-32-github-stars-and-about-description.jpg" alt="GitHub repository for ai-job-search showing 64.3k stars and framework description built on Claude Code">
+    <figcaption>00:32 &mdash; The official ai-job-search repository: an open-source local framework powered by Claude Code for automated job hunting.</figcaption>
+  </figure>
+
+  <h2 id="system-architecture-amp-workflow"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">System Architecture &amp; Workflow</span></h2>
+  <ol>
+    <li><strong>Attach Master Resume / CV:</strong>
+      <ul>
+        <li>Place your unformatted markdown or LaTeX master CV into the <code>/cv</code> folder containing comprehensive experience, skills, and project history.</li>
+        <li>Specify target job titles, seniority levels, geographic preferences, and domain specializations in the configuration profile.</li>
+      </ul>
+    </li>
+    <li><strong>Automated Role Discovery &amp; Scraping:</strong>
+      <ul>
+        <li>The framework continuously queries major job boards and employer career portals (via Greenhouse, Lever, and Workday scrapers).</li>
+        <li>Filters out duplicates and pre-evaluates job descriptions against your experience threshold before downloading full specs.</li>
+      </ul>
+    </li>
+    <li><strong>Per-Job Resume &amp; Cover Letter Tailoring:</strong>
+      <ul>
+        <li>Uses Claude Code subagents to align keywords and technical requirements between the job description and your master CV without fabricating credentials.</li>
+        <li>Drafts an individualized cover letter addressing specific company challenges, products, and culture.</li>
+      </ul>
+    </li>
+    <li><strong>Autonomous Submission &amp; Interview Prep:</strong>
+      <ul>
+        <li>If granted browser automation credentials, the agent auto-fills application forms and tracks status in a local database.</li>
+        <li>Automatically compiles an interview preparation sheet with likely technical and behavioral questions tailored to the applied role.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2 id="repository-amp-evidence"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Repository &amp; Evidence</span></h2>
+  <div class="gallery">
+    <figure>
+      <img src="assets/De4Lyf7JYqG/00-03-mads-lorentzen-creator.jpg" alt="Mads Lorentzen GitHub profile">
+      <figcaption>00:03 &mdash; Mads Lorentzen (Geophysicist, PhD) &mdash; original developer of the framework.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/De4Lyf7JYqG/00-30-ai-job-search-repo-tree.jpg" alt="GitHub repository tree showing .claude, agents, cover_letters, cv folders">
+      <figcaption>00:30 &mdash; File structure: .claude configuration, subagents, cover_letters directory, and CV parsing modules.</figcaption>
+    </figure>
+  </div>
+
+  <h2 id="verbatim-breakdown"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Verbatim Breakdown</span></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Screen / Source</th>
+        <th>Verbatim Content</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>00:02</code></td>
+        <td>GitHub profile</td>
+        <td>Mads Lorentzen &bull; MadsLorentzen<br>Geophysicist, PhD &bull; Denmark</td>
+      </tr>
+      <tr>
+        <td><code>00:19</code></td>
+        <td>Spoken (audio)</td>
+        <td>&ldquo;Job search ke market ko automate karna hai aur usko hi isne automate kara aur ek GitHub repo banayi. Isne AI engineer ki job bhi le li.&rdquo;</td>
+      </tr>
+      <tr>
+        <td><code>00:30</code></td>
+        <td>On-screen repository</td>
+        <td>ai-job-search-dev / ai-job-search &bull; Public<br>Branches: master &bull; Folders: .claude, .github, assets/mascot, cover_letters, cv</td>
+      </tr>
+      <tr>
+        <td><code>00:32</code></td>
+        <td>On-screen repo about</td>
+        <td>About:<br>The job search that runs on your machine. An AI application framework built on Claude Code: evaluate postings, tailor CVs, write cover letters, prep interviews. Fork it and own it.<br>Stars: 64.3k &bull; Forks: 19.9k<br>Topics: ai, ai-agents, career, claude-code, cover-letter, cv, interview-preparation, job-application, job-hunting, job-search</td>
+      </tr>
+      <tr>
+        <td><code>00:35</code></td>
+        <td>Spoken (audio)</td>
+        <td>&ldquo;Matlab tumhe kuch nahi karna bhai, tumhe bas ek apna CV attach karna hai, specialization batani hai, tumhare behalf pe saari job dhoondh-dhoondh ke layega, job description ke according tumhara resume bhi modify karega tumhe bana ke de bhi dega aur agar tumne ise access de diya tumhare behalf pe apply bhi karega.&rdquo;</td>
+      </tr>
+      <tr>
+        <td><code>(caption)</code></td>
+        <td>Post Caption</td>
+        <td>Automate your Job Search using AI😱✨<br>.<br>.<br>{ job, job search, job search update, job switch , job search using AI , interview schedule }</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="prerequisites-amp-setup"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Prerequisites &amp; Setup</span></h2>
+  <ul>
+    <li><strong>GitHub Repository:</strong> <code>https://github.com/ai-job-search-dev/ai-job-search</code></li>
+    <li><strong>Claude Code Access:</strong> Requires Anthropic API key with Claude Code CLI installed locally (<code>npm install -g @anthropic-ai/claude-code</code>).</li>
+    <li><strong>Execution:</strong> Clone repository locally, configure environment variables, populate master CV, and run the main entry point to initiate continuous search loops.</li>
+  </ul>
+
+  <h2 id="try-this"><span class="h-ico"><i data-lucide="sparkles" class="ico"></i></span><span class="h-text">Try This</span></h2>
+  <ol>
+    <li>Navigate to <code>github.com/ai-job-search-dev/ai-job-search</code> and fork the repository.</li>
+    <li>Clone to your local workstation:
+      <pre><code>git clone https://github.com/ai-job-search-dev/ai-job-search.git</code></pre>
+    </li>
+    <li>Create your profile in <code>/cv/master_cv.md</code> detailing your technical stacks, achievements, and impact metrics.</li>
+    <li>Run the evaluation command against a target job URL to inspect how Claude analyzes skill overlap and dynamically rewrites resume bullet points.</li>
+  </ol>
+
+  <h2 id="open-questions"><span class="h-ico"><i data-lucide="help-circle" class="ico"></i></span><span class="h-text">Open Questions</span></h2>
+  <ul>
+    <li>ATS (Applicant Tracking System) bot-detection: Platforms like Workday and Greenhouse frequently employ Cloudflare turnstiles or reCAPTCHA challenges to block automated script submissions; running the agent in human-in-the-loop mode (generating tailored resumes and letters for manual one-click submission) is more reliable than headless form submission.</li>
+  </ul>
+
+  
+  <nav class="pager">
+    <a href="../Engineering-Practices/DewyFUGzXuy-10-habits-for-deep-software-engineering-mastery.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: 10 Habits For Deep Software Engineering </span></a>
+    <a href="De8lwGRqDf4-software-engineer-2-month-job-switch-roadmap.html" class="pager-next"><span>Next: Software Engineer 2 Month Job Switch Roa</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

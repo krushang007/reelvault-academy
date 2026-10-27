@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autonomous Faceless AI Reel Engine: Claude Code Agents, OpenAI Cedar Voice, Whisper Word Timings &amp; Remotion</title>
+<!--
+learning-meta:
+  area: Video-Creation
+  topic: AI-Explainers
+  shortcode: De1BifbTDCl
+  author: techstackbro
+  source_url: https://www.instagram.com/reel/De1BifbTDCl/
+  extracted_at: 2026-10-27T12:48:00Z
+  tags: [video-automation, claude-code, ai-agents, remotion, react-video, openai-audio, whisper, faceless-channels, lipsync-avatar]
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#video-creation" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Video-Creation</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Video-Creation · AI-Explainers</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#video-creation">Video-Creation</a> / <a href="../../index.html#video-creation-ai-explainers">AI-Explainers</a></nav>
+
+  <p class="kicker">Video-Creation · AI-Explainers</p>
+  <h1>Autonomous Faceless AI Reel Engine: Claude Code Agents, OpenAI Cedar Voice, Whisper Word Timings &amp; Remotion</h1>
+
+  
+  <p class="meta">
+    <span>Author: <a href="https://www.instagram.com/techstackbro/" target="_blank" rel="noopener">@techstackbro</a></span>
+    <span>Source: <a href="https://www.instagram.com/reel/De1BifbTDCl/" target="_blank" rel="noopener">Instagram Reel De1BifbTDCl</a></span>
+    <span>Extracted: 2026-10-27</span>
+  </p>
+
+
+  
+  <div class="summary">
+    <p>A full-stack programmatic video generation architecture developed by Tech Bro (@techstackbro) producing publication-ready, faceless vertical reels in approximately 15 minutes. Decomposes the production pipeline into five automated engineering stages orchestrated by Claude Code autonomous agents: deep topic research and script validation against primary sources (arXiv/documentation), neural text-to-speech synthesis via OpenAI's Cedar voice model with multi-take self-verification (<code>gpt-4o-transcribe</code>), word-level caption alignment using OpenAI Whisper, reactive SVG/TSX mouth-viseme avatar animations driven by audio amplitude envelopes, and programmatic rendering into MP4 via Remotion (React-to-video).</p>
+  </div>
+
+
+  <figure class="hero">
+    <img src="assets/De1BifbTDCl/00-44-step5-remotion-react-to-video.jpg" alt="Remotion TSX scene definition turning React components into video frames.">
+    <figcaption>00:44 — Programmatic Video Synthesis: Using Remotion (<code>scenes.tsx</code>) where every layout card, sticker, and transition is defined as deterministic React code.</figcaption>
+  </figure>
+
+  <section>
+    <h2 id="the-5-step-agentic-video-pipeline"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">The 5-Step Agentic Video Pipeline</span></h2>
+    <ol class="steps">
+      <li>
+        <strong>Step 1 &middot; Script Research &amp; Source Verification (Claude Code):</strong>
+        Claude Code receives a topic prompt (e.g. <code>topic: GPT ka full form</code>). It performs automated research, cross-verifies technical definitions against primary sources (academic papers on arXiv and official documentation), and writes the conversational script file (<code>episodes/ep11-gpt-hi/script.txt</code>). The human creator only reviews and gives a single approval (<code>okay</code>).
+      </li>
+      <li>
+        <strong>Step 2 &middot; Neural Voiceover &amp; Automated Multi-Take Verification:</strong>
+        Audio is synthesized using OpenAI's voice model (<code>gpt-audio-1.5</code>, <code>cedar</code> voice preset) outputting <code>vo.wav</code>. Rather than relying on a single inference pass, the agent generates 3 to 5 candidate takes (<code>t1</code>&ndash;<code>t5</code>) and invokes an automated quality check (<code>gpt-4o-transcribe</code>) to detect mispronunciations, stuttering, or hallucinated phonemes, discarding flawed takes and selecting the cleanest take (e.g. <code>t4</code>).
+      </li>
+      <li>
+        <strong>Step 3 &middot; High-Precision Word Timings (OpenAI Whisper):</strong>
+        The selected <code>vo.wav</code> audio file is passed through Whisper to extract microsecond word-level timestamps. This enables animated speech bubble captions that track speech velocity synchronously.
+      </li>
+      <li>
+        <strong>Step 4 &middot; Code-Driven Audio-Reactive Avatar (<code>Avatar.tsx</code>):</strong>
+        The character avatar is not manually illustrated frame-by-frame; it is an SVG component written in TypeScript (<code>src/kit/Avatar.tsx</code>). The mouth opening path (viseme) dynamically recalculates its curve geometry based on audio amplitude envelopes:
+        <ul>
+          <li>Calculates volume envelope: <code>env[frame] = amplitude</code>.</li>
+          <li>When volume is zero: <code>muh: band</code> (mouth closed).</li>
+          <li>As vocal volume increases, the mouth path height expands proportionally to audio intensity.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Step 5 &middot; Programmatic Composition &amp; Rendering (Remotion):</strong>
+        Remotion converts React DOM structures into video frames (<code>ep11-gpt-hi/scenes.tsx</code>). Timed visual cues (<code>&lt;Pill&gt;</code>, <code>&lt;Sticker&gt;</code>, comparison tables, code boxes) bind to timestamp offsets <code>at={t(a.use)}</code>.
+      </li>
+      <li>
+        <strong>Parallel Agent Orchestration:</strong>
+        Claude Code provisions specialized background sub-agents simultaneously across research, audio validation, and component generation, reducing end-to-end turnaround to &sim;9 minutes of machine computation (and &sim;15 minutes total from script approval to final MP4).
+      </li>
+    </ol>
+  </section>
+
+  <section class="gallery">
+    <h2 id="architecture-screens-amp-code-artifacts"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Architecture Screens &amp; Code Artifacts</span></h2>
+    <figure>
+      <img src="assets/De1BifbTDCl/00-11-step1-claude-code-research-script.jpg" alt="Claude Code terminal generating Hindi script and verifying sources on arXiv and docs.">
+      <figcaption>00:11 — Step 1: Claude Code generating <code>script.txt</code> with verified arXiv/docs sources.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/De1BifbTDCl/00-22-step2-openai-voice-cedar-takes.jpg" alt="OpenAI voice model gpt-audio-1.5 Cedar generating 5 takes with gpt-4o-transcribe validation.">
+      <figcaption>00:22 — Step 2: OpenAI Cedar voice synthesis with 5 candidate takes and automated transcript verification.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/De1BifbTDCl/00-34-step4-code-driven-lipsync-avatar.jpg" alt="Avatar.tsx React component calculating SVG mouth paths based on audio envelope values.">
+      <figcaption>00:34 — Step 4: Reactive mouth visemes driven by <code>env[frame]</code> amplitude in <code>Avatar.tsx</code>.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/De1BifbTDCl/00-54-claude-code-parallel-agents-runtime.jpg" alt="Runtime clock showing approximately 9 minutes generation time once script is approved.">
+      <figcaption>00:54 — Production Velocity: &sim;9-minute programmatic build time via parallel AI agents.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2 id="verbatim-breakdown"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Verbatim Breakdown</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Time / Step</th>
+          <th>Spoken Audio (Hinglish)</th>
+          <th>On-Screen Code / Display Elements</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>00:00 - 00:05</td>
+          <td>"Is channel ki har reel AI banata hai. Main sirf faisla karta hoon. Chalo dikhata hoon."</td>
+          <td>is channel ki har reel AI banata hai<br>main sirf faisla karta hoon</td>
+        </tr>
+        <tr>
+          <td>00:06 - 00:17</td>
+          <td>"Pehla step: Script. Claude Code ko topic milta hai, woh research karta hai, sources verify karta hai aur script likh deta hai. Main bas okay karta hoon."</td>
+          <td><strong>pehla step &bull; script ✍️</strong><br>Terminal: <code>Claude Code &gt; topic: GPT ka full form</code><br>File: <code>episodes/ep11-gpt-hi/script.txt</code><br>Badge: <code>sources verify ✓ (arXiv / docs)</code> &bull; <code>okay ✓</code> &bull; <code>main bas okay karta</code></td>
+        </tr>
+        <tr>
+          <td>00:18 - 00:29</td>
+          <td>"Doosra step: Awaaz. Jo awaaz tum sun rahe ho, woh OpenAI ka voice model hai. Har reel ke teen se paanch takes bante hain, aur AI khud sunke check karta hai ki koi word gadbad toh nahi."</td>
+          <td><strong>doosra step &bull; awaaz 🎙️</strong><br><code>OpenAI voice model: gpt-audio-1.5 &bull; cedar</code><br>Audio waveform: <code>ep11 ki asli awaaz (vo.wav)</code><br>Takes: <code>[t1 ✗] [t2 ✗] [t3 ✗] [t4 ✓] [t5 ✗]</code><br>Check: <code>AI check: gpt-4o-transcribe ✓</code> &bull; <code>word gadbad toh nahi</code></td>
+        </tr>
+        <tr>
+          <td>00:30 - 00:36</td>
+          <td>"Teesra step: Captions. Whisper har ek word ki timing pakadta hai, isiliye bubble mein words awaaz ke saath-saath chalte hain."</td>
+          <td><strong>teesra step &bull; captions 💬</strong><br>OpenAI Whisper word-level timing &bull; animated caption bubbles</td>
+        </tr>
+        <tr>
+          <td>00:37 - 00:46</td>
+          <td>"Chautha step: Yeh avatar. Ise kisi ne draw nahi kiya, yeh code hai. Awaaz jitni tez, mera munh utna khulta hai."</td>
+          <td><strong>chautha step &bull; avatar 👱</strong><br><code>src/kit/Avatar.tsx</code><br><code>&lt;circle cx="122" cy="161" r="22" stroke={INK} strokeWidth="4.5" /&gt;</code><br><code>&lt;circle cx="178" cy="161" r="22" stroke={INK} strokeWidth="4.5" /&gt;</code><br><code>&lt;path d="M144 158 Q150 152 156 158" stroke={INK} strokeWidth="4" /&gt;</code><br><code>awaaz &rarr; muh &bull; env[974] = 0.00 &bull; muh: -</code> &bull; <code>draw ✗ code ✓</code></td>
+        </tr>
+        <tr>
+          <td>00:47 - 00:54</td>
+          <td>"Paanchwa step: Animation. Remotion naam ka tool React code ko video mein badalta hai. Har card, har sticker, sab code."</td>
+          <td><strong>paanchwa step &bull; animation 🎬</strong><br><code>ep11-gpt-hi/scenes.tsx</code><br><code>&lt;Scene from={0} to={t(a.g)}&gt;</code><br><code>&lt;Pill text={tx.hookPill} at={2} /&gt;</code><br><code>&lt;Sticker text={tx.useSticker} at={t(a.use)} bg={POP} rotate={6} size={42} ... /&gt;</code><br><code>&lt;/Scene&gt;</code><br><code>React code &rarr; video</code> &bull; <code>Remotion</code></td>
+        </tr>
+        <tr>
+          <td>00:55 - 01:01</td>
+          <td>"Aur best part: Claude Code har reel pe alag-alag AI agents lagata hai, jo ek saath kaam karte hain. Script final hote hi, takreeban 15 minute mein reel taiyaar."</td>
+          <td><code>kitna time? ⏱️</code> &bull; <code>script final ✓</code> &bull; <strong>~9 min (script final hote hi)</strong> &bull; <code>takreeban 15 minute mein</code></td>
+        </tr>
+        <tr>
+          <td>01:02 - 01:06</td>
+          <td>"Yeh poora system chahiye? Comment karo BANAO. Har step ka breakdown aage ki reels mein."</td>
+          <td>CTA: Comment "BANAO" for full system setup.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2 id="referenced-technologies-amp-architecture-stack"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Referenced Technologies &amp; Architecture Stack</span></h2>
+    <ul>
+      <li><strong>Claude Code (Anthropic):</strong> Command-line agent executing multi-step autonomous workflows, topic research, and source verification.</li>
+      <li><strong>OpenAI Voice API (<code>gpt-audio-1.5</code>):</strong> High-fidelity neural voice synthesis using the <code>cedar</code> voice preset.</li>
+      <li><strong>Automated QC (<code>gpt-4o-transcribe</code>):</strong> Multi-take validator comparing transcribed speech back against source script to flag phoneme deviations.</li>
+      <li><strong>OpenAI Whisper:</strong> Speech-to-text timing model extracting microsecond timestamps per word for synchronized animated captions.</li>
+      <li><strong>Remotion (React Video):</strong> Open-source framework rendering React components, SVG illustrations, and keyframe transitions into native MP4 video.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 id="try-this-recreating-the-pipeline"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Try This (Recreating the Pipeline)</span></h2>
+    <ol>
+      <li>Initialize a Remotion project: <code>npx create-video@latest</code>.</li>
+      <li>Create an SVG avatar component (<code>Avatar.tsx</code>) with parametric path coordinates for eye circles and mouth curves.</li>
+      <li>Use the <code>@remotion/media-utils</code> package with <code>useAudioData</code> to extract the volume waveform envelope (<code>env[frame]</code>) from an input audio track.</li>
+      <li>Map the normalized amplitude (0.0 to 1.0) to the mouth SVG quadratic bezier curve height (<code>Q150 ${152 + env * 14} 156 158</code>) to achieve instant lip sync without manual keyframing.</li>
+      <li>Script an automated Claude Code agent workflow that calls the OpenAI Voice API, validates transcription accuracy with Whisper, and executes <code>npx remotion render</code> to output the finished reel.</li>
+    </ol>
+  </section>
+
+  
+  <nav class="pager">
+    
+    <a href="De3tQ_QlFi_-hyperframes-heygen-html-css-video-engine.html" class="pager-next"><span>Next: Hyperframes Heygen Html Css Video Engine</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

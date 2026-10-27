@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open-Source AI Licensing: The Commercial vs Non-Commercial Liability Trap</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · Legal-Licensing</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-legal-licensing">Legal-Licensing</a></nav>
+
+  <p class="kicker">AI · Legal-Licensing</p>
+  <h1>Open-Source AI Licensing: The Commercial vs Non-Commercial Liability Trap</h1>
+
+  
+  <p class="meta">
+    Shared by <a href="https://www.instagram.com/reel/Dd_g0MapbN4/" target="_blank">@srinistake</a> &bull; Rank #148 &bull; Shortcode: <code>Dd_g0MapbN4</code>
+  </p>
+
+
+  
+  <div class="summary">
+    <p>
+        Building an AI startup or commercial SaaS on open weights from Hugging Face without auditing license terms is a catastrophic legal risk. Many popular foundation weights and instruction-tuned checkpoints are published under non-commercial research licenses (e.g., CC-BY-NC 4.0) or custom enterprise covenants. If a commercial product monetizes models derived from or fine-tuned on non-commercial weights, the company faces immediate cease-and-desist orders, copyright infringement damages, and inability to close institutional acquisition due diligence.
+      </p>
+  </div>
+
+
+  <h2 id="visual-reference-stills"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Visual Reference Stills</span></h2>
+    <div class="gallery">
+      <img src="assets/Dd_g0MapbN4/frame_01.jpg" alt="Commercial AI Model Mistake" />
+      <img src="assets/Dd_g0MapbN4/frame_02.jpg" alt="Licensing Landscape Overview" />
+      <img src="assets/Dd_g0MapbN4/frame_03.jpg" alt="Royalty-Free vs Non-Commercial Camps" />
+      <img src="assets/Dd_g0MapbN4/frame_04.jpg" alt="Pre-Flight License Due Diligence" />
+    </div>
+
+    <h2 id="the-two-ai-licensing-camps"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Two AI Licensing Camps</span></h2>
+
+    <div class="license-grid">
+      <div class="license-col col-safe">
+        <h3>✅ Permissive Commercial Licenses</h3>
+        <p style="color:#cbd5e1; font-size:0.9rem; margin-bottom:0.75rem;">Freely usable in closed-source, proprietary, monetized SaaS platforms without royalties or user count ceilings.</p>
+        <ul style="padding-left:1.5rem; color:#cbd5e1; font-size:0.85rem;">
+          <li style="margin-bottom:0.4rem;"><strong>Apache 2.0:</strong> Explicit patent grant + commercial freedom (Mistral-7B base, Qwen-2.5 permissive tier, Whisper).</li>
+          <li style="margin-bottom:0.4rem;"><strong>MIT:</strong> Maximum permissiveness with zero commercial restrictions.</li>
+          <li><strong>BSD-3-Clause:</strong> Minimal attribution requirement.</li>
+        </ul>
+      </div>
+
+      <div class="license-col col-danger">
+        <h3>⚠️ Restrictive / Non-Commercial Traps</h3>
+        <p style="color:#cbd5e1; font-size:0.9rem; margin-bottom:0.75rem;">Explicitly prohibits revenue generation, business operations, or restricts scale through custom usage clauses.</p>
+        <ul style="padding-left:1.5rem; color:#cbd5e1; font-size:0.85rem;">
+          <li style="margin-bottom:0.4rem;"><strong>CC-BY-NC 4.0:</strong> Strictly non-commercial. Any subscription fee, ad revenue, or enterprise deployment breaches copyright.</li>
+          <li style="margin-bottom:0.4rem;"><strong>Llama Community License:</strong> Requires explicit Meta license request if product exceeds 700 million Monthly Active Users (MAU).</li>
+          <li><strong>Synthetic Data Distillation Clause:</strong> Prohibits using model outputs to train competing frontier models (e.g. OpenAI ToS, Llama clause).</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 id="crucial-licensing-gotchas-for-ai-engineers"><span class="h-ico"><i data-lucide="help-circle" class="ico"></i></span><span class="h-text">Crucial Licensing Gotchas for AI Engineers</span></h2>
+
+    <div class="clause-card">
+      <div class="clause-title">1. The "Base vs. Instruct" License Divergence</div>
+      <p style="color:#cbd5e1;">A base pre-trained model may be released under Apache 2.0, but community instruction-tuned variants (e.g. fine-tuned on synthetic ShareGPT or WizardLM datasets) may carry CC-BY-NC contamination due to upstream dataset terms. Always audit the fine-tuning data lineage.</p>
+    </div>
+
+    <div class="clause-card">
+      <div class="clause-title">2. Output Contamination & Model Distillation</div>
+      <p style="color:#cbd5e1;">Generating synthetic training datasets by querying proprietary frontier APIs (GPT-4o, Claude 3.5 Sonnet) to train or distill your own open-source model violates the Terms of Service of major commercial model providers.</p>
+    </div>
+
+    <div class="clause-card">
+      <div class="clause-title">3. Acquisition Due Diligence Checklist</div>
+      <p style="color:#cbd5e1;">During M&A or Series A fundraising, technical auditors review every model weight hash, training dataset source URL, and license string. A single non-commercial model in core production infrastructure can halt investment or collapse valuations.</p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../LLM-Architecture/Ddt-a1Ys8jd-how-llms-are-built-data-tokenization-transformer-pretraining-sft-serving.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: A1Ys8Jd How Llms Are Built Data Tokeniza</span></a>
+    <a href="../Mobile-Agents/DehEdBbgQFZ-google-artemis-open-source-android-agent-mcp.html" class="pager-next"><span>Next: Google Artemis Open Source Android Agent</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

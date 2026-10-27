@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vibe Coding Gets the Demo, System Design Saves 3 AM: The 111-Point Production Readiness Checklist</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#engineering" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Engineering</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Engineering · Production-Readiness</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#engineering">Engineering</a> / <a href="../../index.html#engineering-production-readiness">Production-Readiness</a></nav>
+
+  <p class="kicker">Engineering · Production-Readiness</p>
+  <h1>Vibe Coding Gets the Demo, System Design Saves 3 AM: The 111-Point Production Readiness Checklist</h1>
+
+  
+
+  
+
+  <div class="breadcrumb">
+      <a href="../../index.html">← All Learnings</a> / <a href="../../index.html#Engineering">Engineering</a> / Production Readiness
+    </div>
+
+    
+
+    <div class="metadata">
+      <span><strong>Source:</strong> Instagram Carousel (7 Slides)</span>
+      <span><strong>Creator:</strong> <a href="https://www.instagram.com/code_baithak/" target="_blank" rel="noopener">@code_baithak</a> (Code Baithak)</span>
+      <span><strong>Shortcode:</strong> <code>Dejl2VjiX5L</code></span>
+      <span><strong>Verified:</strong> Complete 111-Item Exhaustive Audit Framework</span>
+    </div>
+
+    <div class="summary-box">
+      <h3>Key Takeaways</h3>
+      <ul>
+        <li><strong>Vibe Coding vs Production Reality:</strong> AI coding assistants (Claude Code, Cursor, Copilot) make it trivial to generate a working prototype demo in hours, but completely omit resilient distributed systems plumbing required to keep production alive under scale.</li>
+        <li><strong>The 111-Point Architecture Audit:</strong> A comprehensive 6-pillar production readiness checklist spanning API resilience, database concurrency, zero-trust security, DevOps deployment, cloud latency economics, and SRE observability.</li>
+        <li><strong>Automated Agent Audit Prompt:</strong> Feed the standardized 111-point list into your coding agent (Claude / Cursor / Antigravity) with the prompt: <em>"Audit my repository against these 111 production readiness checks and report critical vulnerabilities before shipping."</em></li>
+      </ul>
+    </div>
+
+    <h2 id="the-vibe-coding-vulnerability"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The "Vibe Coding" Vulnerability</span></h2>
+    <p>
+      In modern AI-assisted software development, developers rapidly stitch together frontend UIs, server actions, and database schemas. However, AI code generators write code for the "happy path." They rarely auto-generate idempotency keys, connection pool ceilings, circuit breakers, dead-letter queues, or distributed lock timeouts.
+    </p>
+
+    <div class="media-card">
+      <img src="assets/Dejl2VjiX5L/01-vibe-coding-intro.jpg" alt="Who is gonna tell vibe coders about system design">
+      <div class="media-card-caption">
+        <strong>Figure 1:</strong> The fundamental divide: Prototype velocity vs 3 AM production incident resilience.
+      </div>
+    </div>
+
+    <h2 id="the-111-production-readiness-checks"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The 111 Production Readiness Checks</span></h2>
+
+    <h3>Pillar 1: Core API & Application Resilience (Checks 1–19)</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Production Check</th>
+            <th>Failure Mode Prevented</th>
+            <th>Practical Implementation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><strong>Idempotency Keys</strong></td>
+            <td>Double charge trap / duplicate order creation</td>
+            <td>Store <code>Idempotency-Key</code> header in Redis with 24h TTL; reject duplicates.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><strong>Rate Limiting</strong></td>
+            <td>API exhaustion, brute force, DDoS</td>
+            <td>Token bucket / sliding window via Redis (e.g. Upstash Ratelimit).</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><strong>Reverse Proxies</strong></td>
+            <td>Exposing origin servers directly</td>
+            <td>Cloudflare, Nginx, or Envoy fronting upstream workers.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><strong>Connection Pooling</strong></td>
+            <td>Database connection exhaustion crash</td>
+            <td>PgBouncer, Prisma Accelerate, or Supabase connection pooling.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><strong>N+1 Query Detection</strong></td>
+            <td>Silent database killer</td>
+            <td>Eager loading, DataLoader pattern, or batched <code>JOIN</code> queries.</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td><strong>Caching Strategies</strong></td>
+            <td>Database saturation under read load</td>
+            <td>Cache-aside, read-through, or write-behind patterns.</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td><strong>Cache Invalidation</strong></td>
+            <td>Serving stale or corrupt business data</td>
+            <td>Explicit event-driven invalidation or deterministic cache tags.</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td><strong>Load Balancing</strong></td>
+            <td>Single server failure causing total outage</td>
+            <td>Round-robin, least-connections, or IP-hash traffic distribution.</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td><strong>API Gateways</strong></td>
+            <td>Scattered auth and routing logic</td>
+            <td>Centralized JWT verification, SSL termination, and rate limiting.</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td><strong>Timeouts</strong></td>
+            <td>Zombie connections blocking thread pools</td>
+            <td>Strict client (5s) and upstream service (2s) timeout configurations.</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td><strong>Retries</strong></td>
+            <td>Transient network blips failing user operations</td>
+            <td>Retry failed idempotent requests (HTTP 502, 503, 504).</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td><strong>Exponential Backoff & Jitter</strong></td>
+            <td>Thundering herd problem crashing recovering servers</td>
+            <td><code>backoff = min(max_delay, base * 2^attempt + random_jitter)</code>.</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td><strong>Circuit Breakers</strong></td>
+            <td>Cascading failures across downstream services</td>
+            <td>Halt calls when error rate &gt; 50%; fail fast or return cached fallback.</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td><strong>Race Conditions</strong></td>
+            <td>Inconsistent balance updates & inventory overselling</td>
+            <td>Atomic DB operations (<code>UPDATE ... SET balance = balance - 10 WHERE balance &gt;= 10</code>).</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td><strong>Deadlocks</strong></td>
+            <td>Mutually blocked database transactions</td>
+            <td>Consistent resource lock ordering across all queries.</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td><strong>Memory Leaks</strong></td>
+            <td>Gradual server crash under continuous load</td>
+            <td>Unclosed event listeners, unbounded in-memory maps, file descriptor leaks.</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td><strong>Webhooks</strong></td>
+            <td>Missed third-party event notifications</td>
+            <td>HMAC signature verification and durable idempotency storage.</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td><strong>CORS</strong></td>
+            <td>Cross-origin API exploits / frontend blocked</td>
+            <td>Restricting <code>Access-Control-Allow-Origin</code> to explicit trusted domains.</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td><strong>Secrets Management</strong></td>
+            <td>Leaked API keys in frontend bundles or git history</td>
+            <td>AWS Secrets Manager, Doppler, Infisical, or runtime environment variables.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Pillar 2: Database & Distributed Systems (Checks 20–41)</h3>
+    <div class="media-card">
+      <img src="assets/Dejl2VjiX5L/02-database-distributed.jpg" alt="Database and Distributed Systems Checks">
+      <div class="media-card-caption">
+        <strong>Figure 2:</strong> Checks 20–41: Indexing, locking, partitioning, consensus, and message queues.
+      </div>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Concept</th>
+            <th>Core Architectural Rule</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>20–22</td>
+            <td><strong>Indexing, Query Optimization & Read Replicas</strong></td>
+            <td>Ensure index seeks rather than full table scans (<code>EXPLAIN ANALYZE</code>); offload heavy analytic reads to read replicas.</td>
+          </tr>
+          <tr>
+            <td>23–24</td>
+            <td><strong>Database Migrations & Schema Versioning</strong></td>
+            <td>Enforce zero-downtime expand-and-contract schema migrations; never drop columns in the same release.</td>
+          </tr>
+          <tr>
+            <td>25–27</td>
+            <td><strong>Optimistic, Pessimistic & Distributed Locks</strong></td>
+            <td>Use version columns for low contention; <code>SELECT ... FOR UPDATE</code> for high contention; Redis Redlock for cross-service locks.</td>
+          </tr>
+          <tr>
+            <td>28–31</td>
+            <td><strong>Sharding, Partitioning, Replication & Leader Election</strong></td>
+            <td>Partition tables by range/hash; maintain active-passive or active-active replication with consensus (Raft).</td>
+          </tr>
+          <tr>
+            <td>32–35</td>
+            <td><strong>CAP Theorem, Eventual Consistency & Saga Pattern</strong></td>
+            <td>Choose Consistency vs Availability during partitions; use compensating transactions (Sagas) across distributed microservices.</td>
+          </tr>
+          <tr>
+            <td>36–41</td>
+            <td><strong>Queues, Pub/Sub, Dead Letter Queues & Backpressure</strong></td>
+            <td>Decouple ingestion via message brokers (Kafka, SQS, RabbitMQ); route poison pill messages to DLQ; signal backpressure upstream.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Pillar 3: Security & Networking (Checks 42–60)</h3>
+    <div class="media-card">
+      <img src="assets/Dejl2VjiX5L/03-security-networking.jpg" alt="Security and Networking Checks">
+      <div class="media-card-caption">
+        <strong>Figure 3:</strong> Checks 42–60: OWASP vulnerabilities, encryption, transport protocols, and DNS.
+      </div>
+    </div>
+    <ul>
+      <li><strong>42–45: Injection & Web Exploits:</strong> Parameterized SQL queries (prevent Bobby Tables), sanitizing HTML (XSS), anti-forgery tokens (CSRF), and metadata service protection (SSRF).</li>
+      <li><strong>46–48: Identity & Access:</strong> PKCE-based OAuth 2.0 flows, short-lived JWTs with rotating refresh tokens, and least-privilege IAM policies.</li>
+      <li><strong>49–53: Transport & Perimeter Defense:</strong> Mandatory TLS 1.3, AES-256 encryption at rest, Cloudflare Web Application Firewall (WAF), and volumetric DDoS scrubbing.</li>
+      <li><strong>54–60: Protocols & Networking:</strong> Choosing WebSockets / SSE for live streaming, gRPC / Protobuf for low-latency internal RPC, HTTP/2 multiplexing, and redundant authoritative DNS.</li>
+    </ul>
+
+    <h3>Pillar 4: DevOps & Deployment Safety (Checks 61–80)</h3>
+    <div class="media-card">
+      <img src="assets/Dejl2VjiX5L/04-devops-deployment.jpg" alt="DevOps and Deployment Checks">
+      <div class="media-card-caption">
+        <strong>Figure 4:</strong> Checks 61–80: Containerization, Kubernetes YAML, canary rollouts, and semantic versioning.
+      </div>
+    </div>
+    <ul>
+      <li><strong>61–68: Infra & Delivery:</strong> Multi-stage Docker builds, Kubernetes manifests / Helm charts, CI/CD automated test gates, Docker layer caching, and Terraform Infrastructure as Code (IaC).</li>
+      <li><strong>69–73: Release Strategies:</strong> Feature flags (LaunchDarkly / PostHog), Blue-Green zero-downtime cutover, Canary releases testing on 1% traffic before full rollout, automated 1-click rollbacks.</li>
+      <li><strong>74–80: Runtime Probes:</strong> Liveness probes (restarting crashed containers), readiness probes (blocking traffic until warmup finishes), semantic versioning (SemVer), and thread safety in concurrent runtimes.</li>
+    </ul>
+
+    <h3>Pillar 5: Scaling, Latency & Disaster Recovery (Checks 81–99)</h3>
+    <div class="media-card">
+      <img src="assets/Dejl2VjiX5L/05-scaling-resilience.jpg" alt="Scaling, Latency and Resilience Checks">
+      <div class="media-card-caption">
+        <strong>Figure 5:</strong> Checks 81–99: Horizontal scaling, cloud cost optimization, P99 latency, and chaos engineering.
+      </div>
+    </div>
+    <ul>
+      <li><strong>81–86: Elasticity & Economics:</strong> Horizontal pod autoscalers (HPA), Edge caching on CDNs, and preventing cloud bill shock through compute alarms and egress auditing.</li>
+      <li><strong>87–92: Latency Engineering:</strong> Mitigating serverless cold starts, optimizing P99 and tail latency histograms instead of deceptive median averages.</li>
+      <li><strong>93–99: High Availability:</strong> Handling network splits, clock skew (NTP synchronization), multi-region active failover, automated point-in-time recovery (PITR) backups, and deliberate Chaos Engineering failure drills.</li>
+    </ul>
+
+    <h3>Pillar 6: Observability & SRE (Checks 100–111)</h3>
+    <div class="media-card">
+      <img src="assets/Dejl2VjiX5L/06-observability-sre.jpg" alt="Observability and SRE Checks">
+      <div class="media-card-caption">
+        <strong>Figure 6:</strong> Checks 100–111: Distributed tracing, SLIs/SLOs, error budgets, on-call paging, and blameless post-mortems.
+      </div>
+    </div>
+    <ul>
+      <li><strong>100–105: Telemetry:</strong> Structured JSON logging, distributed OpenTelemetry tracing propagating trace IDs across microservices, metrics collectors, and anomaly alert thresholds.</li>
+      <li><strong>106–108: Reliability Governance:</strong> Defining Service Level Indicators (SLIs), Service Level Objectives (SLOs), and utilizing Error Budgets to balance shipping velocity against stability.</li>
+      <li><strong>109–111: Incident Management:</strong> Production incident runbooks, 3:14 AM on-call paging rotations (PagerDuty), and blameless post-mortems documenting root causes and preventative mitigations.</li>
+    </ul>
+
+    <h2 id="how-to-audit-your-codebase-with-claude-cursor"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">How to Audit Your Codebase with Claude / Cursor</span></h2>
+    <div class="media-card">
+      <img src="assets/Dejl2VjiX5L/07-how-to-use-prompt.jpg" alt="How to Use This 111-List Prompt Guide">
+      <div class="media-card-caption">
+        <strong>Figure 7:</strong> Operational workflow: Ingesting the 111-list directly into an AI coding agent to automate production repository reviews.
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <h3>Copy-Paste Production Audit Prompt</h3>
+      <p style="font-family: monospace; font-size: 0.95rem; line-height: 1.6; color: #e2e8f0; margin-top: 0.5rem;">
+        "Act as a Principal Site Reliability Engineer. Audit my repository against the 111 production readiness checks (Idempotency keys, Connection pooling, N+1 queries, Rate limiting, Circuit breakers, Dead letter queues, Zero-downtime migrations, P99 latency, and OpenTelemetry tracing). For every check, classify current status as [PASS], [WARNING], or [CRITICAL FAILURE], and provide the exact code diff required to harden the system."
+      </p>
+    </div>
+
+    <div class="summary-box">
+      <h3>Original Source Reference</h3>
+      <p>
+        Instagram Carousel: <a href="https://www.instagram.com/p/Dejl2VjiX5L/" target="_blank" rel="noopener">https://www.instagram.com/p/Dejl2VjiX5L/</a><br>
+        Creator: <strong>@code_baithak</strong> (Code Baithak)<br>
+        Caption: <em>"Who’s gonna tell you 🤫 . . . #reel #reelviral #fyp #study #funny"</em>
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="DeZE43ABTIp-production-logging-morgan-winston-node-js.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Production Logging Morgan Winston Node J</span></a>
+    <a href="../System-Design/Ddt8znUtkZ0-microsoft-interview-token-refresh-stampede-mutex-queue.html" class="pager-next"><span>Next: Microsoft Interview Token Refresh Stampe</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

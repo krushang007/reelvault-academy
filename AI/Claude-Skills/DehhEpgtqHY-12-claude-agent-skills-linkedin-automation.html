@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12 Free Claude Agent Skills for LinkedIn Automation (sergebulayev/linkedin-skills)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · Claude-Skills</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-claude-skills">Claude-Skills</a></nav>
+
+  <p class="kicker">AI · Claude-Skills</p>
+  <h1>12 Free Claude Agent Skills for LinkedIn Automation (sergebulayev/linkedin-skills)</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        Building organic authority and consistent distribution on LinkedIn typically requires hours of manual drafting, comment engagement, and hook testing. <strong>LinkedIn Skills</strong> (open-sourced by Serge Bulayev at <code>github.com/sergebulayev/linkedin-skills</code>) is a specialized pack of <strong>12 modular Claude Agent Skills</strong> designed to run natively inside Claude.ai and Claude Code.
+      </p>
+      <p>
+        Unlike naive LLM wrappers that produce hallucinated or robotic corporate spam, this skills pack enforces two foundational engineering principles:
+      </p>
+      <ul>
+        <li><strong>Strict Human-in-the-Loop (HITL) Guardrails:</strong> Every agent skill emits an editable preview draft with explicit approval gates (<code>[EDIT]</code> / <code>[APPROVE]</code>). Nothing is published or executed autonomously without user sign-off.</li>
+        <li><strong>Automated De-AI / Humanization Engine:</strong> A dedicated <code>humanizer</code> skill scans generated text, purges predictable AI jargon (e.g. <em>"crucial"</em>, <em>"leverage"</em>, <em>"robust"</em>, <em>"testament"</em>), enforces typographic constraints (strictly limiting em dashes to &lt; 1 per 100 words), and cross-validates copy across 5 major AI detection benchmarks before outputting.</li>
+      </ul>
+
+      <h2 id="visual-architecture-installation"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Visual Architecture & Installation</span></h2>
+      <div class="image-grid">
+        <figure>
+          <img src="assets/DehhEpgtqHY/frame_002.jpg" alt="LinkedIn Skills Pack Overview: 12 Free Claude Skills">
+          <figcaption>LinkedIn Skills Overview: 12 modular skills for automated copywriting, commenting, planning, and de-AI styling.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DehhEpgtqHY/frame_004.jpg" alt="Claude Skills Plugin Interface and Humanizer Module">
+          <figcaption>The Humanizer skill: bans generic AI vocabulary, caps em dashes, and scores drafts against 5 AI detectors.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DehhEpgtqHY/frame_007.jpg" alt="7-Day Content Schedule and Post Writer with 20 Proven Hook Formulas">
+          <figcaption>Structured 7-day calendar targeting diverse content archetypes paired with 20 proven high-retention hook formulas.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DehhEpgtqHY/frame_016.jpg" alt="GitHub Repository and Marketplace Installation Command">
+          <figcaption>Direct installation via Claude plugin CLI: <code>/plugin marketplace add sergebulayev/linkedin-skills</code>.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="installation-setup"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Installation & Setup</span></h2>
+      <p>The skill bundle can be registered into your Claude environment in two ways:</p>
+      <h3>Option A: Claude Code / CLI Plugin Command</h3>
+      <pre><code># 1. Add the marketplace registry pointer
+/plugin marketplace add sergebulayev/linkedin-skills
+
+# 2. Install the skill pack bundle
+/plugin install linkedin-skills@linkedin-skills</code></pre>
+
+      <h3>Option B: Claude.ai Web Interface</h3>
+      <ol>
+        <li>Navigate to <strong>Account Settings &rarr; Feature Previews / Customization &rarr; Plugins</strong>.</li>
+        <li>Select <strong>Add Custom Plugin</strong>.</li>
+        <li>Paste the repository URL: <code>https://github.com/sergebulayev/linkedin-skills</code>.</li>
+        <li>Grant execution permissions for text parsing and skill invocation.</li>
+      </ol>
+
+      <h2 id="the-12-agent-skills-breakdown"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">The 12 Agent Skills Breakdown</span></h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Skill Identifier</th>
+            <th>Primary Responsibility</th>
+            <th>Input Parameters & Operational Behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>post-writer</code></td>
+            <td>Long-form & short-form post generation</td>
+            <td>Consumes core thesis or notes; formats copy using 20 proven viral hook frameworks (curiosity gap, contrarian insight, before/after, framework teardown).</td>
+          </tr>
+          <tr>
+            <td><code>comment-drafter</code></td>
+            <td>Inbound & outbound commenting</td>
+            <td>Reads peer posts; drafts insightful, value-additive commentary adding tactical nuance rather than generic congratulations.</td>
+          </tr>
+          <tr>
+            <td><code>reply-handler</code></td>
+            <td>Comment thread conversation management</td>
+            <td>Processes comments left on your posts and generates context-aware, engaging follow-ups to maintain algorithmic velocity.</td>
+          </tr>
+          <tr>
+            <td><code>humanizer</code></td>
+            <td>Style purification & AI detection evasion</td>
+            <td>Scans drafts to purge AI clichés (<em>"dive in"</em>, <em>"delve"</em>, <em>"unleash"</em>, <em>"tapestry"</em>), limits em dashes, and benchmarks against GPTZero, Originality.ai, ZeroGPT, Sapling, and CopyLeaks.</td>
+          </tr>
+          <tr>
+            <td><code>hook-extractor</code></td>
+            <td>Viral headline reverse-engineering</td>
+            <td>Analyzes top-performing posts in your niche and extracts their structural syntax and emotional triggers for reuse.</td>
+          </tr>
+          <tr>
+            <td><code>content-planner</code></td>
+            <td>7-day calendar orchestration</td>
+            <td>Generates a balanced weekly queue across 7 archetypes: Personal Story, Tactical How-To, Video breakdown, Contrarian Opinion, Resource List, Career Lesson, and Weekly Recap.</td>
+          </tr>
+          <tr>
+            <td><code>profile-optimizer</code></td>
+            <td>Profile conversion auditing</td>
+            <td>Audits 9 key profile touchpoints (Headline, About/Bio, Featured links, Experience descriptions, Call-to-action banner).</td>
+          </tr>
+          <tr>
+            <td><code>thread-monitor</code></td>
+            <td>Engagement velocity tracking</td>
+            <td>Monitors high-engagement discussions to alert the user when prompt responses will maximize visibility.</td>
+          </tr>
+          <tr>
+            <td><code>engager-analytics</code></td>
+            <td>Audience interaction auditing</td>
+            <td>Identifies top commenters, key prospective clients, and high-affinity accounts interacting with your feed.</td>
+          </tr>
+          <tr>
+            <td><code>employee-advocacy</code></td>
+            <td>Team distribution alignment</td>
+            <td>Adapts corporate brand messaging into distinct individual founder/executive tones for company-wide amplification.</td>
+          </tr>
+          <tr>
+            <td><code>repurposer</code></td>
+            <td>Multi-channel asset transmutation</td>
+            <td>Converts newsletters, long-form blogs, YouTube transcripts, or podcast notes into native LinkedIn carousels and text drops.</td>
+          </tr>
+          <tr>
+            <td><code>interviewer</code></td>
+            <td>Socratic founder storytelling extraction</td>
+            <td>Conducts rapid interactive Q&A sessions with the user to extract authentic anecdotes, failure lessons, and operational stories.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="engineering-architecture-how-skills-execute-in-claude"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Engineering Architecture: How Skills Execute in Claude</span></h2>
+      <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    User Input / Trigger                      │
+│             e.g., "Draft a post about our Postgres scaling"  │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   Claude Agent Harness                       │
+│  - Selects `interviewer` or `post-writer` based on context  │
+│  - Formats content using 20 Hook Templates                  │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      Humanizer Pass                          │
+│  - Strips AI buzzwords ("crucial", "leverage", "delve")     │
+│  - Restricts punctuation (em dashes &lt; 1 / 100 words)        │
+│  - Verifies natural sentence length variance                │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   HITL Preview Gate                         │
+│  Emits clean draft with [EDIT] and [APPROVE] checkpoints     │
+│  STOPS execution: No automated outbound posting permitted   │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+
+      <h2 id="key-takeaways-best-practices"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Key Takeaways & Best Practices</span></h2>
+      <ul>
+        <li><strong>Install Once, Reuse Everywhere:</strong> Adding <code>sergebulayev/linkedin-skills</code> turns Claude into an end-to-end B2B personal branding partner that remembers your voice and stylistic constraints.</li>
+        <li><strong>Always Run the Humanizer:</strong> Never publish raw LLM outputs to LinkedIn; algorithmic feeds and professional readers penalize boilerplate corporate phrases.</li>
+        <li><strong>Strict Human Supervision:</strong> Automated social posting carries high reputational risk. Keep Claude in the role of researcher, drafter, and editor—never the autonomous publisher.</li>
+      </ul>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="Deb0eDDhsyJ-turn-claude-code-into-full-dev-team-5-tools.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Turn Claude Code Into Full Dev Team 5 To</span></a>
+    <a href="../Coding-Agents/Defa4pfTlp4-gravitas-reliability-runtime-antigravity-gemini.html" class="pager-next"><span>Next: Gravitas Reliability Runtime Antigravity</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

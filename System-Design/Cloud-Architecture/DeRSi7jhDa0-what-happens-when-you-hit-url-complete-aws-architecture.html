@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Happens When You Type a URL and Hit Enter? The Complete AWS Cloud Architecture</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#system-design" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> System-Design</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">System-Design · Cloud-Architecture</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#system-design">System-Design</a> / <a href="../../index.html#system-design-cloud-architecture">Cloud-Architecture</a></nav>
+
+  <p class="kicker">System-Design · Cloud-Architecture</p>
+  <h1>What Happens When You Type a URL and Hit Enter? The Complete AWS Cloud Architecture</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        The classic software engineering interview prompt—<em>"Explain what happens from the moment you type a URL in your browser and press Enter"</em>—tests an engineer's end-to-end understanding of networking, DNS, caching layers, load balancers, and persistent data tiers.
+      </p>
+      <p>
+        In modern enterprise infrastructure, this journey maps directly to native AWS cloud primitives. In this comprehensive architecture walkthrough, Duology details the complete request lifecycle across 9 interconnected AWS services—from DNS resolution through edge caching, gateway throttling, compute execution, asynchronous message buffering, and storage.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DeRSi7jhDa0/frame_003.jpg" alt="Amazon Route 53 DNS Resolution" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: Layer 1 - DNS Resolution: Route 53 maps domain names to nearest IP endpoints.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeRSi7jhDa0/frame_007.jpg" alt="Amazon CloudFront Edge CDN Caching" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: Layer 2 - Edge Acceleration: CloudFront delivers static assets from regional caches.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeRSi7jhDa0/frame_013.jpg" alt="Amazon API Gateway Routing and Throttling" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: Layer 3 - Application Ingress: API Gateway handles routing, auth, and rate limiting.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeRSi7jhDa0/frame_019.jpg" alt="Compute Layer EC2 vs ECS vs Lambda" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 4: Layer 4 - Compute Tier: Evaluating EC2 (IaaS), ECS (Containers), and Lambda (Serverless).</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeRSi7jhDa0/frame_033.jpg" alt="Amazon S3 Object Storage" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 5: Layer 7 - Blob Storage: S3 providing 11 9s durability for media assets.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeRSi7jhDa0/frame_041.jpg" alt="Complete AWS Architecture Overview Diagram" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 6: Complete End-to-End Enterprise AWS Topology.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-9-stage-request-lifecycle-through-aws"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The 9-Stage Request Lifecycle Through AWS</span></h2>
+
+      <h3>1. DNS Resolution: Amazon Route 53</h3>
+      <p>
+        The browser checks local and OS DNS caches before dispatching an iterative DNS lookup to <strong>Amazon Route 53</strong>. Route 53 uses global Anycast routing, latency-based routing, and weighted health checks to return the nearest IP address of the edge network in sub-20ms.
+      </p>
+
+      <h3>2. Edge Acceleration: Amazon CloudFront (CDN)</h3>
+      <p>
+        The request reaches the nearest CloudFront Point of Presence (PoP). If the request is for static media (HTML, CSS, JS, images) or cached responses (<code>stale-while-revalidate</code>), CloudFront serves the response immediately from edge memory, completely shielding backend servers from load.
+      </p>
+
+      <h3>3. Application Perimeter: Amazon API Gateway & WAF</h3>
+      <p>
+        Dynamic API requests pass through AWS WAF (Web Application Firewall) to block SQLi/DDoS attacks, landing at <strong>Amazon API Gateway</strong> (or Application Load Balancer):
+      </p>
+      <ul>
+        <li><strong>JWT / OAuth Validation:</strong> Verifies user auth tokens before hitting backend compute.</li>
+        <li><strong>Rate Limiting & Throttling:</strong> Enforces token-bucket algorithms (e.g., 50 req/sec per API key) to protect downstream services from runaway clients.</li>
+        <li><strong>SSL/TLS Termination:</strong> Offloads encryption overhead.</li>
+      </ul>
+
+      <h3>4. Compute Execution Tier: EC2 vs ECS vs Lambda</h3>
+      <p>
+        AWS provides three distinct compute archetypes:
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Model</th>
+            <th>Tradeoffs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Amazon EC2</strong></td>
+            <td>Virtual Machines (IaaS)</td>
+            <td>Maximum OS-level control; requires manual patching, OS updates, and autoscaling tuning.</td>
+          </tr>
+          <tr>
+            <td><strong>Amazon ECS / EKS</strong></td>
+            <td>Docker Containers (CaaS)</td>
+            <td>Predictable microservice orchestration with Fargate serverless compute; ideal for long-lived backend APIs.</td>
+          </tr>
+          <tr>
+            <td><strong>AWS Lambda</strong></td>
+            <td>Functions-as-a-Service (Serverless)</td>
+            <td>Zero server management; scales from 0 to 10,000+ executions automatically; pay-per-millisecond; potential cold start latency.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>5. Asynchronous Decoupling: Amazon SQS</h3>
+      <p>
+        When a request involves long-running operations (email generation, payment reconciliation, video encoding), the backend never blocks the HTTP response loop. It immediately writes a message to <strong>Amazon SQS</strong> (Simple Queue Service) and returns <code>HTTP 202 Accepted</code> to the user. Background worker fleets consume the queue asynchronously with dead-letter queue (DLQ) retry guarantees.
+      </p>
+
+      <h3>6. Persistence Layer: Amazon RDS vs DynamoDB</h3>
+      <ul>
+        <li><strong>Amazon RDS / Aurora:</strong> For ACID-compliant transactional relational workloads requiring complex joins, SQL constraints, and referential integrity.</li>
+        <li><strong>Amazon DynamoDB:</strong> Fully managed NoSQL key-value/document database delivering predictable single-digit millisecond latency at any throughput scale.</li>
+      </ul>
+
+      <h3>7. Blob Storage: Amazon S3</h3>
+      <p>
+        User-uploaded documents, videos, and avatars are never stored inside databases or container file systems. They reside in <strong>Amazon S3</strong>, delivering 99.999999999% (11 9s) durability, presigned upload URLs, and direct integration with CloudFront.
+      </p>
+
+      <h3>8. Observability & Telemetry: Amazon CloudWatch</h3>
+      <p>
+        Every component streams structured JSON logs, system metrics (CPU, RAM, 5xx error rates, queue depth), and distributed traces (AWS X-Ray) to CloudWatch, triggering automated alarms and PagerDuty escalations.
+      </p>
+
+      <h3>9. Security & Governance: AWS IAM</h3>
+      <p>
+        Governs every internal service-to-service transaction using least-privilege IAM Roles. ECS containers communicate with S3 and SQS using ephemeral, rotating STS credentials rather than hardcoded API keys.
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    
+    <a href="../Data-Structures/Db3Aj55x1rD-how-github-diffs-millions-of-lines-merkle-trees.html" class="pager-next"><span>Next: How Github Diffs Millions Of Lines Merkl</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

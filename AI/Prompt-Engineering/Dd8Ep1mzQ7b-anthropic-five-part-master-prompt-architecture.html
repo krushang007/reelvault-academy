@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anthropic's 5-Part Master Prompt Architecture for Claude Code & Vibe Coding</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · Prompt-Engineering</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-prompt-engineering">Prompt-Engineering</a></nav>
+
+  <p class="kicker">AI · Prompt-Engineering</p>
+  <h1>Anthropic's 5-Part Master Prompt Architecture for Claude Code & Vibe Coding</h1>
+
+  
+  <p class="meta">
+    Shared by <a href="https://www.instagram.com/reel/Dd8Ep1mzQ7b/" target="_blank">@vansh.vashist14</a> &bull; Rank #158 &bull; Shortcode: <code>Dd8Ep1mzQ7b</code>
+  </p>
+
+
+  
+  <div class="summary">
+    <p>
+        The difference between amateur "vibe coding" (where an AI hallucinating half-baked code breaks existing modules) and production-grade engineering is prompt structure. Based on official Anthropic prompt engineering guidelines, this 5-part architecture decomposes prompts into unambiguous XML-tagged sections that maximize reasoning depth and eliminate output drift in Claude 3.5 Sonnet and Claude Code.
+      </p>
+  </div>
+
+
+  <h2 id="visual-reference-stills"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Visual Reference Stills</span></h2>
+    <div class="gallery">
+      <img src="assets/Dd8Ep1mzQ7b/frame_01.jpg" alt="Anthropic Prompt Engineering Secret" />
+      <img src="assets/Dd8Ep1mzQ7b/frame_02.jpg" alt="Deconstructing the 5-Part Prompt Architecture" />
+      <img src="assets/Dd8Ep1mzQ7b/frame_03.jpg" alt="Final Prompt Harness Execution" />
+    </div>
+
+    <h2 id="the-5-part-master-prompt-structure"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">The 5-Part Master Prompt Structure</span></h2>
+
+    <div class="part-box">
+      <span class="part-num">1</span>
+      <h3 class="part-title">Role Definition & Primary Objective (1–2 Lines)</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Explicitly state the exact persona, seniority level, and core purpose:</p>
+      <pre><code>&lt;role&gt;
+You are a Principal Staff Frontend Engineer specializing in Next.js App Router, 
+TypeScript, and TailwindCSS design systems. Your objective is to build a responsive, 
+accessible pricing calculator with zero hydration mismatches.
+&lt;/role&gt;</code></pre>
+    </div>
+
+    <div class="part-box">
+      <span class="part-num">2</span>
+      <h3 class="part-title">Background Context & File Lineage</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Provide all upstream requirements, API schemas, design system tokens, or relevant codebase snippets:</p>
+      <pre><code>&lt;context&gt;
+We are working within a Turborepo monorepo. The shared UI package uses Radix UI 
+primitives. Existing color tokens live in @repo/ui/tokens.
+&lt;/context&gt;</code></pre>
+    </div>
+
+    <div class="part-box">
+      <span class="part-num">3</span>
+      <h3 class="part-title">Step-by-Step Task Breakdown</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Force structured, sequential execution rather than guessing the entire build in one go:</p>
+      <pre><code>&lt;instructions&gt;
+1. Read the existing component structure in src/components/pricing/.
+2. Create the state management hook using React 19 useActionState.
+3. Implement the client component with keyboard accessible slider controls.
+4. Add comprehensive unit tests in vitest verifying edge values (0, max, negative).
+&lt;/instructions&gt;</code></pre>
+    </div>
+
+    <div class="part-box">
+      <span class="part-num">4</span>
+      <h3 class="part-title">Explicit Negative Constraints & Guardrails</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">LLMs perform 2x better when told what NOT to do:</p>
+      <pre><code>&lt;constraints&gt;
+- Do NOT use the `any` type under any circumstance.
+- Do NOT rewrite or delete unrelated utility functions.
+- Do NOT use external icon packages; strictly use inline SVG or lucide-react.
+- Do NOT truncate code blocks with comments like "// ...rest of code".
+&lt;/constraints&gt;</code></pre>
+    </div>
+
+    <div class="part-box">
+      <span class="part-num">5</span>
+      <h3 class="part-title">Thinking Scratchpad & Exact Output Schema</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Give the model a designated scratchpad tag to reason before outputting final code:</p>
+      <pre><code>&lt;output_format&gt;
+First, inside &lt;thinking&gt; tags, analyze potential hydration issues and state transitions.
+Then, output ONLY the completed TypeScript file without markdown conversational commentary.
+&lt;/output_format&gt;</code></pre>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../Mobile-Agents/DehEdBbgQFZ-google-artemis-open-source-android-agent-mcp.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Google Artemis Open Source Android Agent</span></a>
+    <a href="../RAG-Architecture/DcJYvFmIjmn-colpali-multi-vector-vision-language-rag-paligemma.html" class="pager-next"><span>Next: Colpali Multi Vector Vision Language Rag</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

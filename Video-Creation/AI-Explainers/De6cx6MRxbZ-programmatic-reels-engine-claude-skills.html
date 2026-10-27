@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programmatic Short-Form Video Generation: The Claude Code-to-Video Engine</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#video-creation" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Video-Creation</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Video-Creation · AI-Explainers</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#video-creation">Video-Creation</a> / <a href="../../index.html#video-creation-ai-explainers">AI-Explainers</a></nav>
+
+  <p class="kicker">Video-Creation · AI-Explainers</p>
+  <h1>Programmatic Short-Form Video Generation: The Claude Code-to-Video Engine</h1>
+
+  
+  <p class="meta">
+    <span>Adilet (@adilet.fndr)</span> &bull; <span>2026-10-25</span> &bull; <a href="https://www.instagram.com/reel/De6cx6MRxbZ/">Original Reel</a>
+  </p>
+
+
+  
+
+  <p class="summary">An architectural breakdown of a programmatic code-driven video synthesis pipeline powered by a custom Claude Skill (<code>ai-video</code>). Unlike probabilistic text-to-video AI generators that produce random, glitchy motion, this system programmatically generates scripts, synchronizes text-to-speech voiceovers, animates modular multi-style scenes (Classic, 3D Explainer, Illustrated) using code-based rendering engines (e.g. Remotion/Canvas at 30 fps), and runs an automated motion-scoring pulse test to eliminate dull or flat pacing moments prior to final rendering.</p>
+
+  <figure class="hero">
+    <img src="assets/De6cx6MRxbZ/00-05-code-driven-reel-architecture.jpg" alt="Code to Reel architecture showing scene code rendered programmatically to video frames">
+    <figcaption>00:05 &mdash; Programmatic video generation paradigm: writing executable scene code rather than prompting black-box diffusion video models.</figcaption>
+  </figure>
+
+  <h2 id="system-architecture-amp-pipeline"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">System Architecture &amp; Pipeline</span></h2>
+  <ol>
+    <li><strong>Code-Driven Determinism vs. Diffusion Models:</strong>
+      <ul>
+        <li>Traditional text-to-video diffusion models (Runway, Sora) suffer from uncontrollable hallucinations, visual morphing, and text rendering errors.</li>
+        <li>Programmatic video uses declarative code (<code>reel.js</code> with components like <code>scene('hook')</code>, <code>spring(card)</code>, <code>presenter.point()</code>) compiled deterministically into 30 fps video frames.</li>
+      </ul>
+    </li>
+    <li><strong>Single-Prompt Autonomous Build Pipeline (4 Stages):</strong>
+      <ol>
+        <li><strong>Write Script:</strong> Analyzes topic prompt (e.g. <em>&ldquo;make a reel about why IKEA makes you walk through the whole store&rdquo;</em>) and writes narrative structure with conversational rhythm.</li>
+        <li><strong>Record Voiceover:</strong> Generates synchronized audio via high-fidelity neural TTS (ElevenLabs API).</li>
+        <li><strong>Animate Scenes:</strong> Pulls from a pre-built modular Scene Library across three distinct visual styles: <strong>Classic</strong>, <strong>3D Explainer</strong>, and <strong>Illustrated</strong>.</li>
+        <li><strong>Render File:</strong> Compiles React/HTML5 canvas components and audio waveforms into an MP4 export via headless Chromium/FFmpeg.</li>
+      </ol>
+    </li>
+    <li><strong>Viral Behavioral Constraints (Decoded Rules):</strong>
+      <ul>
+        <li><strong>Hook Pattern:</strong> First visual payoff and narrative premise must land within <strong>1.5 seconds</strong>.</li>
+        <li><strong>Pacing Frequency:</strong> A visual event, camera move, transition, or card pop must trigger every <strong>0.6 seconds</strong> to sustain mobile retention.</li>
+        <li><strong>Kinetic Captions:</strong> Words dynamically pulse and pop in frame-perfect sync with audio phonemes.</li>
+      </ul>
+    </li>
+    <li><strong>Motion Scoring &amp; Self-Correction:</strong>
+      <ul>
+        <li>Before export, an automated evaluator computes a continuous &ldquo;motion pulse / heartbeat&rdquo; across the video timeline (measured on a 1–10 score, min 7.2).</li>
+        <li>Detects dead zones (&ldquo;weak moments&rdquo; lacking screen movement) and programmatically inserts cuts, zoom snaps, or kinetic text accents to restore energy.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2 id="pipeline-breakdown"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Pipeline Breakdown</span></h2>
+  <div class="gallery">
+    <figure>
+      <img src="assets/De6cx6MRxbZ/00-24-4-stage-build-pipeline.jpg" alt="Claude is building 4-stage task list: Write script, Record voiceover, Animate scenes, Render file">
+      <figcaption>00:24 &mdash; The autonomous 4-stage build pipeline running inside the Claude environment.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/De6cx6MRxbZ/00-36-decoded-pacing-and-hook-rules.jpg" alt="Decoded metrics: Hook patterns payoff by 1.5s, Pacing rules event every 0.6s, Kinetic captions words pop in sync">
+      <figcaption>00:36 &mdash; Algorithmic pacing parameters: 1.5s hook payoff and 0.6s event frequency.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/De6cx6MRxbZ/00-41-motion-scoring-heartbeat-engine.jpg" alt="Motion score gauge showing 7.6/10 and heartbeat waveform detecting weak pacing moments">
+      <figcaption>00:41 &mdash; Motion pulse test: timeline heartbeat waveform identifying weak flat spots for automatic re-animation.</figcaption>
+    </figure>
+  </div>
+
+  <h2 id="verbatim-breakdown"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Verbatim Breakdown</span></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Screen / Source</th>
+        <th>Verbatim Content</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>00:00</code></td>
+        <td>On-screen badge</td>
+        <td>// 01 &bull; any style<br>This Claude skill lets you create unlimited reels in any style.<br>CLASSIC &bull; 3D EXPLAINER &bull; ILLUSTRATED</td>
+      </tr>
+      <tr>
+        <td><code>00:05</code></td>
+        <td>Code snippet &amp; UI</td>
+        <td>scene(&quot;hook&quot;)<br>caption(&quot;These reels&quot;)<br>spring(card)<br>presenter.point()<br>render()<br>&rarr; MADE WITH CODE &bull; render(&quot;mcd&quot;, 30 fps)</td>
+      </tr>
+      <tr>
+        <td><code>00:07</code></td>
+        <td>On-screen comparison</td>
+        <td>NOT AI-GENERATED<br>&times; AI VIDEO MODEL (random - glitchy)<br>&#9989; CODE &bull; render(&quot;mcd&quot;, 30 fps)</td>
+      </tr>
+      <tr>
+        <td><code>00:11</code></td>
+        <td>Spoken (audio)</td>
+        <td>&ldquo;I myself got over 40,000 followers in 35 days with them, and nearly 5 million views.&rdquo;</td>
+      </tr>
+      <tr>
+        <td><code>00:20</code></td>
+        <td>On-screen prompt</td>
+        <td>ai-video &gt; &ldquo;make a reel about why IKEA makes you walk through the whole store&rdquo;</td>
+      </tr>
+      <tr>
+        <td><code>00:24</code></td>
+        <td>Claude build UI</td>
+        <td>Claude is building:<br>[X] Write script<br>[X] Record voiceover<br>[X] Animate scenes<br>[X] Render file</td>
+      </tr>
+      <tr>
+        <td><code>00:35</code></td>
+        <td>On-screen parameters</td>
+        <td>#1 Hook patterns: payoff by 1.5 s<br>#2 Pacing rules: event every 0.6 s<br>#3 Kinetic captions: WORDS POP IN SYNC</td>
+      </tr>
+      <tr>
+        <td><code>00:41</code></td>
+        <td>On-screen metrics</td>
+        <td>// motion score: 7.6 / 10 (min)<br>&hearts; MOTION: ikea_reel.mp4 (92 bpm)<br>WEAK &rarr; FIXES THE WEAK MOMENTS</td>
+      </tr>
+      <tr>
+        <td><code>(caption)</code></td>
+        <td>Post Caption</td>
+        <td>Every reel on this account is made programmatically by one Claude skill: you type one line, and it writes the script, records the voice, animates every scene in the style you pick, scores its own motion and renders the file. 40K+ followers in 35 days.<br>Comment SKILL and I&rsquo;ll send you the system &#128071;<br>My results, not a promise: yours depend on your niche and consistency.<br>#claudecode #aitools #aivideo #contentcreator #money</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="tech-stack-amp-libraries"><span class="h-ico"><i data-lucide="wrench" class="ico"></i></span><span class="h-text">Tech Stack &amp; Libraries</span></h2>
+  <ul>
+    <li><strong>Programmatic Video Framework:</strong> Remotion (React-based video rendering) or Node.js Canvas / FFmpeg rendering pipelines.</li>
+    <li><strong>Voice Synthesis:</strong> ElevenLabs WebSocket API for low-latency neural speech generation and word-level timestamp alignment.</li>
+    <li><strong>LLM Engine:</strong> Claude 3.5 Sonnet / Claude Opus for structural screenplay writing, timing calculations, and JSX/CSS layout composition.</li>
+  </ul>
+
+  <h2 id="try-this"><span class="h-ico"><i data-lucide="sparkles" class="ico"></i></span><span class="h-text">Try This</span></h2>
+  <ol>
+    <li>Set up a local Remotion project (<code>npx create-video</code>) configured for 1080&times;1920 vertical format at 30 fps.</li>
+    <li>Write a Claude system prompt that accepts a 1-sentence topic and outputs a structured JSON object containing:
+      <ul>
+        <li><code>narration</code>: Voiceover script split into 3–5 sentence arrays.</li>
+        <li><code>scenes</code>: Array of scene types (<code>diagram</code>, <code>isometric_3d</code>, <code>quote_card</code>) with entry/exit frame offsets.</li>
+        <li><code>captions</code>: Word-level timestamps for kinetic CSS spring scaling.</li>
+      </ul>
+    </li>
+    <li>Enforce the 0.6-second rule: ensure that spring animations, icon reveals, or highlight color changes fire at intervals no greater than 18 frames (at 30 fps).</li>
+  </ol>
+
+  <h2 id="open-questions"><span class="h-ico"><i data-lucide="help-circle" class="ico"></i></span><span class="h-text">Open Questions</span></h2>
+  <ul>
+    <li>Rendering compute constraints: Rendering high-resolution 3D assets or complex SVG particle animations at 30–60 fps headlessly can bottleneck CPU compute; offloading Remotion rendering to AWS Lambda (Remotion Lambda) is standard practice for production throughput.</li>
+  </ul>
+
+  
+  <nav class="pager">
+    <a href="De3tQ_QlFi_-hyperframes-heygen-html-css-video-engine.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Hyperframes Heygen Html Css Video Engine</span></a>
+    <a href="DebprD8TMlR-5-claude-skills-code-driven-motion-graphics.html" class="pager-next"><span>Next: 5 Claude Skills Code Driven Motion Graph</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

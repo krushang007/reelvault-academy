@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turning Claude Code into a Full Development Team: 5 Modular Tools and MCP Extensions</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · Claude-Skills</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-claude-skills">Claude-Skills</a></nav>
+
+  <p class="kicker">AI · Claude-Skills</p>
+  <h1>Turning Claude Code into a Full Development Team: 5 Modular Tools and MCP Extensions</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        Most developers treat CLI coding agents like Anthropic's Claude Code as isolated, solo programmers—prompting them for one-off functions or ad-hoc script edits. However, without structured role specialization and environment extensions, coding agents quickly hit context window degradation, hallucinatory package APIs, and regression bugs.
+      </p>
+      <p>
+        In this breakdown, AI educator Naman Soni demonstrates how to elevate Claude Code from a lone developer into a structured 5-role virtual engineering team using specialized custom skills, Model Context Protocol (MCP) servers, slash commands, and persona prompting.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/Deb0eDDhsyJ/frame_007.jpg" alt="Turn Claude Code into a full dev team architecture" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: Orchestrating Claude Code across 5 specialized engineering personas.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Deb0eDDhsyJ/frame_010.jpg" alt="Superpowers specification and planning framework" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: Tool 1 - Superpowers: Spec brainstorm, task decomposition, and test-first design.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Deb0eDDhsyJ/frame_013.jpg" alt="Context7 MCP server for live library documentation" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: Tool 2 - Context7 MCP: Feeding live docs (Next.js, Supabase) directly to the agent.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Deb0eDDhsyJ/frame_017.jpg" alt="Custom code review slash command" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 4: Tool 3 - Code Reviewer: Automated pull-request and bug detection slash commands.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Deb0eDDhsyJ/frame_024.jpg" alt="Executive leadership review persona" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 5: Tool 5 - Executive Review: Enforcing product vision and pragmatic prioritization.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-5-tool-engineering-matrix"><span class="h-ico"><i data-lucide="wrench" class="ico"></i></span><span class="h-text">The 5-Tool Engineering Matrix</span></h2>
+
+      <h3>1. Architect / Planner: "Superpowers" Spec Engine</h3>
+      <p>
+        Before writing a single line of application code, invoke a strict planning and specification phase:
+      </p>
+      <ul>
+        <li><strong>Brainstorming & Boundary Definition:</strong> Clarify constraints, data models, and edge cases.</li>
+        <li><strong>Micro-Task Decomposition:</strong> Split large objectives into atomic units of work (max 1–2 files per step).</li>
+        <li><strong>Test-Driven Harness:</strong> Author failing test assertions prior to feature implementation to prevent silent hallucinations.</li>
+      </ul>
+
+      <h3>2. Researcher: Context7 Live Documentation MCP</h3>
+      <p>
+        LLM pre-training weights frequently misremember the latest APIs for fast-moving ecosystems (such as Next.js 15+ App Router caching rules or Supabase SSR authentication helpers). 
+      </p>
+      <p>
+        By connecting an MCP documentation proxy (such as Context7 or official SDK doc servers), Claude Code queries live upstream documentation before generating integration code, eliminating outdated methods and deprecated imports.
+      </p>
+
+      <h3>3. Quality Assurance: Automated `/code-review` Command</h3>
+      <p>
+        Configure a custom project slash command (e.g. <code>.claude/commands/code-review.md</code>) that forces the agent into an adversarial code review posture:
+      </p>
+      <pre><code># .claude/commands/code-review.md
+Review the git diff on the current branch against main.
+Inspect:
+1. Potential security vulnerabilities (injection, auth bypass, unvalidated input).
+2. Missing error handling and unhandled Promise rejections.
+3. Unnecessary dependency bloat or duplicate helper logic.
+4. Compliance with existing repository design patterns.</code></pre>
+
+      <h3>4. Refactoring Specialist: Code Simplifier & Cleaner</h3>
+      <p>
+        LLMs generate redundant abstractions, verbose comments, and dead branches over long coding sessions. A dedicated simplification pass prompts the model to:
+      </p>
+      <ul>
+        <li>Delete temporary debugging logs and dead imports.</li>
+        <li>Collapse nested conditionals and apply idiomatic language constructs.</li>
+        <li>Verify formatting with local linters (e.g. Ruff or Prettier).</li>
+      </ul>
+
+      <h3>5. Product Lead / Executive Review (The YC CEO Persona)</h3>
+      <p>
+        Engineers often over-engineer secondary features. Ground the agent with an executive product lead prompt (e.g. inspired by Garry Tan / Y Combinator principles):
+      </p>
+      <blockquote>
+        "Evaluate this feature through the lens of a venture-backed startup CEO: Does this code deliver direct user value? Are we building unnecessary complexity before product-market fit? What is the simplest path to shipping this to real users today?"
+      </blockquote>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="DeRrAqXtuxP-anthropic-claude-for-startups-credits-eligibility.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Anthropic Claude For Startups Credits El</span></a>
+    <a href="DehhEpgtqHY-12-claude-agent-skills-linkedin-automation.html" class="pager-next"><span>Next: 12 Claude Agent Skills Linkedin Automati</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS Production Hardening: Nginx Rate Limiting, ClamAV File Quarantine & Cloudflare WAF</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#engineering" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Engineering</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Engineering · Cloud-Security</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#engineering">Engineering</a> / <a href="../../index.html#engineering-cloud-security">Cloud-Security</a></nav>
+
+  <p class="kicker">Engineering · Cloud-Security</p>
+  <h1>AWS Production Hardening: Nginx Rate Limiting, ClamAV File Quarantine & Cloudflare WAF</h1>
+
+  
+  <p class="meta">
+    Shared by <a href="https://www.instagram.com/reel/DeHtWQNTWF7/" target="_blank">@xdankit</a> (Ankit Jain) &bull; Rank #123 &bull; Shortcode: <code>DeHtWQNTWF7</code>
+  </p>
+
+
+  
+  <div class="summary">
+    <p>
+        The moment an application is deployed to public cloud infrastructure (AWS EC2, VPS), automated bots scan and assault exposed IP addresses regardless of application size or traffic. Deployments suffer high CPU/RAM spikes and disk corruption not because of legitimate user load, but due to credential stuffing, directory traversal, reverse-shell payloads in disguised file uploads, and cryptocurrency mining exploits. This guide codifies a 3-layer production defense architecture: Cloudflare Edge WAF, Nginx reverse-proxy rate limiting, and an asynchronous ClamAV quarantine isolation sandbox for file processing.
+      </p>
+  </div>
+
+
+  <h2 id="key-visual-reference-frames"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Key Visual Reference Frames</span></h2>
+    <div class="gallery">
+      <img src="assets/DeHtWQNTWF7/frame_01.jpg" alt="First AWS Deployment Experience" />
+      <img src="assets/DeHtWQNTWF7/frame_03.jpg" alt="Bot Traffic & Resource Spikes in Logs" />
+      <img src="assets/DeHtWQNTWF7/frame_05.jpg" alt="ClamAV Open Source Antivirus Setup" />
+      <img src="assets/DeHtWQNTWF7/frame_07.jpg" alt="Cloudflare WAF & Production Hardening" />
+    </div>
+
+    <h2 id="the-three-attack-vectors-on-fresh-cloud-deployments"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Three Attack Vectors on Fresh Cloud Deployments</span></h2>
+    <ol>
+      <li>
+        <strong>Automated Bot Traffic & Scanners:</strong>
+        Bots continuously probe for known vulnerabilities (<code>/wp-login.php</code>, <code>/.env</code>, phpMyAdmin, actuator endpoints). Blocking single IP addresses in firewall tables fails immediately because attackers rotate residential proxy networks and VPN egress pools.
+      </li>
+      <li>
+        <strong>Malicious File Upload Exploits:</strong>
+        Attackers rename malicious PHP, Bash, or ELF binaries to <code>avatar.jpg</code> or <code>document.pdf</code>. If stored directly on disk and served or executed by worker threads, they establish reverse shells or launch crypto miners (e.g., XMRig) that consume 100% of CPU capacity.
+      </li>
+      <li>
+        <strong>Volumetric L7 DDoS & Token Flooding:</strong>
+        Direct origin exposure allows unsophisticated bots to exhaust HTTP connection pools and memory before requests even touch business logic.
+      </li>
+    </ol>
+
+    <h2 id="the-3-layer-production-defense-architecture"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">The 3-Layer Production Defense Architecture</span></h2>
+
+    <div class="architecture-box">
+      <h3><span class="step-number">1</span>Edge Layer: Cloudflare WAF & Managed Rules</h3>
+      <p>Hide origin IPs completely behind Cloudflare reverse proxy:</p>
+      <ul>
+        <li><strong>Proxy Status:</strong> Orange cloud active (origin IP never exposed in DNS A records).</li>
+        <li><strong>Security Level:</strong> Medium / Managed Challenge on automated ASN pools.</li>
+        <li><strong>Security Groups on AWS:</strong> Restrict EC2 inbound port 80/443 strictly to Cloudflare's published CIDR IP blocks.</li>
+      </ul>
+    </div>
+
+    <div class="architecture-box">
+      <h3><span class="step-number">2</span>Reverse Proxy Layer: Nginx Leaky-Bucket Rate Limiting</h3>
+      <p>Configure Nginx to rate-limit requests per client IP to prevent resource exhaustion:</p>
+      <pre><code># nginx.conf
+http {
+    # Define rate limit zone (10MB memory zone holds ~160k IP states)
+    limit_req_zone $binary_remote_addr zone=api_limit:10m rate=10r/s;
+    limit_conn_zone $binary_remote_addr zone=addr_limit:10m;
+
+    server {
+        listen 80;
+        server_name api.yourdomain.com;
+
+        location /api/ {
+            # Allow burst of 20 with nodelay to smooth legitimate spikes
+            limit_req zone=api_limit burst=20 nodelay;
+            limit_conn addr_limit 10;
+            
+            proxy_pass http://localhost:3000;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}</code></pre>
+    </div>
+
+    <div class="architecture-box">
+      <h3><span class="step-number">3</span>Storage Layer: ClamAV Quarantine Sandbox</h3>
+      <p>Never store user-uploaded files directly into production storage or executable paths:</p>
+      <ol>
+        <li><strong>Temporary Quarantine Directory:</strong> Save incoming multipart uploads into an isolated quarantine folder (e.g., <code>/tmp/quarantine/</code>) with execution flags disabled (<code>noexec</code> mount).</li>
+        <li><strong>Header & MIME Verification:</strong> Verify magic bytes (not just file extension strings).</li>
+        <li><strong>ClamAV Scan:</strong> Invoke ClamAV daemon (<code>clamdscan --fdpass</code>) to scan the quarantined file against virus signatures.</li>
+        <li><strong>Safe Promotion or Instant Eviction:</strong> If clean, promote to S3 / permanent storage with randomized UUID naming. If infected, purge immediately and log IP/user metadata to security audit tables.</li>
+      </ol>
+      <pre><code># Example Node.js / Docker integration with clamdjs
+const clamd = require('clamdjs');
+const scanner = clamd.createScanner('127.0.0.1', 3310);
+
+async function handleFileUpload(tempFilePath) {
+  const result = await scanner.scanFile(tempFilePath);
+  if (clamd.isCleanReply(result)) {
+    // Safe to promote to persistent S3 bucket
+    await uploadToS3(tempFilePath);
+  } else {
+    // Quarantine breach: delete file and flag tenant
+    fs.unlinkSync(tempFilePath);
+    throw new SecurityException('Malicious payload detected: ' + result);
+  }
+}</code></pre>
+    </div>
+
+    <div class="callout-warning">
+      <h4>Core Takeaway for AI Engineers</h4>
+      <p>
+        Building fast with AI coding tools (Claude, Cursor, Copilot) is a superpower, but speed without production defenses creates liability. Always enforce origin hiding, request rate limits, and quarantine sandboxes before taking any MVP live on public cloud infrastructure.
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    
+    <a href="../Production-Readiness/Dd4d0n3oEuy-website-post-launch-verification-suite-gsc-clarity-screaming-frog.html" class="pager-next"><span>Next: Website Post Launch Verification Suite G</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

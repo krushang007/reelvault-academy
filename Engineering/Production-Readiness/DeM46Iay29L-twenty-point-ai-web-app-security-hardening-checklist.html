@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 20-Point Security Hardening Checklist for AI-Generated & Vibe-Coded Web Apps</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#engineering" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Engineering</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Engineering · Production-Readiness</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#engineering">Engineering</a> / <a href="../../index.html#engineering-production-readiness">Production-Readiness</a></nav>
+
+  <p class="kicker">Engineering · Production-Readiness</p>
+  <h1>The 20-Point Security Hardening Checklist for AI-Generated & Vibe-Coded Web Apps</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        When two developers build web applications using frontier coding agents (e.g. Claude 3.5 Sonnet vs OpenAI Codex), automated penetration testing often reveals that one application is impenetrable while the other suffers from severe vulnerabilities. The difference lies not in the underlying neural network weights, but in whether the engineer enforces a strict <strong>Production Security Hardening Policy</strong> on generated code.
+      </p>
+      <p>
+        AI coding models optimize for rapid feature completion and minimal syntax errors. Left unchecked, they routinely generate unvalidated database queries, leak client-side secrets, expose source maps in production builds, and omit server-side authorization checks. This guide provides the complete 20-point security audit checklist required prior to launching any AI-generated web application.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DeM46Iay29L/frame_003.jpg" alt="Security Penetration Testing Comparison" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: Security Audit: Unhardened AI code vs security-gated production build.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeM46Iay29L/frame_011.jpg" alt="Broken Object Level Authorization BOLA Mitigation" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: Item 5: Fixing BOLA/IDOR by validating ownership server-side on every request.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeM46Iay29L/frame_015.jpg" alt="Tightening CORS Allowed Origins Configuration" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: Item 11: Tightening CORS origins—explicit domain whitelists without wildcards.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeM46Iay29L/frame_019.jpg" alt="Removing Exposed Source Maps in Production Next.js" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 4: Item 17: Disabling client-facing JavaScript source maps in production bundles.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-20-point-production-hardening-checklist"><span class="h-ico"><i data-lucide="sparkles" class="ico"></i></span><span class="h-text">The 20-Point Production Hardening Checklist</span></h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Vulnerability & Vector</th>
+            <th>The Common AI Mistake</th>
+            <th>Required Production Hardening</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><strong>SQL Injection</strong></td>
+            <td>Raw string interpolation inside SQL queries.</td>
+            <td>Use parameterized statements or ORM binding (Prisma, Drizzle, SQLAlchemy) exclusively.</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><strong>Cross-Site Scripting (XSS)</strong></td>
+            <td>Rendering unsanitized HTML via <code>dangerouslySetInnerHTML</code>.</td>
+            <td>Sanitize with DOMPurify and configure strict Content Security Policy (CSP) headers.</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><strong>CSRF Protection</strong></td>
+            <td>Accepting cross-origin state mutations without validation.</td>
+            <td>Enforce <code>SameSite=Lax</code> or <code>Strict</code> on cookies; validate anti-CSRF tokens on POST/PUT/DELETE.</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><strong>File Upload Validation</strong></td>
+            <td>Checking only client-provided file extensions (e.g. <code>.jpg</code>).</td>
+            <td>Verify magic bytes buffer signatures, re-encode images via Sharp, and upload to S3/R2 with non-executable MIME types.</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><strong>Broken Object Level Authorization (BOLA/IDOR)</strong></td>
+            <td>Querying <code>GET /api/documents/:id</code> without checking if requesting user owns the document.</td>
+            <td>Enforce tenant ownership verification on every database query: <code>WHERE id = :id AND user_id = :auth_user_id</code>.</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td><strong>Rate Limiting</strong></td>
+            <td>Leaving auth endpoints (login, forgot-password) unbounded.</td>
+            <td>Implement Redis sliding-window rate limiters (e.g. 5 failed login attempts per 15 minutes per IP).</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td><strong>Secure JWT Secrets</strong></td>
+            <td>Using weak strings like <code>secret123</code> or hardcoding keys in repositories.</td>
+            <td>Generate 256-bit cryptographically random secrets stored in managed secret vaults.</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td><strong>Server-Side Secret Isolation</strong></td>
+            <td>Prefixing private backend keys with <code>NEXT_PUBLIC_</code> in frontend frameworks.</td>
+            <td>Keep database URLs and private payment keys strictly in server environments; audit client bundles.</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td><strong>Cryptographic Password Hashing</strong></td>
+            <td>Using legacy MD5, SHA-256, or low-cost bcrypt rounds.</td>
+            <td>Use Argon2id or bcrypt with an adaptive cost factor &ge; 12.</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td><strong>Multi-Factor Authentication (MFA)</strong></td>
+            <td>Relying solely on single-factor passwords for admin and billing routes.</td>
+            <td>Support standard RFC 6238 TOTP authenticator apps or FIDO2/WebAuthn passkeys.</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td><strong>Strict CORS Policy</strong></td>
+            <td>Using wildcard <code>Access-Control-Allow-Origin: *</code> alongside credentials.</td>
+            <td>Explicitly whitelist exact production subdomains (<code>https://app.example.com</code>).</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td><strong>Eliminate LocalStorage Tokens</strong></td>
+            <td>Storing access and refresh tokens in browser <code>localStorage</code>.</td>
+            <td>Store tokens in <code>HttpOnly; Secure; SameSite=Strict</code> cookies to completely prevent JavaScript XSS exfiltration.</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td><strong>Server-Side Permission Gates</strong></td>
+            <td>Hiding buttons in React without validating permissions in backend handlers.</td>
+            <td>Always re-verify user role, subscription tier, and permissions inside API route middleware.</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td><strong>Row-Level Security (RLS)</strong></td>
+            <td>Exposing Postgres tables directly to Supabase client without RLS policies.</td>
+            <td>Enable <code>ALTER TABLE x ENABLE ROW LEVEL SECURITY;</code> on all tables with explicit <code>USING (auth.uid() = user_id)</code> policies.</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td><strong>Webhook Signature Verification</strong></td>
+            <td>Processing incoming Stripe/GitHub webhooks without signature verification.</td>
+            <td>Verify HMAC SHA-256 cryptographic signatures using raw request buffers before processing payments.</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td><strong>Server-Side Request Forgery (SSRF)</strong></td>
+            <td>Allowing server to fetch user-supplied URLs without IP filtering.</td>
+            <td>Blacklist loopback and cloud metadata IP ranges (<code>127.0.0.1</code>, <code>169.254.169.254</code>).</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td><strong>Disable Production Source Maps</strong></td>
+            <td>Deploying Next.js / Vite with default <code>productionBrowserSourceMaps: true</code>.</td>
+            <td>Set <code>productionBrowserSourceMaps: false</code> to avoid leaking entire backend API routes and comments in browser DevTools.</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td><strong>Rotate Default Credentials</strong></td>
+            <td>Deploying database containers with default <code>postgres:postgres</code> credentials.</td>
+            <td>Enforce automated secret generation during infrastructure provisioning.</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td><strong>Log Sanitization</strong></td>
+            <td>Logging raw request bodies containing credit card numbers, passwords, or PII.</td>
+            <td>Implement log masking middleware to strip sensitive authentication headers and fields.</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td><strong>Dependency Vulnerability Scanning</strong></td>
+            <td>Ignoring known CVEs in transitive npm/pip dependencies.</td>
+            <td>Automate CI/CD security audits with <code>npm audit</code>, Snyk, or GitHub Dependabot.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="Dd4d0n3oEuy-website-post-launch-verification-suite-gsc-clarity-screaming-frog.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Website Post Launch Verification Suite G</span></a>
+    <a href="DeZE43ABTIp-production-logging-morgan-winston-node-js.html" class="pager-next"><span>Next: Production Logging Morgan Winston Node J</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

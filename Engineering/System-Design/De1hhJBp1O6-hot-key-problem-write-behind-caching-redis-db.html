@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hot Key / Hot Row Problem &amp; Write-Behind Caching with Redis for High-Throughput Writes</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#engineering" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Engineering</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Engineering · System-Design</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#engineering">Engineering</a> / <a href="../../index.html#engineering-system-design">System-Design</a></nav>
+
+  <p class="kicker">Engineering · System-Design</p>
+  <h1>Hot Key / Hot Row Problem &amp; Write-Behind Caching with Redis for High-Throughput Writes</h1>
+
+  
+
+  
+
+  <p class="back"><a href="../../index.html">&larr; Learning Library</a></p>
+  <p class="breadcrumbs"><span>Engineering</span> / <span>System-Design</span></p>
+
+  
+
+  <section class="meta">
+    <p><strong>Creator:</strong> <a href="https://www.instagram.com/reel/De1hhJBp1O6/" target="_blank" rel="noopener">@sys.design.101 (System Design 101)</a></p>
+    <p><strong>Original Post:</strong> October 23, 2026 &bull; Instagram Reel &bull; 58s</p>
+    <p><strong>Stats:</strong> 33,108 likes &bull; 177 comments</p>
+    <p><strong>Status:</strong> Completed &bull; Verified via Audio &amp; Video Inspection</p>
+  </section>
+
+  <section>
+    <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+    <p>When high-concurrency viral events occur—such as an episode premiere receiving 500,000 likes within 60 seconds (~8,400 updates/sec)—direct database writes (e.g. <code>UPDATE videos SET likes = likes + 1 WHERE id = 'latent_ep1';</code>) trigger the notorious <strong>Hot Key / Hot Row</strong> problem. Because relational databases enforce row-level locking to maintain transactional consistency (ACID), concurrent transactions must queue sequentially behind a single lock. This causes cascading request timeouts and database connection pool starvation.</p>
+    <p>The standard distributed systems remedy is <strong>Write-Behind (Write-Back) Caching</strong>: incoming write events increment an in-memory counter in Redis via atomic operations (<code>INCR</code>) without locking, while an asynchronous batch worker periodically aggregates accumulated likes and flushes them to the relational database in a single batched update query every few seconds.</p>
+  </section>
+
+  <section>
+    <h2 id="system-architecture-amp-the-hot-row-problem"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">System Architecture &amp; The Hot Row Problem</span></h2>
+    <h3>1. The Naive Approach ("15 LPA Candidate Answer")</h3>
+    <pre><code>-- Naive individual update executed 500,000 times concurrently
+UPDATE videos 
+SET likes = likes + 1 
+WHERE id = 'latent_ep1';</code></pre>
+    <p>While syntactically correct, executing this query 8,400+ times per second against a single row creates severe failure modes:</p>
+    <ul>
+      <li><strong>Exclusive Row Locks (Pessimistic Locking):</strong> Relational databases (PostgreSQL, MySQL/InnoDB) acquire exclusive row locks during write operations. Only one connection can modify <code>latent_ep1</code> at any instant.</li>
+      <li><strong>Lock Queue Saturation:</strong> Every subsequent like request is placed into an OS thread/process wait queue. Thousands of concurrent requests stall waiting for lock acquisition.</li>
+      <li><strong>Connection Pool Exhaustion:</strong> Web application workers hold open database connections while waiting in the lock queue, exhausting max connection limits (e.g., <code>max_connections = 100</code> or <code>pool_size = 200</code>) and bringing down unaffected queries across the entire platform.</li>
+      <li><strong>Cascading Timeouts:</strong> HTTP client requests hit upstream API gateway timeouts (504 Gateway Timeout), dropping user engagement.</li>
+    </ul>
+
+    <figure>
+      <img src="assets/De1hhJBp1O6/00-24-hot-key-hot-row-problem-table.jpg" alt="Hot Key and Hot Row update distribution chart showing 8,400 updates/sec on latent_ep1" loading="lazy">
+      <figcaption>Figure 1: Hot Key skew visualization. While neighboring video rows experience 0 updates/sec, the viral episode row encounters 8,400 updates/sec, overwhelming single-row throughput limits.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="assets/De1hhJBp1O6/00-29-row-lock-queue-connection-exhaustion.jpg" alt="Row locked visualization showing queue of pending database connections" loading="lazy">
+      <figcaption>Figure 2: Row lock queue mechanism. Database enforces single-transaction-at-a-time execution (Row Locked: Ek update khatam, tabhi agla), stranding hundreds of thousands of connection threads.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2 id="solution-write-behind-write-back-caching"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Solution: Write-Behind (Write-Back) Caching</span></h2>
+    <p>The scalable pattern decouples user-facing write ingestion from durable database persistence.</p>
+
+    <figure>
+      <img src="assets/De1hhJBp1O6/00-41-write-behind-caching-redis-batch-update.jpg" alt="Write-behind caching architecture diagram with Redis counter and periodic batch database update" loading="lazy">
+      <figcaption>Figure 3: Write-Behind Caching architecture. In-memory Redis counter absorbs thousands of concurrent increments without locking; a 2-second periodic worker flushes the delta into the database in a single query.</figcaption>
+    </figure>
+
+    <h3>Architecture Workflow</h3>
+    <ol>
+      <li><strong>Ingestion Tier:</strong> When a user hits the Like button, the API server executes an atomic in-memory increment against Redis:
+        <pre><code>INCR likes:latent_ep1</code></pre>
+        Because Redis operates in-memory with single-threaded event-loop atomicity, <code>INCR</code> executes sub-millisecond without row locks or contention.
+      </li>
+      <li><strong>Immediate Acknowledgement:</strong> The client receives an instantaneous HTTP 200 response with zero database latency.</li>
+      <li><strong>Periodic Flush Worker:</strong> Every <code>N</code> seconds (e.g. 2 seconds), a background job or cron worker extracts accumulated counts:
+        <pre><code>-- Flush delta to relational database in 1 single transaction
+UPDATE videos 
+SET likes = likes + 55719 
+WHERE id = 'latent_ep1';</code></pre>
+      </li>
+      <li><strong>Throughput Reduction:</strong> Instead of executing 500,000 queries per minute, the database receives only 30 batch updates (one every 2 seconds)—a <strong>99.994% reduction</strong> in write query load.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2 id="engineering-tradeoffs-amp-edge-cases"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Engineering Tradeoffs &amp; Edge Cases</span></h2>
+    <h3>The Durability Conundrum: "What if Redis Crashes?"</h3>
+    <p>At 0:49, the creator highlights the fundamental distributed systems question: <em>"Agar database mein likhne se pehle Redis hi crash ho gaya... toh jama saare likes kahan gaye?"</em></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Strategy</th>
+          <th>Mechanism</th>
+          <th>Pros</th>
+          <th>Cons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Redis AOF (Append-Only File)</strong></td>
+          <td>Append every <code>INCR</code> command to disk (e.g., <code>appendfsync everysec</code>)</td>
+          <td>Near-zero loss on restart (at most 1 sec of data lost); minimal disk overhead</td>
+          <td>Slight I/O latency penalty compared to pure in-memory operation</td>
+        </tr>
+        <tr>
+          <td><strong>Message Queue (Kafka / RabbitMQ)</strong></td>
+          <td>Publish like events to a partitioned Kafka topic; batch consumer commits offsets after DB write</td>
+          <td>Guaranteed durability, exact-once or at-least-once processing, replayability</td>
+          <td>Higher operational complexity and infrastructure overhead</td>
+        </tr>
+        <tr>
+          <td><strong>Acceptable Approximate Metrics</strong></td>
+          <td>For vanity metrics (social likes/views), losing &lt;1% during an unplanned failover is acceptable</td>
+          <td>Maximum throughput, lowest latency, simplest implementation</td>
+          <td>Minor counter discrepancy if unexpected hard crash occurs before flush</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2 id="verbatim-audio-transcript-amp-dialogue"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Verbatim Audio Transcript &amp; Dialogue</span></h2>
+    <blockquote>
+      <p><strong>[00:00 - 00:08]</strong> Interviewer ne poocha: Latent ka naya episode &mdash; 1 minute mein 5 lakh likes. Database kaise update karoge?</p>
+      <p><strong>[00:08 - 00:15]</strong> 15 LPA wala: Har like pe database mein <code>likes + 1</code>. Query toh correct hai, par humein college project nahi, scalable system banana hai.</p>
+      <p><strong>[00:15 - 00:23]</strong> Yahin aata hai Hot Key problem. Aur iska fix? Write-Behind Caching. Yeh video save kar lo, interview mein kaam aayega.</p>
+      <p><strong>[00:23 - 00:34]</strong> Problem samjho: Lakhon likes, sab ek hi row pe &mdash; us episode wali row. Isi ko Hot Key ya Hot Row kehte hain.</p>
+      <p><strong>[00:34 - 00:41]</strong> Par database us row ko ek baar mein ek hi update karne deta hai. Toh line har second badhti jaati hai. Likes timeout hote hain, aur database ki saari connections isi line mein phas jaati hain.</p>
+      <p><strong>[00:41 - 00:49]</strong> Solution: Likes pehle Redis mein gino. Redis memory mein counter rakhta hai. Har like pe bas <code>+1</code>. Phir har kuch second mein, jama huye saare likes database mein ek hi update mein. 5 lakh updates ki jagah, bas gine-chune. Line khatam.</p>
+      <p><strong>[00:49 - 00:58]</strong> Ab 15 LPA wala bola: Agar database mein likhne se pehle Redis hi crash ho gaya, toh Redis mein jama saare likes kahan gaye? Tum batao, comment mein.</p>
+    </blockquote>
+  </section>
+
+  
+  <nav class="pager">
+    <a href="Ddt8znUtkZ0-microsoft-interview-token-refresh-stampede-mutex-queue.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Microsoft Interview Token Refresh Stampe</span></a>
+    <a href="DeYmEhSE0K2-handling-traffic-bursts-prewarming-vs-autoscaling.html" class="pager-next"><span>Next: Handling Traffic Bursts Prewarming Vs Au</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Instagram Scaled PostgreSQL to 3 Billion Users: The 6-Stage Architecture Evolution</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#engineering" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Engineering</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Engineering · System-Design</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#engineering">Engineering</a> / <a href="../../index.html#engineering-system-design">System-Design</a></nav>
+
+  <p class="kicker">Engineering · System-Design</p>
+  <h1>How Instagram Scaled PostgreSQL to 3 Billion Users: The 6-Stage Architecture Evolution</h1>
+
+  
+
+  
+
+  <div class="breadcrumb">
+      <a href="../../index.html">← All Learnings</a> / <a href="../../index.html#Engineering">Engineering</a> / System Design
+    </div>
+
+    
+
+    <div class="metadata">
+      <span><strong>Source:</strong> Instagram Reel</span>
+      <span><strong>Creator:</strong> <a href="https://www.instagram.com/backendlore/" target="_blank" rel="noopener">@backendlore</a> (Backend Lore • System Design & AI)</span>
+      <span><strong>Shortcode:</strong> <code>DegPVfBCW18</code></span>
+      <span><strong>Verified:</strong> Audio, Video Animation & Engineering Blueprint Verified</span>
+    </div>
+
+    <div class="summary-box">
+      <h3>Key Takeaways</h3>
+      <ul>
+        <li><strong>PostgreSQL at Hyperscale:</strong> Instagram scaled from a single underpowered server on Day 1 to over 3 billion active users while retaining PostgreSQL as its core transactional persistence layer.</li>
+        <li><strong>The 6 Architecture Bottleneck Stages:</strong> System evolution proceeded through six progressive failure points: (1) Single-box CPU choke &rarr; (2) Connection exhaustion (PgBouncer) &rarr; (3) Read query saturation (Read Replicas + Memcached) &rarr; (4) Heavy table separation &rarr; (5) Virtual logical sharding &rarr; (6) Distributed 64-bit Snowflake ID generation.</li>
+        <li><strong>Logical Sharding Over Physical Sharding:</strong> Instead of binding shards 1:1 to physical servers, Instagram partitioned data into thousands of lightweight <em>logical database shards</em> mapped onto a smaller cluster of physical nodes, allowing frictionless rebalancing without global data reshuffling.</li>
+        <li><strong>The Instagram 64-Bit Custom ID (Snowflake):</strong> Solved multi-shard collision and timestamp ordering using custom PL/pgSQL logic: 41 bits (epoch timestamp in ms) + 13 bits (logical shard ID) + 10 bits (auto-increment sequence), yielding chronological K-sortable primary keys natively.</li>
+      </ul>
+    </div>
+
+    <h2 id="the-architectural-journey-from-day-1-to-3-billion-users"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Architectural Journey: From Day 1 to 3 Billion Users</span></h2>
+    <p>
+      On Day 1, Instagram experienced 25,000 signups on a single server weaker than a modern consumer laptop running an un-tuned PostgreSQL instance. As concurrency exploded, the database failed six distinct times. Each fix solved an immediate hardware or concurrency bottleneck.
+    </p>
+
+    <h2 id="stage-1-server-choke-day-1-cloud-migration"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Stage 1: Server Choke (Day 1 Cloud Migration)</span></h2>
+    <p>
+      25,000 users overwhelmed the single physical box on launch night. The initial resolution was straightforward vertical migration: transitioning the application server and PostgreSQL database to Amazon Web Services (AWS EC2).
+    </p>
+
+    <h2 id="stage-2-connection-pool-exhaustion-pgbouncer"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Stage 2: Connection Pool Exhaustion & PgBouncer</span></h2>
+    <p>
+      As user traffic surged, Instagram horizontally scaled its Django application worker processes. However, PostgreSQL implements a process-based concurrency model where <strong>each open client connection forks a separate OS backend process</strong> consuming substantial memory (typically 5–10 MB per connection).
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DegPVfBCW18/01-pgbouncer-connection-pooling.jpg" alt="PgBouncer Connection Pooling Architecture">
+      <div class="media-card-caption">
+        <strong>Figure 1:</strong> Interposing PgBouncer between application servers and PostgreSQL to multiplex thousands of transient app requests across a small set of persistent DB connections.
+      </div>
+    </div>
+
+    <p>
+      <strong>The Solution:</strong> Instagram placed <strong>PgBouncer</strong> as an intermediate connection pooler in transaction pooling mode. Thousands of ephemeral Django requests were multiplexed through a tightly controlled pool of persistent database connections, halting RAM exhaustion.
+    </p>
+
+    <h2 id="stage-3-read-saturation-read-replicas-memcached"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Stage 3: Read Saturation (Read Replicas & Memcached)</span></h2>
+    <p>
+      Feed refreshes created massive read amplification. Every feed load triggered multiple relational queries on the primary database, driving CPU saturation.
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DegPVfBCW18/02-read-replicas-memcached.jpg" alt="Read Replicas and Memcached Offloading">
+      <div class="media-card-caption">
+        <strong>Figure 2:</strong> Segregating read and write traffic: Read replicas handle live feed generation while Memcached prevents repeated queries from touching disk.
+      </div>
+    </div>
+
+    <ul>
+      <li><strong>Read Replicas:</strong> Asynchronous streaming replication replicas absorbed read traffic for user profiles and feeds.</li>
+      <li><strong>Memcached Caching:</strong> Frequently queried user profiles and relationship counts were cached in-memory.</li>
+      <li><strong>The Emerging Bottleneck:</strong> While read traffic was offloaded, all write transactions (likes, comments, photo uploads) still concentrated entirely on the single primary database node.</li>
+    </ul>
+
+    <h2 id="stage-4-vertical-limits-table-splitting"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Stage 4: Vertical Limits & Table Splitting</span></h2>
+    <p>
+      The <code>photos</code> table was the fastest-growing relation in the database. When the photos table exceeded 60 GB, it approached the physical limits of AWS's largest available instance type at the time (which maxed out at 68 GB RAM).
+    </p>
+    <p>
+      <strong>The Solution:</strong> Vertical table partitioning. The <code>photos</code> relation was segregated into its own dedicated database cluster, separating media metadata from user accounts and social graph tables.
+    </p>
+
+    <h2 id="stage-5-horizontal-sharding-via-logical-shards"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Stage 5: Horizontal Sharding via Logical Shards</span></h2>
+    <p>
+      When photo volume exceeded single-machine storage, horizontal sharding became mandatory. However, a naive physical sharding scheme (e.g. dividing users across 4 physical machines by <code>user_id % 4</code>) introduces a catastrophic operational hazard: adding a 5th machine requires reshuffling almost the entire dataset.
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DegPVfBCW18/03-logical-sharding-pattern.jpg" alt="Logical Shards Mapped to Physical Machines">
+      <div class="media-card-caption">
+        <strong>Figure 3:</strong> Virtual/Logical Sharding: Thousands of logical schemas mapped to physical servers via an abstraction lookup table.
+      </div>
+    </div>
+
+    <h3>The Logical Shard Architecture:</h3>
+    <ul>
+      <li>Instagram pre-provisioned <strong>thousands of small logical PostgreSQL schemas</strong> (e.g., 8,192 logical shards) across a smaller initial set of physical database machines.</li>
+      <li>A central mapping table registered which logical shard resided on which physical machine (e.g. Shards 1–1000 on Machine A, Shards 1001–2000 on Machine B).</li>
+      <li>When a physical node reached capacity, engineers simply exported specific logical shards (e.g. via <code>pg_dump</code> / logical replication) to a new node and updated the shard map pointer, achieving zero-reshuffle rebalancing.</li>
+    </ul>
+
+    <h2 id="stage-6-the-64-bit-custom-id-generator-snowflake"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Stage 6: The 64-Bit Custom ID Generator (Snowflake)</span></h2>
+    <p>
+      With photos distributed across thousands of logical shards, traditional auto-incrementing serial IDs caused immediate primary key collisions (Photo #1 on Shard 1 clashed with Photo #1 on Shard 2). Generating IDs via UUIDs was rejected because UUIDs are 128-bit (excessive index size) and lack natural chronological ordering.
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DegPVfBCW18/04-instagram-64bit-id-structure.jpg" alt="Instagram 64-bit ID Bit Allocation">
+      <div class="media-card-caption">
+        <strong>Figure 4:</strong> The 64-bit ID layout: 41 bits (timestamp in ms), 13 bits (logical shard ID), 10 bits (sequence counter).
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Bit Range</th>
+            <th>Bit Allocation</th>
+            <th>Purpose & Capacity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Bits 63–23 (41 bits)</strong></td>
+            <td>Timestamp (ms)</td>
+            <td>Milliseconds elapsed since custom Instagram epoch (~69 years without rollover).</td>
+          </tr>
+          <tr>
+            <td><strong>Bits 22–10 (13 bits)</strong></td>
+            <td>Logical Shard ID</td>
+            <td>Identifies which logical shard holds the row (supports up to 8,192 shards).</td>
+          </tr>
+          <tr>
+            <td><strong>Bits 9–0 (10 bits)</strong></td>
+            <td>Auto-Increment Sequence</td>
+            <td>Modulus counter supporting up to 1,024 unique IDs per shard per millisecond.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The In-Database PL/pgSQL Function:</h3>
+    <div class="code-block" style="background: rgba(0,0,0,0.6); padding: 1.25rem; border-radius: 8px; font-family: monospace; border: 1px solid rgba(255,255,255,0.1); line-height: 1.5; color: #f1f5f9;">
+<pre style="margin: 0;"><span style="color: #38bdf8;">CREATE OR REPLACE FUNCTION</span> next_id(OUT result bigint) <span style="color: #38bdf8;">AS</span> $$
+<span style="color: #38bdf8;">DECLARE</span>
+    our_epoch bigint := 1314220021721; <span style="color: #64748b;">-- Custom epoch in ms</span>
+    seq_id bigint;
+    now_millis bigint;
+    shard_id int := 1143;              <span style="color: #64748b;">-- ID of this logical shard</span>
+<span style="color: #38bdf8;">BEGIN</span>
+    <span style="color: #38bdf8;">SELECT</span> nextval(<span style="color: #4ade80;">'table_id_seq'</span>) % 1024 <span style="color: #38bdf8;">INTO</span> seq_id;
+    <span style="color: #38bdf8;">SELECT</span> FLOOR(EXTRACT(EPOCH <span style="color: #38bdf8;">FROM</span> clock_timestamp()) * 1000) <span style="color: #38bdf8;">INTO</span> now_millis;
+    result := (now_millis - our_epoch) &lt;&lt; 23;
+    result := result | (shard_id &lt;&lt; 10);
+    result := result | (seq_id);
+<span style="color: #38bdf8;">END</span>;
+$$ <span style="color: #38bdf8;">LANGUAGE</span> PLPGSQL;</pre>
+    </div>
+
+    <h3>Strategic Advantages of the 64-Bit ID:</h3>
+    <ul>
+      <li><strong>Time-Sortable (K-Sortable):</strong> Newest photos naturally sort to the top by ID value without requiring a separate timestamp B-Tree index.</li>
+      <li><strong>Self-Describing Routing:</strong> Given any photo ID (e.g. <code>11637205501278089</code>), bitwise shifting immediately reveals exactly when it was created and which logical shard hosts it, eliminating cross-shard index lookups.</li>
+      <li><strong>Zero External Coordination:</strong> IDs are generated autonomously inside PostgreSQL without reliance on external distributed coordinators (like ZooKeeper).</li>
+    </ul>
+
+    <h2 id="conclusion-identify-the-bottleneck-before-changing-technologies"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Conclusion: Identify the Bottleneck Before Changing Technologies</span></h2>
+    <p>
+      By methodically identifying and addressing specific resource bottlenecks—CPU, connection memory, read saturation, disk capacity, and ID collisions—Instagram scaled write throughput from 90 likes/sec to over 10,000+ likes/second while maintaining PostgreSQL reliability.
+    </p>
+
+    <div class="summary-box">
+      <h3>Original Source Reference</h3>
+      <p>
+        Instagram Reel: <a href="https://www.instagram.com/reel/DegPVfBCW18/" target="_blank" rel="noopener">https://www.instagram.com/reel/DegPVfBCW18/</a><br>
+        Creator: <strong>@backendlore</strong> (Backend Lore • System Design & AI)<br>
+        Caption: <em>"System design problem: how Instagram scaled its Postgres database? #systemdesign #softwareengineer #interviewprep"</em>
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="DeYmEhSE0K2-handling-traffic-bursts-prewarming-vs-autoscaling.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Handling Traffic Bursts Prewarming Vs Au</span></a>
+    
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

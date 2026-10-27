@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clay.com Local Business Lead Engine: Google Maps Scraping & AI Qualification Scoring</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#freelance" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Freelance</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Freelance · Client-Acquisition</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#freelance">Freelance</a> / <a href="../../index.html#freelance-client-acquisition">Client-Acquisition</a></nav>
+
+  <p class="kicker">Freelance · Client-Acquisition</p>
+  <h1>Clay.com Local Business Lead Engine: Google Maps Scraping & AI Qualification Scoring</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        Freelance agencies and B2B marketers often waste dozens of manual hours copying contact information from Google Maps, only to send generic cold pitches to low-intent local businesses. By combining <strong>Clay.com's Google Maps native integration</strong> with LLM qualification scoring, consultants can automate lead extraction, rank businesses by probability of needing digital marketing services, and generate hyper-tailored visibility scorecards.
+      </p>
+      <p>
+        In this implementation guide, growth marketer Veeru breaks down the end-to-end Clay workflow: extracting local aesthetic clinics, executing multi-factor scoring (reviews, website presence, social activity), and running the 5-per-day outreach math that yields predictable monthly client closes.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DZNRQC-H-je/frame_003.jpg" alt="Clay.com Google Maps SMB Integration" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: Step 1 - Connecting Clay's native Google Maps integration to extract local SMB data.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DZNRQC-H-je/frame_008.jpg" alt="Targeting Aesthetic Clinics by Geo Location" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: Step 2 - Filtering by high-ticket service verticals (Aesthetic Clinics, Interior Design, Real Estate).</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DZNRQC-H-je/frame_020.jpg" alt="AI Lead Scoring and Prioritization Table" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: Step 3 - AI Lead Qualification: Ranking prospects with high intent but weak marketing presence.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DZNRQC-H-je/frame_026.jpg" alt="Visibility Scorecard Cold Outreach Template" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 4: Step 4 - The "Visibility Scorecard" cold outreach email template.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-4-step-clay-outreach-funnel"><span class="h-ico"><i data-lucide="sparkles" class="ico"></i></span><span class="h-text">The 4-Step Clay Outreach Funnel</span></h2>
+
+      <h3>Step 1: Local Geo-Scraping via Clay</h3>
+      <p>
+        In Clay, create a new table and select <strong>Import from Google Maps</strong>:
+      </p>
+      <ul>
+        <li><strong>Location:</strong> Specific metropolitan target (e.g., Hyderabad, Telangana or Austin, TX).</li>
+        <li><strong>Search Query:</strong> High-ticket local service categories where single-customer lifetime value is high (<code>Aesthetic Clinics</code>, <code>Dental Implants</code>, <code>Luxury Interior Designers</code>, <code>Commercial Roofing</code>).</li>
+        <li>Clay exports: Business Name, Street Address, Phone Number, Website URL, Rating, and Total Review Count.</li>
+      </ul>
+
+      <h3>Step 2: AI Qualification Scoring Prompt</h3>
+      <p>
+        Pass the raw Google Maps dataset through Claude 3.5 Sonnet or ChatGPT inside Clay with this qualification rubric:
+      </p>
+      <pre><code>Evaluate each business on a scale of 1 to 10 for "Need for Digital Marketing Services":
+- High Priority Criteria (Score 8-10):
+  1. High review volume (> 50 reviews, average > 4.2 stars) proving strong operational cash flow.
+  2. Missing, broken, or outdated non-responsive website URL.
+  3. No active Meta Pixel or Google Analytics detected on domain.
+  4. Inactive social media links (last post > 90 days ago).
+Filter and output only the Top 3 highest-probability businesses with a 2-sentence rationale for each.</code></pre>
+
+      <h3>Step 3: The "Visibility Scorecard" Outreach Script</h3>
+      <p>
+        Instead of pitching services, lead with diagnostic insights:
+      </p>
+      <blockquote>
+        "Hi [Founder Name],<br><br>
+        I was researching leading aesthetic clinics across [City] and put together a simple 3-point digital visibility scorecard for [Clinic Name].<br><br>
+        While your Google reviews are phenomenal (4.8 stars across 120 patients), I noticed two subtle leaks where prospective patients looking for [Treatment] are currently getting routed to [Competitor Name]:<br>
+        1. [Specific Website Friction / Missing Online Booking]<br>
+        2. [Unclaimed Local Map Keyword]<br><br>
+        I recorded a quick 90-second screen walk-through showing how to plug these two leaks. Would you be open to me sending the private link over?"
+      </blockquote>
+
+      <h3>Step 4: The 5-per-Day Outreach Economics</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Outreach Cadence</th>
+            <th>Monthly Volume</th>
+            <th>Conservative Reply Rate</th>
+            <th>Closing Rate</th>
+            <th>New Retainer Clients</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>5 Highly Tailored Outreaches / Day</strong></td>
+            <td>150 prospects / month</td>
+            <td>10% reply (15 calls)</td>
+            <td>20% close on calls (2% overall)</td>
+            <td><strong>3 New Clients / Month ($3,000–$6,000/mo ARR added)</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  
+  <nav class="pager">
+    
+    <a href="Dc4COA4JxUo-cold-call-script-no-website-local-business-pitch.html" class="pager-next"><span>Next: Cold Call Script No Website Local Busine</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

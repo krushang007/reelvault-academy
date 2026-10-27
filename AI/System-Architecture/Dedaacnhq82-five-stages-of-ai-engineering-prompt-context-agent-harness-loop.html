@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Five Evolutions of AI Engineering: Prompt, Context, Agent, Harness & Loop Engineering</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · System-Architecture</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-system-architecture">System-Architecture</a></nav>
+
+  <p class="kicker">AI · System-Architecture</p>
+  <h1>The Five Evolutions of AI Engineering: Prompt, Context, Agent, Harness & Loop Engineering</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        The discipline of building software with Foundation Models has shifted rapidly over the past three years. Early practitioners treated AI systems as text-in/text-out probabilistic boxes, concentrating effort entirely on phrasing inputs (<em>Prompt Engineering</em>).
+      </p>
+      <p>
+        As production requirements demanded deterministic accuracy, multi-step planning, and autonomous execution, the engineering stack stratified into <strong>five distinct architectural layers</strong>:
+      </p>
+      <ol>
+        <li><strong>Prompt Engineering:</strong> Optimizing raw input phrasing, tone, and few-shot formatting.</li>
+        <li><strong>Context Engineering:</strong> Dynamic retrieval (RAG), session memory, and semantic token pruning.</li>
+        <li><strong>Agent Engineering:</strong> Giving models sensory tools, function calling, and environment actuation.</li>
+        <li><strong>Harness Engineering:</strong> Wrapping models in strict runtime guardrails, sandboxing, tool permissions, and state tracking (<em>AI + Guardrails = Harness</em>).</li>
+        <li><strong>Loop Engineering:</strong> Autonomous multi-turn convergence loops (<em>Plan &rarr; Execute &rarr; Verify &rarr; Repeat</em>) that iteratively test and self-correct until code or workflows succeed.</li>
+      </ol>
+
+      <h2 id="visual-architecture-the-5-stage-evolution"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Visual Architecture & The 5-Stage Evolution</span></h2>
+      <div class="image-grid">
+        <figure>
+          <img src="assets/Dedaacnhq82/frame_005.jpg" alt="Timeline of the 5 AI Engineering Disciplines">
+          <figcaption>The 5-stage progression of modern AI system design: Prompt &rarr; Context &rarr; Agent &rarr; Harness &rarr; Loop.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Dedaacnhq82/frame_025.jpg" alt="Context Engineering: Grounding LLM in Private Data">
+          <figcaption>Context Engineering: Moving beyond generic model priors by injecting grounded company documents and structured project status.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Dedaacnhq82/frame_038.jpg" alt="Agent Engineering: Connecting LLM to Terminal and Web APIs">
+          <figcaption>Agent Engineering: Arming the model with external actuators—terminals, HTTP clients, and browsers via tool calling.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Dedaacnhq82/frame_055.jpg" alt="Harness Engineering: AI + Guardrails = Harness">
+          <figcaption>Harness Engineering: Surrounding the model with deterministic safety boundaries: Memory, Permissions, Testing, and Tool access control.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Dedaacnhq82/frame_065.jpg" alt="Loop Engineering: Plan, Execute, Verify, Repeat">
+          <figcaption>Loop Engineering: Autonomous cyclical feedback loops that verify real output against acceptance criteria before completing.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="detailed-layer-by-layer-architectural-breakdown"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Detailed Layer-by-Layer Architectural Breakdown</span></h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Evolutionary Stage</th>
+            <th>Primary Objective</th>
+            <th>Core Technologies & Patterns</th>
+            <th>Failure Modes When Neglected</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Prompt Engineering</strong></td>
+            <td>Guiding model tone, persona, and output syntax via raw string templates.</td>
+            <td>Few-shot exemplars, role prompting, chain-of-thought formatting, markdown output tags.</td>
+            <td>Brittleness across model versions, format drifts, high variance in responses.</td>
+          </tr>
+          <tr>
+            <td><strong>2. Context Engineering</strong></td>
+            <td>Curating the exact minimum set of high-signal tokens needed for accurate reasoning.</td>
+            <td>Vector databases (pgvector, Chroma), hybrid BM25 search, token pruning, session summarization, AST code chunking.</td>
+            <td>Context window exhaustion, "lost-in-the-middle" hallucinations, exorbitant API inference costs.</td>
+          </tr>
+          <tr>
+            <td><strong>3. Agent Engineering</strong></td>
+            <td>Allowing the model to interact with the external world and query live systems.</td>
+            <td>Tool calling (OpenAI function calling, Anthropic tool use), Model Context Protocol (MCP), ReAct patterns.</td>
+            <td>Passive conversational models unable to affect reality or verify real-time facts.</td>
+          </tr>
+          <tr>
+            <td><strong>4. Harness Engineering</strong></td>
+            <td>Restricting, isolating, and observing agent actions to prevent catastrophic failure.</td>
+            <td>Container sandboxes (Docker, WebAssembly), permission interceptors, file read-before-write checks, state checkpoints.</td>
+            <td>Unchecked destructive commands (<code>rm -rf</code>, accidental database drops, infinite runaway billing loops).</td>
+          </tr>
+          <tr>
+            <td><strong>5. Loop Engineering</strong></td>
+            <td>Orchestrating autonomous self-correcting cycles that iterate until goals are verified.</td>
+            <td>Plan &rarr; Execute &rarr; Verify &rarr; Repeat, SWE-bench evaluation runners, deterministic unit test verification, multi-agent debates.</td>
+            <td>Early exit upon hallucinated success, inability to fix subtle compilation errors or runtime exceptions.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="the-loop-engineering-cycle-plan-rarr-execute-rarr-verify-rarr-repeat"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Loop Engineering Cycle (Plan &rarr; Execute &rarr; Verify &rarr; Repeat)</span></h2>
+      <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                           1. PLAN                           │
+│  - Break complex instruction into discrete verifiable steps │
+│  - Define exact assertion criteria (e.g. exit 0, tests pass)│
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                          2. EXECUTE                         │
+│  - Invoke sandboxed tools (file edit, run command, query DB)│
+│  - Apply minimal surgical code modifications                │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                          3. VERIFY                          │
+│  - Execute deterministic test suite / linter                │
+│  - Parse actual stdout / stderr for regression signals      │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                ┌──────────────┴──────────────┐
+                ▼                             ▼
+        [Verification Fails]          [Verification Passes]
+                │                             │
+                ▼                             ▼
+┌──────────────────────────────┐┌──────────────────────────────┐
+│          4. REPEAT           ││          5. COMPLETE         │
+│ - Backtrack changes          ││ - Log evidence & diffs       │
+│ - Adjust plan & re-execute   ││ - Exit loop cleanly          │
+└──────────────────────────────┘└──────────────────────────────┘</code></pre>
+
+      <h2 id="engineering-principles-for-systems-architects"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Engineering Principles for Systems Architects</span></h2>
+      <ul>
+        <li><strong>Smart Models in Dumb Harnesses Fail:</strong> Giving a 100B+ frontier parameter model full root shell access without an execution harness guarantees corrupted environments. System reliability stems from the harness, not raw model IQ.</li>
+        <li><strong>Verification is Queen:</strong> If an agent cannot programmatically verify its own output via a compiler, unit test, or visual screenshot assertion, it cannot operate in a Loop. Never deploy autonomous loops without deterministic test oracles.</li>
+        <li><strong>Context Pruning Trumps Context Size:</strong> Even with 2M+ context windows, precision drops as irrelevant noise increases. High-performing AI applications spend 70% of engineering bandwidth on Context Engineering.</li>
+      </ul>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="DeYbkzTKO_0-scaling-llm-inference-1m-users-one-gpu-vllm.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Scaling Llm Inference 1M Users One Gpu V</span></a>
+    <a href="DejSW8AP9nB-llm-architecture-tradeoff-vocabulary-size-vs-context-window-kv-cache.html" class="pager-next"><span>Next: Llm Architecture Tradeoff Vocabulary Siz</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

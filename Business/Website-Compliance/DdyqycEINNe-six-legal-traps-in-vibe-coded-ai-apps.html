@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6 Legal & Compliance Traps in Vibe-Coded AI Apps: The "Per-Violation" Statutory Risk Matrix</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#business" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Business</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Business · Website-Compliance</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#business">Business</a> / <a href="../../index.html#business-website-compliance">Website-Compliance</a></nav>
+
+  <p class="kicker">Business · Website-Compliance</p>
+  <h1>6 Legal & Compliance Traps in Vibe-Coded AI Apps: The "Per-Violation" Statutory Risk Matrix</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        AI vibe-coding tools (Cursor, Claude Code, Lovable, v0) allow solo developers to build and launch production software in hours. However, standard LLM prompts produce code optimized solely for visual completeness—completely omitting essential statutory compliance safeguards.
+      </p>
+      <p>
+        As startup legal educator Adilet reveals, digital regulatory penalties in the United States and European Union do <strong>not scale as a percentage of company revenue</strong>. Instead, privacy, copyright, consumer protection, and wiretapping laws mandate <strong>per-visitor, per-session, and per-email statutory damages</strong>. A vibe-coded app with $0 in revenue can accumulate over $100,000 in legally enforceable liabilities before processing its first customer transaction.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DdyqycEINNe/frame_003.jpg" alt="Cumulative Legal Liability Counter" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: Statutory liabilities accumulate per action, regardless of company revenue.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DdyqycEINNe/frame_007.jpg" alt="Google Fonts Dynamic Loading Violation" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: Trap 2 - Google Fonts leaking visitor IP addresses to external servers.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DdyqycEINNe/frame_011.jpg" alt="Session Replay Keystroke Logging Wiretapping" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: Trap 3 - Unmasked analytics session replays categorized as illegal wiretapping.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DdyqycEINNe/frame_015.jpg" alt="CAN-SPAM Marketing Email Violations" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 4: Trap 4 - Waitlist announcement emails missing physical addresses or unsubscribe links.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DdyqycEINNe/frame_019.jpg" alt="User Generated Profile Uploads DMCA Liability" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 5: Trap 6 - Unregistered DMCA designated agents voiding platform safe harbor.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DdyqycEINNe/frame_023.jpg" alt="The Per Rule in Statutory Damages" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 6: The "Per" Principle: Statutory fines apply per session, per child, and per email.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-6-traps-technical-remediation-matrix"><span class="h-ico"><i data-lucide="help-circle" class="ico"></i></span><span class="h-text">The 6 Traps & Technical Remediation Matrix</span></h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Trap & Law</th>
+            <th>Vibe-Coding Failure Mode</th>
+            <th>Statutory Penalty</th>
+            <th>Production Technical Fix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. COPPA Age Gate</strong><br><em>15 U.S.C. §§ 6501–6506</em></td>
+            <td>Sign-up modal only collects Email and Password, never validating user age or date of birth.</td>
+            <td>Up to <strong>$53,000 per child</strong> under 13 years old.</td>
+            <td>Implement mandatory birthdate verification or age-attestation checkbox (<code>I confirm I am 13 years or older</code>) on signup schema.</td>
+          </tr>
+          <tr>
+            <td><strong>2. Google Fonts IP Leak</strong><br><em>EU GDPR / Munich Court Precedent</em></td>
+            <td>HTML <code>&lt;link&gt;</code> requests dynamic fonts directly from <code>fonts.googleapis.com</code>, exposing EU visitor IP addresses without prior consent.</td>
+            <td>Statutory damages & cease-and-desist claims (~<strong>€100 to €2,700 per visitor</strong>).</td>
+            <td>Self-host all font files locally (e.g. using <code>next/font/google</code> in Next.js which automatically bundles fonts at build time, zero external network requests).</td>
+          </tr>
+          <tr>
+            <td><strong>3. Session Replay Wiretapping</strong><br><em>California CIPA / Cal. Penal Code § 631</em></td>
+            <td>Integrating Hotjar, PostHog, or FullStory with default configurations that record user keystrokes in form fields without consent.</td>
+            <td><strong>$5,000 per session</strong> under California wiretapping private right of action.</td>
+            <td>Enable strict input masking (<code>data-mask</code>, <code>maskAllInputs: true</code>) and disable session recording until the user accepts the analytics cookie banner.</td>
+          </tr>
+          <tr>
+            <td><strong>4. Waitlist CAN-SPAM Breach</strong><br><em>15 U.S.C. §§ 7701–7713</em></td>
+            <td>Sending a blast announcement ("We're live!") to waitlist signups without an unsubscribe link or a registered physical address.</td>
+            <td>Up to <strong>$53,000 per recipient email</strong>.</td>
+            <td>Configure transactional email providers (Resend, Postmark) with footer templates including a 1-click unsubscribe link and a valid commercial postal address.</td>
+          </tr>
+          <tr>
+            <td><strong>5. California Auto-Renewal Law (ARL)</strong><br><em>Cal. Bus. & Prof. Code §§ 17600–17606</em></td>
+            <td>Stripe Checkout button does not display recurring renewal frequency, billing date, and cancellation instructions immediately adjacent to the pay button.</td>
+            <td>All recurring revenue is legally classified as an <strong>"unconditional gift"</strong>, requiring 100% full refund.</td>
+            <td>Place explicit text immediately above the checkout button: <em>"You will be billed $X/month automatically until cancelled. Cancel anytime via Settings > Billing."</em></td>
+          </tr>
+          <tr>
+            <td><strong>6. DMCA Safe Harbor Void</strong><br><em>17 U.S.C. § 512(c)</em></td>
+            <td>Allowing users to upload profile avatars, banners, or images without filing a Designated Copyright Agent with the US Copyright Office.</td>
+            <td>Up to <strong>$150,000 per willful copyright infringement</strong> by any user.</td>
+            <td>Pay the official <strong>$6 filing fee</strong> at <code>copyright.gov/dmca-directory</code> to register an agent, and link a DMCA Takedown Notice page in the footer.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="the-hardening-prompt-for-coding-agents"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Hardening Prompt for Coding Agents</span></h2>
+      <p>
+        Before deploying any AI-generated frontend or authentication flow, provide this operational prompt to Claude Code, Cursor, or your build agent:
+      </p>
+      <pre><code>Audit this repository against the 6 critical launch compliance vectors:
+1. Ensure self-hosted typography: replace all external font links with local bundle imports.
+2. Verify signup schema includes strict age verification (COPPA compliance).
+3. Audit analytics scripts: mask all input forms and gate tracking behind cookie consent.
+4. Ensure all email dispatch templates contain 1-click unsubscribe headers and physical postal footers.
+5. In the billing/checkout view, add explicit California ARL recurring terms adjacent to the payment CTA.
+6. Verify footer links include Terms of Service, Privacy Policy, and DMCA Agent contact info.</code></pre>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../Venture-Capital/DebKopJxEQS-vc-wishlist-playbook-yc-rfs-a16z-funding.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Vc Wishlist Playbook Yc Rfs A16Z Funding</span></a>
+    <a href="De32y8dz0Q6-india-dpdp-act-8-point-website-checklist.html" class="pager-next"><span>Next: India Dpdp Act 8 Point Website Checklist</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

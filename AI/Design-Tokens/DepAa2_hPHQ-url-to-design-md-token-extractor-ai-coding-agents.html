@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automated URL-to-DESIGN.md Extraction: Grounding AI Coding Agents with Precise Design Tokens</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · Design-Tokens</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-design-tokens">Design-Tokens</a></nav>
+
+  <p class="kicker">AI · Design-Tokens</p>
+  <h1>Automated URL-to-DESIGN.md Extraction: Grounding AI Coding Agents with Precise Design Tokens</h1>
+
+  
+
+  
+
+  <div class="breadcrumb">
+      <a href="../../index.html">← All Learnings</a> / <a href="../../index.html#AI">AI</a> / Design Tokens
+    </div>
+
+    
+
+    <div class="metadata">
+      <span><strong>Source:</strong> Instagram Reel</span>
+      <span><strong>Creator:</strong> <a href="https://www.instagram.com/athar.codes/" target="_blank" rel="noopener">@athar.codes</a> (Athar Akram | XTHXR)</span>
+      <span><strong>Shortcode:</strong> <code>DepAa2_hPHQ</code></span>
+      <span><strong>Verified:</strong> Video & UI Screen Demonstration Verified</span>
+    </div>
+
+    <div class="summary-box">
+      <h3>Key Takeaways</h3>
+      <ul>
+        <li><strong>The AI UI Replication Problem:</strong> Passing a raw website URL directly to an AI coding agent (Claude Code, Cursor, Windsurf, Antigravity) results in hallucinated color palettes, generic Tailwind defaults, mismatched font families, and imprecise padding.</li>
+        <li><strong>The DESIGN.md Solution:</strong> Instead of raw URLs, crawl and extract the target website's computed CSS tokens into a standardized, portable <code>DESIGN.md</code> specification file.</li>
+        <li><strong>Styleguide Extraction Pipeline:</strong> Tools like Context.dev / DesignMD capture full-page viewports, extract exact hex color tokens (surfaces, accents, opacities), and parse typography hierarchies (family, size, weight).</li>
+        <li><strong>Direct Agent Grounding:</strong> Supplying the generated <code>DESIGN.md</code> file into your agent prompt guarantees pixel-accurate reproduction of enterprise-grade interfaces (e.g. Scale AI, Stripe, Linear).</li>
+      </ul>
+    </div>
+
+    <h2 id="why-direct-url-prompting-fails-coding-agents"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Why Direct URL Prompting Fails Coding Agents</span></h2>
+    <p>
+      Developers frequently instruct LLM coding agents: <em>"Build me a landing page that looks exactly like <code>https://scale.com</code>"</em>.
+      Because LLMs only receive textual DOM snippets or basic web scrapes without computed styling contexts, the agent defaults to generic AI aesthetic tropes:
+    </p>
+    <ul>
+      <li>Flat purple/blue gradient backgrounds instead of deep layered dark surfaces (<code>#191A29</code>, <code>#161723</code>).</li>
+      <li>Generic browser fonts (Inter, Roboto) instead of custom geometric grotesques (e.g. Aeonik).</li>
+      <li>Inconsistent spacing scales without systematic surface elevation or tokenized borders.</li>
+    </ul>
+
+    <h2 id="the-automated-url-to-token-workflow"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">The Automated URL-to-Token Workflow</span></h2>
+
+    <h3>1. Input Target Domain</h3>
+    <p>
+      Navigate to a design extraction service (e.g., Context.dev Styleguide API / DesignMD). Enter the domain you wish to inspect (e.g., <code>https://scale.com/</code>, <code>stripe.com</code>, <code>linear.app</code>).
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DepAa2_hPHQ/01-enter-website-url.jpg" alt="Enter Website URL into Generator">
+      <div class="media-card-caption">
+        <strong>Figure 1:</strong> Inputting the target URL (Scale.com) into the Design.md generator interface.
+      </div>
+    </div>
+
+    <h3>2. Automated Headless Extraction</h3>
+    <p>
+      Click <strong>Generate Design.md</strong>. The background extraction pipeline executes three coordinated stages:
+    </p>
+    <ol>
+      <li><strong>Viewport Screenshot Capture:</strong> Renders desktop and mobile viewports in a headless browser engine.</li>
+      <li><strong>Computed Styleguide Parsing:</strong> Traverses CSS declarations across DOM nodes to identify primary colors, opacity variants, borders, and surface depths.</li>
+      <li><strong>Typography Normalization:</strong> Queries loaded font files, font-family declarations, headline scale ratios, and font-weight distributions.</li>
+    </ol>
+
+    <div class="media-card">
+      <img src="assets/DepAa2_hPHQ/02-extraction-pipeline.jpg" alt="Capturing Screenshot and Extracting Styleguide">
+      <div class="media-card-caption">
+        <strong>Figure 2:</strong> Multi-stage pipeline: Capturing screenshot &rarr; Extracting styleguide &rarr; Synthesizing DESIGN.md.
+      </div>
+    </div>
+
+    <h3>3. Structured DESIGN.md Specification Output</h3>
+    <p>
+      The tool produces a concise, machine-readable <code>DESIGN.md</code> file (typically ~100–120 lines of structured YAML / Markdown tokens):
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DepAa2_hPHQ/03-design-md-output.jpg" alt="Extracted scale.com-design.md YAML Structure">
+      <div class="media-card-caption">
+        <strong>Figure 3:</strong> Generated <code>scale.com-design.md</code> token file containing semantic color palettes, surface opacities, and Aeonik typography definitions.
+      </div>
+    </div>
+
+    <div class="code-block" style="background: rgba(0,0,0,0.6); padding: 1.25rem; border-radius: 8px; font-family: monospace; border: 1px solid rgba(255,255,255,0.1); line-height: 1.5;">
+<pre style="margin: 0; color: #f1f5f9;"><span style="color: #38bdf8;">version</span>: alpha
+<span style="color: #38bdf8;">name</span>: Scale Minimal Dark
+<span style="color: #38bdf8;">description</span>: A restrained enterprise AI system with high-contrast dark surfaces, precise type, and rounded utility accents.
+
+<span style="color: #38bdf8;">colors</span>:
+  <span style="color: #a78bfa;">primary</span>: <span style="color: #4ade80;">"#FFFFFF"</span>
+  <span style="color: #a78bfa;">secondary</span>: <span style="color: #4ade80;">"#191A29"</span>
+  <span style="color: #a78bfa;">tertiary</span>: <span style="color: #4ade80;">"#374151"</span>
+  <span style="color: #a78bfa;">neutral</span>: <span style="color: #4ade80;">"#99999F"</span>
+  <span style="color: #a78bfa;">surface</span>: <span style="color: #4ade80;">"#191A29"</span>
+  <span style="color: #a78bfa;">on-surface</span>: <span style="color: #4ade80;">"#FFFFFF"</span>
+  <span style="color: #a78bfa;">accent</span>: <span style="color: #4ade80;">"#FF4444"</span>
+  <span style="color: #a78bfa;">primary-60</span>: <span style="color: #4ade80;">"#FFFFFF99"</span>
+  <span style="color: #a78bfa;">primary-40</span>: <span style="color: #4ade80;">"#FFFFFF66"</span>
+  <span style="color: #a78bfa;">surface-strong</span>: <span style="color: #4ade80;">"#161723"</span>
+
+<span style="color: #38bdf8;">typography</span>:
+  <span style="color: #a78bfa;">headline-display</span>:
+    <span style="color: #e2e8f0;">fontFamily</span>: Aeonik
+    <span style="color: #e2e8f0;">fontSize</span>: 56px
+    <span style="color: #e2e8f0;">fontWeight</span>: 500</pre>
+    </div>
+
+    <h3>4. Grounding Your AI Coding Agent</h3>
+    <p>
+      Download the <code>DESIGN.md</code> file or paste its contents into your project workspace root.
+    </p>
+
+    <div class="media-card">
+      <img src="assets/DepAa2_hPHQ/04-download-design-md.jpg" alt="Download DESIGN.md for Coding Agents">
+      <div class="media-card-caption">
+        <strong>Figure 4:</strong> Download the file and pass it directly to Claude Code, Antigravity, or Cursor.
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <h3>Recommended Agent Prompt Formula</h3>
+      <p style="font-family: monospace; font-size: 0.95rem; line-height: 1.6; color: #e2e8f0; margin-top: 0.5rem;">
+        "I have attached <code>DESIGN.md</code> containing the exact design system tokens extracted from Scale.com. Use ONLY these tokenized color hex codes (primary: #FFFFFF, surface: #191A29, surface-strong: #161723), font scale (Aeonik display 56px/500 weight), and layout rules. Do NOT use default Tailwind colors or unstyled browser defaults."
+      </p>
+    </div>
+
+    <div class="summary-box">
+      <h3>Original Source Reference</h3>
+      <p>
+        Instagram Reel: <a href="https://www.instagram.com/reel/DepAa2_hPHQ/" target="_blank" rel="noopener">https://www.instagram.com/reel/DepAa2_hPHQ/</a><br>
+        Creator: <strong>@athar.codes</strong> (Athar Akram | XTHXR)<br>
+        Caption: <em>"This is what frontend developers need! . . . Ui design, frontend developer, ui, ux, website development..."</em>
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../Coding-Agents/Defa4pfTlp4-gravitas-reliability-runtime-antigravity-gemini.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Gravitas Reliability Runtime Antigravity</span></a>
+    <a href="../Document-AI/De8XiOgA7x4-multimodal-document-parsing-system-design.html" class="pager-next"><span>Next: Multimodal Document Parsing System Desig</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

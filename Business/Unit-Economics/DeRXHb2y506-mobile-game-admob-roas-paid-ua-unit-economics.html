@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile Game Unit Economics: Google AdMob Revenue vs Paid User Acquisition ROAS</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#business" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Business</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Business · Unit-Economics</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#business">Business</a> / <a href="../../index.html#business-unit-economics">Unit-Economics</a></nav>
+
+  <p class="kicker">Business · Unit-Economics</p>
+  <h1>Mobile Game Unit Economics: Google AdMob Revenue vs Paid User Acquisition ROAS</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        Indie game developers frequently believe that launching a hyper-casual or puzzle game on Google Play and driving automated Google Ads install campaigns will generate passive profit. However, without strict target ROAS (Return on Ad Spend) bidding and lifetime value (LTV) optimization, paid install campaigns burn capital at an unsustainable loss.
+      </p>
+      <p>
+        In this real financial audit of his indie puzzle game <em>Arrow Puzzle Max</em>, developer Pradeep reveals the exact daily spend, install velocity, and AdMob banner/interstitial revenue across an 8-day test period, diagnosing a 78% loss margin and outlining the mathematical pivot required to achieve breakeven.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DeRXHb2y506/frame_001.jpg" alt="Google AdMob dashboard overview for Arrow Puzzle Max" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: Google AdMob production console showing live revenue telemetry.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeRXHb2y506/frame_010.jpg" alt="Daily spend and install acquisition spreadsheet" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: Tracking daily ad spend (₹2,260/day) against raw install volume (~110 installs/day).</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeRXHb2y506/frame_025.jpg" alt="ROAS calculation table showing 22 percent recovery rate" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: Financial audit revealing a 22% ROAS (78% net loss on ad spend).</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-production-numbers-breakdown"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">The Production Numbers Breakdown</span></h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Daily Value</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Daily Ad Spend</strong></td>
+            <td>₹2,260 (~$27.00 USD)</td>
+            <td>Google App Install Campaign (Target CPA / Max Installs)</td>
+          </tr>
+          <tr>
+            <td><strong>Daily Installs</strong></td>
+            <td>~108 – 110 installs</td>
+            <td>Blended cost per install (CPI) ≈ ₹20.50 (~$0.25)</td>
+          </tr>
+          <tr>
+            <td><strong>Daily AdMob Revenue</strong></td>
+            <td>$0.65 – $0.69 USD (~₹55 – ₹58)</td>
+            <td>Banner + rewarded interstitial impressions</td>
+          </tr>
+          <tr>
+            <td><strong>Day-1 ROAS</strong></td>
+            <td><strong>22%</strong></td>
+            <td>Only ₹22 recovered for every ₹100 invested</td>
+          </tr>
+          <tr>
+            <td><strong>Net Daily Loss</strong></td>
+            <td><strong>-₹2,202 / day (-78%)</strong></td>
+            <td>Unsustainable burning without retention-driven LTV</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="core-takeaways-the-turnaround-strategy"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Core Takeaways & The Turnaround Strategy</span></h2>
+
+      <h3>1. The "Max Installs" Bidding Trap</h3>
+      <p>
+        When launching mobile ad campaigns, Google's default recommendation is "Maximize Conversions / Installs". The bidding algorithm optimizes solely to find devices willing to tap install, regardless of device quality, ad engagement propensity, or geo-tier value. This results in users who download, open once for 30 seconds, and never trigger high-eCPM rewarded ads.
+      </p>
+
+      <h3>2. Switching to Target ROAS (tROAS)</h3>
+      <p>
+        Instead of bidding for raw installs, hyper-casual developers must link Firebase Analytics and Google AdMob to pass real-time ad revenue events back to Google Ads. This enables <strong>tROAS bidding</strong>:
+      </p>
+      <ul>
+        <li>Google Ads targets users who historically watch rewarded ads or engage with high-value interstitial banners.</li>
+        <li>Campaign bids dynamically scale down when ad impression eCPMs decline.</li>
+      </ul>
+
+      <h3>3. The Minimum Viable Spend Discipline</h3>
+      <p>
+        Scaling spend from ₹2,000/day to ₹10,000/day while running at a 22% ROAS simply accelerates bankruptcy. The correct scaling rule:
+      </p>
+      <ol>
+        <li>Reduce daily spend to the minimum viable test budget (e.g. ₹500/day).</li>
+        <li>Optimize in-game ad placements (add rewarded revives, remove disruptive mid-level banners that degrade Day-1 retention).</li>
+        <li>Only when organic + paid Day-7 ROAS approaches 100% (breakeven) should daily budgets be expanded to ₹5,000–₹10,000.</li>
+      </ol>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../Pitch-Deck/DewZIjaTgnv-10-slide-investor-pitch-deck-formula.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: 10 Slide Investor Pitch Deck Formula</span></a>
+    <a href="../Venture-Capital/DebKopJxEQS-vc-wishlist-playbook-yc-rfs-a16z-funding.html" class="pager-next"><span>Next: Vc Wishlist Playbook Yc Rfs A16Z Funding</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

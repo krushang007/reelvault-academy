@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The 5 Core Problems of AI Engineering: Context, Cost, Evaluation, Guardrails &amp; Agent Loops</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · System-Architecture</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-system-architecture">System-Architecture</a></nav>
+
+  <p class="kicker">AI · System-Architecture</p>
+  <h1>The 5 Core Problems of AI Engineering: Context, Cost, Evaluation, Guardrails &amp; Agent Loops</h1>
+
+  
+
+  
+
+  <p class="back"><a href="../../index.html">&larr; Learning Library</a></p>
+  <p class="breadcrumbs"><span>AI</span> / <span>System-Architecture</span></p>
+
+  
+
+  <section class="meta">
+    <p><strong>Creator:</strong> <a href="https://www.instagram.com/reel/DetQefisiL1/" target="_blank" rel="noopener">@techie007.dev (Sukhad Anand)</a></p>
+    <p><strong>Original Post:</strong> October 20, 2026 &bull; Instagram Reel &bull; 52s</p>
+    <p><strong>Stats:</strong> 4,423 likes &bull; 105 comments</p>
+    <p><strong>Status:</strong> Completed &bull; Verified via Audio &amp; Video Inspection</p>
+  </section>
+
+  <section>
+    <h2 id="executive-summary-5-problems-not-100-tools"><span class="h-ico"><i data-lucide="wrench" class="ico"></i></span><span class="h-text">Executive Summary: "5 Problems, Not 100 Tools"</span></h2>
+    <p>The generative AI ecosystem introduces dozens of new frameworks, vector stores, and wrapper libraries weekly. Beginners often get overwhelmed trying to master every tool. However, production AI engineering collapses into exactly <strong>five fundamental architectural problems</strong>:</p>
+    <ol>
+      <li><strong>Context:</strong> Grounding the model with private, up-to-date data (RAG &amp; Embeddings).</li>
+      <li><strong>Cost &amp; Latency:</strong> Mitigating inference token expense and response delay (Prompt Caching &amp; Model Routing).</li>
+      <li><strong>Evaluation:</strong> Verifying system accuracy objectively across revisions (Evals &amp; LLM-as-a-Judge).</li>
+      <li><strong>Guardrails:</strong> Enforcing security and safety boundaries (Input Injection Defense &amp; Output Schema Validation).</li>
+      <li><strong>Agentic Action:</strong> Enabling models to interact with real-world environments (Tool Calling &amp; Think-Act-Check Loops).</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2 id="deep-dive-the-5-fundamental-problems"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Deep Dive: The 5 Fundamental Problems</span></h2>
+
+    <h3>Problem 1: Context &mdash; Grounding with Private Knowledge</h3>
+    <p>Foundation models have static knowledge cutoffs and zero visibility into proprietary enterprise databases or user documents.</p>
+    <ul>
+      <li><strong>Embeddings:</strong> Text is converted into high-dimensional numerical vectors to index semantic meaning rather than literal keyword matches.</li>
+      <li><strong>Retrieval-Augmented Generation (RAG):</strong> At inference time, the user query is embedded, relevant chunks are retrieved from vector stores via cosine similarity, and they are injected into the model prompt to produce factual, grounded responses.</li>
+    </ul>
+    <figure>
+      <img src="assets/DetQefisiL1/00-11-problem-1-context-rag-embeddings.jpg" alt="Problem 1: Context grounding via RAG and Embeddings" loading="lazy">
+      <figcaption>Figure 1: Context grounding architecture. Converting documentation into embedding vector spaces to augment prompts and generate grounded answers.</figcaption>
+    </figure>
+
+    <h3>Problem 2: Cost &amp; Latency &mdash; Economical Scaling</h3>
+    <p>Calling frontier models (e.g., Claude 3.5 Sonnet, GPT-4o) naively on every turn results in unsustainable token bills and high latency.</p>
+    <ul>
+      <li><strong>Prompt Caching:</strong> Reusing identical system prompts, static schema definitions, and persistent documentation prefixes across turns, reducing token computation by up to 90% and cutting Time-to-First-Token (TTFT).</li>
+      <li><strong>Model Routing:</strong> Passing user requests through a lightweight classifier or router. Simple conversational asks or classification tasks are routed to ultra-fast, cheap models (e.g., Claude Haiku, GPT-4o-mini), reserving expensive frontier reasoning models only for high-complexity requests.</li>
+    </ul>
+    <figure>
+      <img src="assets/DetQefisiL1/00-19-problem-2-cost-prompt-caching-model-routing.jpg" alt="Problem 2: Cost reduction via Prompt Caching and Model Routing" loading="lazy">
+      <figcaption>Figure 2: Cost optimization pipeline. Combining prompt prefix caching and intelligent model routing between small and large models.</figcaption>
+    </figure>
+
+    <h3>Problem 3: Evaluation &mdash; Objective Measurement</h3>
+    <p>Because LLM outputs are non-deterministic, modifying system prompts or switching models risks silent regressions without structured benchmarking.</p>
+    <ul>
+      <li><strong>Synthetic &amp; Golden Test Suites:</strong> A curated test dataset run automatically against every prompt iteration or model upgrade.</li>
+      <li><strong>LLM-as-a-Judge:</strong> Leveraging an evaluator model to score outputs against predefined criteria (factual correctness, tone adherence, conciseness), yielding quantifiable pass rates (e.g., 80% passing target).</li>
+    </ul>
+    <figure>
+      <img src="assets/DetQefisiL1/00-26-problem-3-evals-llm-as-judge.jpg" alt="Problem 3: Measuring reliability through automated Evals and LLM-as-a-Judge" loading="lazy">
+      <figcaption>Figure 3: Evaluation framework. Running automated test suites with model-graded scoring to prevent regressions across releases.</figcaption>
+    </figure>
+
+    <h3>Problem 4: Guardrails &mdash; Security &amp; Safety Perimeter</h3>
+    <p>Direct exposure of an LLM to untrusted user input invites prompt injection, system prompt extraction, jailbreaks, and destructive actions.</p>
+    <ul>
+      <li><strong>Input Checks:</strong> Pre-execution classifiers that sanitize queries, detect prompt injection attempts, and strip adversarial instructions.</li>
+      <li><strong>Output Checks:</strong> Post-execution schema validation (e.g., Pydantic/Zod JSON parsing) and safety policy filters before any data reaches the end user or executing database.</li>
+    </ul>
+    <figure>
+      <img src="assets/DetQefisiL1/00-34-problem-4-guardrails-input-output-checks.jpg" alt="Problem 4: Input and Output guardrails isolating the core LLM" loading="lazy">
+      <figcaption>Figure 4: Guardrail perimeter. Isolating the model between input injection barriers and output policy/schema validation gates.</figcaption>
+    </figure>
+
+    <h3>Problem 5: Tool Calling &amp; Agent Loops &mdash; Beyond Chat</h3>
+    <p>Real-world utility requires the model to take action rather than merely generate text.</p>
+    <ul>
+      <li><strong>Function / Tool Calling:</strong> The model formats structured JSON payloads requesting function execution (web search, database queries, terminal commands).</li>
+      <li><strong>Agent Execution Loop:</strong> An autonomous loop operating on the <code>think &rarr; act &rarr; check &rarr; repeat</code> cycle, compacting intermediate tool outputs to maintain context hygiene.</li>
+    </ul>
+    <figure>
+      <img src="assets/DetQefisiL1/00-41-problem-5-tools-agents-loop.jpg" alt="Problem 5: Tool calling and agent execution loop" loading="lazy">
+      <figcaption>Figure 5: Tool and agent orchestration. The model drives an iterative think-act-check loop connected to APIs, search, and databases.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2 id="the-unified-production-architecture-map"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">The Unified Production Architecture Map</span></h2>
+    <p>When combined, these five modules form the universal architecture underlying virtually all modern AI products:</p>
+    <figure>
+      <img src="assets/DetQefisiL1/00-47-unified-ai-product-architecture-map.jpg" alt="Complete unified AI architecture diagram connecting all 5 problems" loading="lazy">
+      <figcaption>Figure 6: The Universal AI System Map. User query &rarr; Input Guardrail &rarr; Router/Cache &rarr; LLM (augmented by RAG Docs, Tool calling, and Evals) &rarr; Output Guardrail &rarr; Verified Answer.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2 id="verbatim-audio-transcript"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Verbatim Audio Transcript</span></h2>
+    <blockquote>
+      <p><strong>[00:00 - 00:08]</strong> Tumhe hazaron AI tools dikhte hain, par tumhe sab kuch seekhne ki zaroorat nahi hai. There are only five problems in AI engineering.</p>
+      <p><strong>[00:08 - 00:15]</strong> First problem is ki AI ko tumhe context dena hai. Toh uske liye tum build kar sakte ho RAG. You need to learn how embeddings are made.</p>
+      <p><strong>[00:15 - 00:23]</strong> Doosri cheez: tumhe AI ki cost kam karni hai. Uske liye tumhe aana chahiye how to do prompt caching and how to route the model correctly.</p>
+      <p><strong>[00:23 - 00:32]</strong> Teesri cheez: tumhe pata karna hai ki tumhara agent sahi se kaam kar bhi raha hai? Uske liye tumhe evals banane padenge, tumhe test karna padega ki in synthetic test cases pe tumhara agent sahi se kaam karta hai ya nahi.</p>
+      <p><strong>[00:32 - 00:40]</strong> Chauthi cheez: you have to build guardrails. Tumhara agent kahin jaake database na delete kar de, ya fir koi security breach na kar de. You have to build guardrails around your AI agent.</p>
+      <p><strong>[00:40 - 00:49]</strong> Paanchvi cheez: you need to know how AI agent collaborates with the tools, how it makes the calls, and kaise tools ka output aata hai, kisko compact karna hai, kisko kya karna hai.</p>
+      <p><strong>[00:49 - 00:52]</strong> All of these things, if you learn and put it all together, that encompasses everything in AI engineering.</p>
+    </blockquote>
+  </section>
+
+  
+  <nav class="pager">
+    <a href="DejSW8AP9nB-llm-architecture-tradeoff-vocabulary-size-vs-context-window-kv-cache.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Llm Architecture Tradeoff Vocabulary Siz</span></a>
+    <a href="../Voice-Agents/De3aRzHArun-real-time-voice-ai-agent-system-design.html" class="pager-next"><span>Next: Real Time Voice Ai Agent System Design</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

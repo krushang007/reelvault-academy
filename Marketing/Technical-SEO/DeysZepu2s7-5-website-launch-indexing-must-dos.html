@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5 Critical Post-Launch Indexing Steps: Search Console, Sitemaps, llms.txt, Open Graph &amp; Bing</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#marketing" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Marketing</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Marketing · Technical-SEO</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#marketing">Marketing</a> / <a href="../../index.html#marketing-technical-seo">Technical-SEO</a></nav>
+
+  <p class="kicker">Marketing · Technical-SEO</p>
+  <h1>5 Critical Post-Launch Indexing Steps: Search Console, Sitemaps, llms.txt, Open Graph &amp; Bing</h1>
+
+  
+  <p class="meta">
+    <span>oruimtech (@oruim.tech)</span> &bull; <span>2026-10-22</span> &bull; <a href="https://www.instagram.com/reel/DeysZepu2s7/">Original Reel</a>
+  </p>
+
+
+  
+
+  <p class="summary">A 5-point post-launch technical checklist ensuring new web applications and marketing sites get indexed across both legacy search engines (Google, Bing) and next-generation conversational AI crawlers (ChatGPT Search, Google Gemini, Claude). Covers domain verification, XML sitemap generation, structured llms.txt documentation, Open Graph social share cards, and Bing Webmaster Tools grounding.</p>
+
+  <figure class="hero">
+    <img src="assets/DeysZepu2s7/00-41-llms-txt-ai-crawlers.jpg" alt="llms.txt file architecture informing AI models: ChatGPT, Gemini, and Claude what the website is about">
+    <figcaption>00:41 &mdash; Step 3: Implementing an llms.txt file at domain root to ensure AI answer engines understand and cite site contents.</figcaption>
+  </figure>
+
+  <h2 id="steps-workflow"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Steps / Workflow</span></h2>
+  <ol>
+    <li><strong>Verify Domain in Google Search Console:</strong>
+      <ul>
+        <li>Add your property (<code>https://yourwebsite.com</code>) via DNS TXT record or HTML meta tag.</li>
+        <li>Notifies Googlebot that the domain exists and unlocks search analytics (impressions, query clicks, average rankings, crawl errors).</li>
+      </ul>
+    </li>
+    <li><strong>Generate &amp; Submit an XML Sitemap (<code>sitemap.xml</code>):</strong>
+      <ul>
+        <li>Produce an automated route manifest containing all canonical URLs (<code>/</code>, <code>/about</code>, <code>/services</code>, <code>/blog</code>).</li>
+        <li>Submit the sitemap endpoint (<code>yourwebsite.com/sitemap.xml</code>) directly inside Google Search Console to guarantee full crawler coverage.</li>
+      </ul>
+    </li>
+    <li><strong>Add an <code>llms.txt</code> File for Generative AI Models:</strong>
+      <ul>
+        <li>Just as search engine spiders parse XML sitemaps, frontier AI agents (ChatGPT, Gemini, Claude) ingest <code>/llms.txt</code> markdown summaries.</li>
+        <li>Provide a clean, plain-text summary of your company, core features, documentation links, and APIs to enable accurate citations in AI search overviews.</li>
+      </ul>
+    </li>
+    <li><strong>Implement Open Graph Meta Tags (Social Previews):</strong>
+      <ul>
+        <li>Include standard <code>og:title</code>, <code>og:description</code>, <code>og:image</code>, and <code>og:url</code> tags in your <code>&lt;head&gt;</code>.</li>
+        <li>Ensures links shared on WhatsApp, LinkedIn, Slack, and X render a polished preview card with branded thumbnail artwork instead of an unformatted text URL.</li>
+      </ul>
+    </li>
+    <li><strong>Submit to Bing Webmaster Tools:</strong>
+      <ul>
+        <li>Register the website inside Microsoft Bing Webmaster Tools (can import directly from Google Search Console).</li>
+        <li><strong>Critical AI benefit:</strong> OpenAI ChatGPT Search, Microsoft Copilot, and numerous third-party RAG pipelines rely directly on Bing's search index for live web data retrieval.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2 id="checklist-walkthrough"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Checklist Walkthrough</span></h2>
+  <div class="gallery">
+    <figure>
+      <img src="assets/DeysZepu2s7/00-02-5-must-dos-checklist.jpg" alt="5 must-dos checklist for new websites">
+      <figcaption>00:02 &mdash; The 5 foundational launch requirements to ensure discoverability.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/DeysZepu2s7/00-14-google-search-console.jpg" alt="Google Search Console property configuration and search clicks">
+      <figcaption>00:14 &mdash; Step 1: Google Search Console registration and search telemetry.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/DeysZepu2s7/00-29-sitemap-xml-indexing.jpg" alt="sitemap.xml file structure with home, about, services, blog routes">
+      <figcaption>00:29 &mdash; Step 2: XML sitemap providing route architecture for indexing.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/DeysZepu2s7/00-51-open-graph-tags.jpg" alt="Open Graph meta tags code snippet rendering rich card on WhatsApp and LinkedIn">
+      <figcaption>00:51 &mdash; Step 4: Open Graph meta tags generating rich social sharing previews.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/DeysZepu2s7/01-03-bing-webmaster-tools.jpg" alt="Bing Webmaster Tools connecting search data to ChatGPT">
+      <figcaption>01:03 &mdash; Step 5: Bing Webmaster Tools integration powering ChatGPT search grounding.</figcaption>
+    </figure>
+  </div>
+
+  <h2 id="verbatim-breakdown"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Verbatim Breakdown</span></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Screen / Source</th>
+        <th>Verbatim Content</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>00:00</code></td>
+        <td>On-screen card</td>
+        <td>built your website?<br>&times; No one can find you<br>5 must-dos &bull; 1 2 3 4 5 &bull; nobody finds it &#129300;</td>
+      </tr>
+      <tr>
+        <td><code>00:06</code></td>
+        <td>On-screen card</td>
+        <td>step 1 of 5 &bull; Search Console<br>Add property: yourwebsite.com<br>&#9989; Google knows your site<br>Top searches: your name (1.2K clicks), web developer portfolio (840 clicks), react developer (310 clicks)</td>
+      </tr>
+      <tr>
+        <td><code>00:17</code></td>
+        <td>On-screen card</td>
+        <td>step 2 of 5 &bull; sitemap<br>yourwebsite.com &rarr; Home, About, Services, Blogs<br>&lt;urlset&gt; &lt;url&gt;/home&lt;/url&gt; ... &rarr; Google &#9989; indexed</td>
+      </tr>
+      <tr>
+        <td><code>00:31</code></td>
+        <td>On-screen card</td>
+        <td>step 3 of 5 &bull; llms.txt<br># yourwebsite.com &gt; Web developer portfolio<br>sitemap &rarr; search engines<br>llms.txt &rarr; ChatGPT, Gemini, Claude</td>
+      </tr>
+      <tr>
+        <td><code>00:44</code></td>
+        <td>On-screen card</td>
+        <td>step 4 of 5 &bull; Open Graph<br>&lt;meta property=&quot;og:title&quot; content=&quot;My Portfolio&quot; /&gt;<br>&lt;meta property=&quot;og:image&quot; content=&quot;/preview.png&quot; /&gt;<br>WhatsApp, LinkedIn &rarr; rich card (not a plain link &times;)</td>
+      </tr>
+      <tr>
+        <td><code>00:56</code></td>
+        <td>On-screen card</td>
+        <td>step 5 of 5 &bull; Bing Webmaster Tools<br>Bing search data &rarr; ChatGPT<br>Add your site: yourwebsite.com &rarr; Add site &rarr; &#9989; site added</td>
+      </tr>
+      <tr>
+        <td><code>(caption)</code></td>
+        <td>Post Caption</td>
+        <td>Follow @oruim.tech<br><br>Built a website? Do these 5 things or nobody will find it &#128071;<br>1&#65039;&#8419; Add it to Google Search Console<br>2&#65039;&#8419; Create a sitemap<br>3&#65039;&#8419; Add an llms.txt file, so ChatGPT, Gemini and Claude know what your site is about<br>4&#65039;&#8419; Add Open Graph tags, so your link shows a proper preview on WhatsApp and LinkedIn<br>5&#65039;&#8419; Add it to Bing Webmaster Tools too<br>Save this for your next launch &#128204;<br>Follow @oruim.tech for practical tech tips every day.<br>#website #webdevelopment #seo #googlesearchconsole #sitemap</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="file-templates"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">File Templates</span></h2>
+  <h3>Open Graph Meta Tags Boilerplate</h3>
+  <pre><code>&lt;meta property=&quot;og:type&quot; content=&quot;website&quot;&gt;
+&lt;meta property=&quot;og:url&quot; content=&quot;https://yourwebsite.com/&quot;&gt;
+&lt;meta property=&quot;og:title&quot; content=&quot;Your Project Title&quot;&gt;
+&lt;meta property=&quot;og:description&quot; content=&quot;Clear concise value proposition under 160 characters.&quot;&gt;
+&lt;meta property=&quot;og:image&quot; content=&quot;https://yourwebsite.com/og-image.png&quot;&gt;
+&lt;meta property=&quot;og:image:width&quot; content=&quot;1200&quot;&gt;
+&lt;meta property=&quot;og:image:height&quot; content=&quot;630&quot;&gt;</code></pre>
+
+  <h3><code>llms.txt</code> Specification Template</h3>
+  <pre><code># Your Brand / Product Name
+&gt; One line summary describing what this application or company does.
+
+## Core Pages
+- [Home](https://yourwebsite.com/): Product overview and primary landing page.
+- [Docs](https://yourwebsite.com/docs): Developer documentation and API specifications.
+- [Pricing](https://yourwebsite.com/pricing): Pricing plans and tier breakdown.</code></pre>
+
+  <h2 id="try-this"><span class="h-ico"><i data-lucide="sparkles" class="ico"></i></span><span class="h-text">Try This</span></h2>
+  <ol>
+    <li>Create a minimal <code>llms.txt</code> markdown file in your public root directory containing a clean description of your service and key product links.</li>
+    <li>Test your domain on <a href="https://www.opengraph.xyz/">OpenGraph.xyz</a> to confirm that your 1200&times;630 social card renders properly without broken image links.</li>
+    <li>Log into Bing Webmaster Tools and click &ldquo;Import from Google Search Console&rdquo; to sync verified domain ownership and sitemaps in under 30 seconds.</li>
+  </ol>
+
+  <h2 id="open-questions"><span class="h-ico"><i data-lucide="help-circle" class="ico"></i></span><span class="h-text">Open Questions</span></h2>
+  <ul>
+    <li>Standardization of <code>llms.txt</code>: While increasingly adopted across tech companies (Stripe, Anthropic docs, FastHTML), official support and crawling behavior across AI providers is still evolving compared to established <code>robots.txt</code> and sitemap protocols.</li>
+  </ul>
+
+  
+  <nav class="pager">
+    <a href="Dewd1yKmAHf-google-page-2-to-page-1-internal-linking-siloing.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Google Page 2 To Page 1 Internal Linking</span></a>
+    
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

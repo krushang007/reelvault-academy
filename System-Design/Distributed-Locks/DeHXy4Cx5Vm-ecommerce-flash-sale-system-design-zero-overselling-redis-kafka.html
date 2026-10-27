@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-Commerce Flash Sale System Design: 1.5M Req/Sec, Zero Overselling & Inventory Locking</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#system-design" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> System-Design</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">System-Design · Distributed-Locks</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#system-design">System-Design</a> / <a href="../../index.html#system-design-distributed-locks">Distributed-Locks</a></nav>
+
+  <p class="kicker">System-Design · Distributed-Locks</p>
+  <h1>E-Commerce Flash Sale System Design: 1.5M Req/Sec, Zero Overselling & Inventory Locking</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        At midnight during mega-sales events (such as Flipkart's Big Billion Days or Amazon's Prime Day), viral hardware discounts drop: 1,000 flagship smartphones are offered at massive markdowns. At exactly 12:00:00 AM, over <strong>1,000,000 users click "Buy Now" in the exact same second</strong>, flooding checkout servers with <strong>1.5 Million requests per second</strong>.
+      </p>
+      <p>
+        Meanwhile, a typical ACID-compliant relational order database (MySQL or PostgreSQL) can safely process approximately <strong>2,000 writes per second</strong> without locking up. This creates a severe 750X throughput mismatch. Furthermore, naive database inventory checks trigger fatal race conditions where thousands of orders are accepted for items that do not exist—forcing painful public apologies and regulatory scrutiny.
+      </p>
+      <p>
+        In this end-to-end system design breakdown, Fewshot Studio deconstructs the enterprise architecture used to eliminate race conditions, achieve zero overselling, and protect the core transactional database through a 5-tier defense.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="gallery">
+        <figure>
+          <img src="assets/DeHXy4Cx5Vm/frame_004.jpg" alt="The User Nightmare: Money Debited but Order Cancelled" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 1: The Failure Mode: Money debited, but order cancelled due to overselling.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeHXy4Cx5Vm/frame_011.jpg" alt="Throughput Gap: 1.5M Req/Sec vs 2,000 Writes/Sec" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 2: The Core Challenge: A 750X throughput mismatch between traffic and database capacity.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeHXy4Cx5Vm/frame_019.jpg" alt="Virtual Waiting Room Rate Limiter" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 3: Layer 1 & 2: Edge CDN + Virtual Waiting Room token limiter.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeHXy4Cx5Vm/frame_026.jpg" alt="Race Condition in Relational Database Read-Modify-Write" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 4: The Race Condition: Simultaneous reads causing negative inventory.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeHXy4Cx5Vm/frame_035.jpg" alt="Redis Atomic In-Memory Stock Decrement via Lua Script" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 5: Layer 3: Single-step atomic stock decrement in Redis memory.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeHXy4Cx5Vm/frame_043.jpg" alt="10-Minute Reservation Lease and Kafka Asynchronous Queue" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 6: Layer 4: 10-minute payment countdown lease with automatic rollback on timeout.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/DeHXy4Cx5Vm/frame_051.jpg" alt="Complete Flash Sale Topology: Edge to Database" style="max-width: 100%; border-radius: 8px;">
+          <figcaption>Figure 7: Complete End-to-End Flash Sale Infrastructure Topology.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="the-failure-mechanism-why-naive-sql-fails"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Failure Mechanism: Why Naive SQL Fails</span></h2>
+      <p>
+        In standard e-commerce applications, inventory verification follows a read-then-write pattern:
+      </p>
+      <pre><code>-- Step 1: Read stock
+SELECT stock FROM inventory WHERE product_id = 'iphone_15';
+
+-- Step 2: If stock > 0, decrement
+UPDATE inventory SET stock = stock - 1 WHERE product_id = 'iphone_15';</code></pre>
+      <p>
+        When only 1 phone remains in stock, users Rahul and Priya tap "Buy" at the identical millisecond ($T=0.001\text{s}$). Both requests read <code>stock = 1</code> in parallel before either has executed the update. Both proceed to execute <code>stock - 1</code>. Two customers receive confirmation for a single physical unit.
+      </p>
+
+      <h2 id="the-5-tier-production-architecture"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">The 5-Tier Production Architecture</span></h2>
+
+      <h3>1. Edge CDN Shielding (Traffic Deflection)</h3>
+      <p>
+        All static marketing graphics, product specifications, pricing labels, and JavaScript bundles are served directly from global Edge CDNs. Zero static traffic reaches backend application servers.
+      </p>
+
+      <h3>2. Virtual Waiting Room (Token Gate)</h3>
+      <p>
+        Instead of allowing 1,500,000 checkout requests to hammer application gateways simultaneously, incoming users enter an edge-hosted Virtual Waiting Room (using Cloudflare Waiting Room or AWS API Gateway usage plans). A token-bucket algorithm admits only the maximum transaction volume the downstream system can safely handle (e.g., 2,500 users every 2 seconds).
+      </p>
+
+      <h3>3. Atomic In-Memory Reservation (Redis + Lua Script)</h3>
+      <p>
+        The physical database is never queried during the initial click. Instead, the current available inventory counter is stored in a Redis Cluster.
+      </p>
+      <p>
+        Because Redis executes commands on a single-threaded event loop, reading and decrementing can be executed as a <strong>single atomic transaction using an embedded Lua script</strong>:
+      </p>
+      <pre><code>-- Redis Lua Script: atomic_reserve.lua
+local key = KEYS[1]
+local current_stock = tonumber(redis.call('GET', key) or 0)
+
+if current_stock > 0 then
+    redis.call('DECR', key)
+    return 1 -- Reservation Successful!
+else
+    return 0 -- Sold Out!
+end</code></pre>
+      <p>
+        The first 1,000 requests decrement the counter down to 0 in microseconds. The 1,001st request evaluates to 0 and is immediately rejected with a clean "Sold Out" message in under 1 millisecond, without ever waking up the relational database!
+      </p>
+
+      <h3>4. Asynchronous Order Ingestion via Apache Kafka</h3>
+      <p>
+        The 1,000 users who secure a successful Redis reservation are not directed to write synchronously to the relational database.
+      </p>
+      <p>
+        Instead, an <code>OrderCreatedEvent</code> is published to an <strong>Apache Kafka</strong> partition. Downstream order-worker consumer microservices read from Kafka at a smooth, constant rate of 500 writes/sec, generating the final database records, initializing invoices, and creating payment sessions safely.
+      </p>
+
+      <h3>5. The 10-Minute Lease & Compensating Rollback</h3>
+      <p>
+        A reservation is not a permanent sale. The user is granted a <strong>10-minute payment countdown lease</strong>:
+      </p>
+      <ul>
+        <li><strong>Success Path:</strong> User completes payment through Stripe/Razorpay. The payment gateway webhook fires, marking the order as <code>CONFIRMED</code>.</li>
+        <li><strong>Failure / Timeout Path:</strong> If the user closes the tab, declines the OTP, or the 10-minute timer expires, the background reconciler triggers a <strong>compensating transaction</strong>:</li>
+      </ul>
+      <pre><code>-- Release stock back into circulation
+INCR stock:iphone_15</code></pre>
+      <p>
+        The unit is released back into the live inventory pool, instantly allowing a waiting user in the queue to purchase it.
+      </p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../Data-Structures/Db3Aj55x1rD-how-github-diffs-millions-of-lines-merkle-trees.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: How Github Diffs Millions Of Lines Merkl</span></a>
+    <a href="../In-Memory-Databases/DeTD0G2onBi-why-redis-is-single-threaded-and-lightning-fast.html" class="pager-next"><span>Next: Why Redis Is Single Threaded And Lightni</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

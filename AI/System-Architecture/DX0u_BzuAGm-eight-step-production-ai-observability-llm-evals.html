@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Production AI Observability: The 8-Step LLM Evaluation & Trace Lifecycle</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · System-Architecture</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-system-architecture">System-Architecture</a></nav>
+
+  <p class="kicker">AI · System-Architecture</p>
+  <h1>Production AI Observability: The 8-Step LLM Evaluation & Trace Lifecycle</h1>
+
+  
+  <p class="meta">
+    Shared by <a href="https://www.instagram.com/reel/DX0u_BzuAGm/" target="_blank">@techwithnt</a> &bull; Rank #133 &bull; Shortcode: <code>DX0u_BzuAGm</code>
+  </p>
+
+
+  
+  <div class="summary">
+    <p>
+        AI applications fail silently. Traditional application performance monitoring (APM) shows green health checks, 200 OK statuses, and sub-second latencies while an LLM hallucination is actively giving illegal or harmful advice to an end user. Production AI observability requires instrumenting full granular request journeys into discrete spans (Intent routing, Retrieval, Re-ranking, Context synthesis, Tool execution), automated semantic scoring, and systematic "Bad Answers" feedback loops.
+      </p>
+  </div>
+
+
+  <h2 id="video-visual-stills"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Video Visual Stills</span></h2>
+    <div class="gallery">
+      <img src="assets/DX0u_BzuAGm/frame_01.jpg" alt="Silent AI Failures in Production" />
+      <img src="assets/DX0u_BzuAGm/frame_02.jpg" alt="Tracing Request Spans & RAG Context" />
+      <img src="assets/DX0u_BzuAGm/frame_03.jpg" alt="Scoring & Flagging Hallucinations" />
+      <img src="assets/DX0u_BzuAGm/frame_04.jpg" alt="Bad Answers Dashboard & Retesting" />
+    </div>
+
+    <h2 id="the-8-step-production-llm-observability-architecture"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">The 8-Step Production LLM Observability Architecture</span></h2>
+
+    <div class="step-box">
+      <span class="step-num">1</span>
+      <h3 class="step-title">Capture the Request Metadata</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Log the user question, session ID, tenant ID, UTC timestamp, exact model version (e.g. <code>gpt-4o-2024-08-06</code>), prompt hash/version, temperature, top_p, and environment (staging vs production).</p>
+    </div>
+
+    <div class="step-box">
+      <span class="step-num">2</span>
+      <h3 class="step-title">Trace the Pipeline (Spans into Traces)</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Deconstruct every single AI invocation into ordered OpenTelemetry spans:</p>
+      <div class="metric-list">
+        <div class="metric-tag">Span 1: User Input Normalization</div>
+        <div class="metric-tag">Span 2: Semantic Intent Router</div>
+        <div class="metric-tag">Span 3: Embedding & Vector Search</div>
+        <div class="metric-tag">Span 4: Context Re-Ranking Chunks</div>
+        <div class="metric-tag">Span 5: LLM Generation API Call</div>
+        <div class="metric-tag">Span 6: Tool/Function Invocation</div>
+        <div class="metric-tag">Span 7: Final Guardrail Filtering</div>
+      </div>
+    </div>
+
+    <div class="step-box">
+      <span class="step-num">3</span>
+      <h3 class="step-title">Store Grounding Context (RAG State)</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Persist which documents were retrieved, exact chunk text, chunk IDs, cosine similarity distances, and source document versions to diagnose retrieval failures.</p>
+    </div>
+
+    <div class="step-box">
+      <span class="step-num">4</span>
+      <h3 class="step-title">Track Critical System & Financial Metrics</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Monitor end-to-end latency, Time-To-First-Token (TTFT), prompt tokens vs completion tokens, model cost per query, retry counts, and tool schema execution failures.</p>
+    </div>
+
+    <div class="step-box">
+      <span class="step-num">5</span>
+      <h3 class="step-title">Score Answer Quality (LLM-as-a-Judge)</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Run automated evaluators against sample traffic:</p>
+      <ul style="padding-left:1.5rem; margin-top:0.5rem; color:#cbd5e1;">
+        <li><strong>Faithfulness / Groundedness:</strong> Is every claim derived directly from retrieved chunks?</li>
+        <li><strong>Answer Relevance:</strong> Did the model answer the user's specific intent?</li>
+        <li><strong>Hallucination Detection:</strong> Did the model fabricate dates, prices, or policies?</li>
+        <li><strong>User Sentiment:</strong> Explicit thumbs-up / thumbs-down and retry patterns.</li>
+      </ul>
+    </div>
+
+    <div class="step-box">
+      <span class="step-num">6</span>
+      <h3 class="step-title">Automated Anomaly Flagging Rules</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Trigger alerts when: zero context retrieved but answer asserts firm policy; model answer contradicts retrieved document text; token cost spikes 300% above median; or a newly deployed prompt template increases user negative feedback.</p>
+    </div>
+
+    <div class="step-box">
+      <span class="step-num">7</span>
+      <h3 class="step-title">The "Bad Answers" Review Dashboard</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">A dedicated interface for engineering and product teams displaying failed queries, complete retrieved chunks, prompt versions, latency, cost, and human audit notes.</p>
+    </div>
+
+    <div class="step-box">
+      <span class="step-num">8</span>
+      <h3 class="step-title">The Continuous Optimization Loop</h3>
+      <p style="margin-top:0.5rem; color:#cbd5e1;">Trace &rarr; Score &rarr; Flag &rarr; Debug &rarr; Fix (Chunk size, prompt system message, model choice, or vector index) &rarr; Run regression eval test suite.</p>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../RAG-Architecture/DcJYvFmIjmn-colpali-multi-vector-vision-language-rag-paligemma.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Colpali Multi Vector Vision Language Rag</span></a>
+    <a href="Dd33sv7sGBT-antigravity-specialist-modes-subagent-memory-architecture.html" class="pager-next"><span>Next: Antigravity Specialist Modes Subagent Me</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

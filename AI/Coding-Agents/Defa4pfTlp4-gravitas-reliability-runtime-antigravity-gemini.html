@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GRAVITAS: Open-Source Reliability Runtime for Antigravity & Gemini Coding Agents (udaysharmadev/Gravitas)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#ai" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> AI</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">AI · Coding-Agents</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#ai">AI</a> / <a href="../../index.html#ai-coding-agents">Coding-Agents</a></nav>
+
+  <p class="kicker">AI · Coding-Agents</p>
+  <h1>GRAVITAS: Open-Source Reliability Runtime for Antigravity & Gemini Coding Agents (udaysharmadev/Gravitas)</h1>
+
+  
+
+  
+
+  <div class="content">
+      <h2 id="executive-summary"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Executive Summary</span></h2>
+      <p>
+        Frontier models like Google Gemini 3.1 Pro High bring extraordinary reasoning capabilities, 1M+ token context windows, and multimodal understanding to coding tasks. However, when deployed inside autonomous agent harnesses (such as the Google Antigravity IDE or <code>antigravity-cli</code>), coding models frequently suffer from standard behavioral failure modes: editing files without inspecting existing patterns, creating ungrounded diffs, assuming tests passed without checking stdout, or celebrating task completion prematurely.
+      </p>
+      <p>
+        <strong>GRAVITAS</strong> (<code>udaysharmadev/Gravitas</code>) is an open-source reliability runtime and behavioral policy engineered specifically for Google Antigravity agents. Rather than attempting to fine-tune model weights, GRAVITAS restructures the <em>engineering process</em> itself—constraining agent action sequences through deterministic skills and inspection gates.
+      </p>
+
+      <h2 id="core-visual-demonstrations"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Core Visual Demonstrations</span></h2>
+      <div class="image-grid">
+        <figure>
+          <img src="assets/Defa4pfTlp4/frame_010.jpg" alt="Antigravity IDE running Gemini 3.1 Pro High for 3h 37m autonomous task execution">
+          <figcaption>Long-horizon autonomous execution (3h 37m) in Antigravity IDE with Gemini 3.1 Pro High running systematic tasks and bypass validation.</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Defa4pfTlp4/frame_014.jpg" alt="GRAVITAS GitHub Repository: Reliability Runtime for Coding Agents">
+          <figcaption>GRAVITAS specification: "An open-source reliability runtime for coding agents — measured, not claimed."</figcaption>
+        </figure>
+        <figure>
+          <img src="assets/Defa4pfTlp4/frame_018.jpg" alt="Installing GRAVITAS into Antigravity IDE using npx skills add">
+          <figcaption>One-line installation into workspace customization root: <code>npx skills add udaysharmadev/Gravitas --skill gravitas --agent antigravity -yes</code>.</figcaption>
+        </figure>
+      </div>
+
+      <h2 id="installation-setup"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Installation & Setup</span></h2>
+      <p>
+        GRAVITAS conforms to the portable <strong>Agent Skills</strong> standard (used across Antigravity, Claude Code, and Codex). It installs directly into your repository’s <code>.agents/skills/</code> directory.
+      </p>
+
+      <h3>For Google Antigravity IDE</h3>
+      <pre><code># Install Core skill into current workspace
+npx skills add udaysharmadev/Gravitas --skill gravitas --agent antigravity -yes
+
+# Run diagnostic verification
+python3 .agents/skills/gravitas/scripts/doctor.py</code></pre>
+
+      <h3>For Antigravity CLI (agy)</h3>
+      <pre><code># Target the terminal runtime explicitly
+npx skills add udaysharmadev/Gravitas --skill gravitas --agent antigravity-cli -yes</code></pre>
+
+      <h2 id="the-five-core-tenets-of-gravitas"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">The Five Core Tenets of GRAVITAS</span></h2>
+      <p>
+        GRAVITAS enforces a strict behavioral state machine that prevents the agent from deviating from evidence-grounded engineering:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Tenet</th>
+            <th>Prohibited Agent Failure Mode</th>
+            <th>Enforced Mechanical Behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Inspect Before Editing</strong></td>
+            <td>Speculative code rewriting; making blind assumptions about APIs, imports, and types.</td>
+            <td>Agent must call <code>view_file</code> or <code>grep_search</code> on all related symbol references before invoking any replace/write tool.</td>
+          </tr>
+          <tr>
+            <td><strong>2. Proportional Risk Planning</strong></td>
+            <td>Over-engineering trivial single-line fixes, or conversely, attempting architectural refactors without a structured checklist.</td>
+            <td>Low-risk edits execute immediately; architectural changes mandate a formal task checklist with verifiable step-by-step gates.</td>
+          </tr>
+          <tr>
+            <td><strong>3. Real Output Verification</strong></td>
+            <td>Declaring success because "code looks correct" or ignoring stderr / nonzero exit codes.</td>
+            <td>Agent must run the test suite, linter, or local smoke script; requires actual exit code <code>0</code> and verified terminal stdout.</td>
+          </tr>
+          <tr>
+            <td><strong>4. Systematic Failure Recovery</strong></td>
+            <td>Repeating the same failing edit in a 10-turn retry loop without diagnosing root cause.</td>
+            <td>After two failed attempts, agent must pause, review test logs, check environmental assumptions, and backtrack if necessary.</td>
+          </tr>
+          <tr>
+            <td><strong>5. Evidence-Only Reporting</strong></td>
+            <td>Hallucinating feature completion or assuring the user of fixes without concrete proof.</td>
+            <td>Agent summaries must provide clickable file links, exact terminal command outputs, and explicit before/after proof.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="runtime-execution-architecture"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Runtime Execution Architecture</span></h2>
+      <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    User Coding Instruction                  │
+│       "Fix race condition in session checkout pipeline"     │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   GRAVITAS Pre-Flight                       │
+│  - Reads project conventions, test runners, & dependencies  │
+│  - Inspects target files BEFORE drafting any replacement    │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                     Targeted Execution                      │
+│  - Executes minimal surgical edits                          │
+│  - Preserves unrelated comments, docstrings, and formatting │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Empirical Verification                   │
+│  - Executes test suite via CLI runner                       │
+│  - Parses stderr, stdout, and exit codes                    │
+│    ├─ Passed (exit 0) &rarr; Generates evidence summary         │
+│    └─ Failed (exit != 0) &rarr; Halts, backtracks, & diagnoses   │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+
+      <h2 id="key-engineering-takeaways"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Key Engineering Takeaways</span></h2>
+      <ul>
+        <li><strong>Process Over Weights:</strong> State-of-the-art LLMs rarely fail due to lack of coding intelligence; they fail due to lack of discipline. Constraining agents with verifiable workflow policies eliminates over 80% of unforced bugs.</li>
+        <li><strong>Zero Overhead:</strong> As a portable agent skill, GRAVITAS introduces zero external SaaS dependencies, running entirely within local Markdown files, Python scripts, and Antigravity hooks.</li>
+        <li><strong>Measurable Reliability:</strong> Integrates built-in test runner harnesses so agent productivity can be benchmarked on real repositories rather than synthetic puzzles.</li>
+      </ul>
+    </div>
+
+  
+  <nav class="pager">
+    <a href="../Claude-Skills/DehhEpgtqHY-12-claude-agent-skills-linkedin-automation.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: 12 Claude Agent Skills Linkedin Automati</span></a>
+    <a href="../Design-Tokens/DepAa2_hPHQ-url-to-design-md-token-extractor-ai-coding-agents.html" class="pager-next"><span>Next: Url To Design Md Token Extractor Ai Codi</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>

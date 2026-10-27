@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HyperFrames: Open-Source Deterministic Video Generation from HTML, CSS &amp; FFmpeg</title>
+<!--
+learning-meta:
+  area: Video-Creation
+  topic: AI-Explainers
+  shortcode: De3tQ_QlFi_
+  author: influ.uuencer
+  source_url: https://www.instagram.com/reel/De3tQ_QlFi_/
+  extracted_at: 2026-10-27T04:40:00Z
+  tags: [hyperframes, heygen, programmatic-video, remotion-alternative, html-to-video, claude-code, codex, ffmpeg, open-source]
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../_assets/style.css">
+</head>
+<body data-root-rel="../../">
+<div class="progress" aria-hidden="true"><span></span></div>
+<header class="topbar">
+  <a href="../../index.html" class="brand">ReelVault Knowledge Academy</a>
+  <nav class="topbar-nav">
+    <a href="../../index.html" class="topbar-link"><i data-lucide="layout-grid" class="ico"></i> All Tracks</a>
+    <a href="../../index.html#video-creation" class="topbar-link active"><i data-lucide="book-marked" class="ico"></i> Video-Creation</a>
+  </nav>
+  <button type="button" class="topbar-search-btn" id="openCommandPaletteBtn" title="Search everywhere (⌘K / Ctrl+K)">
+    <i data-lucide="search" class="ico"></i>
+    <span class="search-btn-label">Search</span>
+    <kbd class="search-btn-kbd">⌘K</kbd>
+  </button>
+  <span class="crumb">Video-Creation · AI-Explainers</span>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="On this page">
+  <div class="toc-title">On this page</div>
+  <ol id="toc"></ol>
+</nav>
+
+<main class="article">
+  <nav class="crumbs"><a href="../../index.html">Academy</a> / <a href="../../index.html#video-creation">Video-Creation</a> / <a href="../../index.html#video-creation-ai-explainers">AI-Explainers</a></nav>
+
+  <p class="kicker">Video-Creation · AI-Explainers</p>
+  <h1>HyperFrames: Open-Source Deterministic Video Generation from HTML, CSS &amp; FFmpeg</h1>
+
+  
+  <p class="meta">
+    <span>Author: <a href="https://www.instagram.com/influ.uuencer/" target="_blank" rel="noopener">@influ.uuencer</a></span>
+    <span>Source: <a href="https://www.instagram.com/reel/De3tQ_QlFi_/" target="_blank" rel="noopener">Instagram Reel De3tQ_QlFi_</a></span>
+    <span>Extracted: 2026-10-27</span>
+  </p>
+
+
+  
+  <div class="summary">
+    <p>A technical teardown of HyperFrames, HeyGen’s open-source framework (~71k GitHub stars) designed for autonomous AI agents (Claude Code, Cursor, Codex) to compile programmatic MP4 videos from standard HTML, CSS, GSAP, and media assets. Explains the underlying headless Chrome seeking and FFmpeg encoding pipeline that delivers 100% deterministic, frame-accurate rendering with zero SaaS API per-render fees.</p>
+  </div>
+
+
+  <figure class="hero">
+    <img src="assets/De3tQ_QlFi_/00-03-hyperframes-github-repo.jpg" alt="HeyGen HyperFrames GitHub repository banner showing 70,909 stars and description: Write HTML. Render video. Built for agents.">
+    <figcaption>00:03 — HyperFrames Core Architecture: Replacing generative video diffusion hallucination with deterministic DOM and CSS animation compiling.</figcaption>
+  </figure>
+
+  <section>
+    <h2 id="framework-architecture-amp-developer-workflow"><span class="h-ico"><i data-lucide="network" class="ico"></i></span><span class="h-text">Framework Architecture &amp; Developer Workflow</span></h2>
+    <ol class="steps">
+      <li>
+        <strong>The Deterministic Engine Architecture:</strong>
+        Generative AI video models (Runway, Sora, Luma) suffer from typographic warping and non-reproducible motion artifacts. HyperFrames shifts video production into deterministic code compilation: every video is structured as an HTML document where CSS animations, GSAP timelines, and data attributes define frame-level timings and track layers.
+      </li>
+      <li>
+        <strong>Under-the-Hood Rendering Pipeline:</strong>
+        Rendering executes locally or inside Docker containers:
+        <ul>
+          <li><strong>Headless Chrome:</strong> Spawns a Chromium instance, steps frame by frame through the DOM timeline, and extracts crisp lossless canvas snapshots.</li>
+          <li><strong>FFmpeg Encoding:</strong> Encodes sequential frame buffers and audio tracks into standard H.264/AAC MP4 files. The identical input code guarantees identical byte-for-byte output videos.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Agent Integration (Claude Code &amp; Codex):</strong>
+        Equip coding agents with the HyperFrames skills package:
+        <code>npx hyperframes skills update</code>
+        Agents can autonomously scaffold animations, inspect browser previews via dev servers, and render finished launch videos.
+      </li>
+      <li>
+        <strong>Manual CLI Quickstart:</strong>
+        Execute the 3-stage lifecycle:
+        <pre><code>npx hyperframes init my-video
+cd my-video
+npx hyperframes preview   # Live preview in browser with hot reload
+npx hyperframes render    # Compile final MP4</code></pre>
+      </li>
+      <li>
+        <strong>Prerequisites &amp; Licensing:</strong>
+        Requires <strong>Node.js 22+</strong> and <strong>FFmpeg</strong> installed locally. Fully open source under the <strong>Apache 2.0</strong> license with zero per-render fees or cloud credits.
+      </li>
+    </ol>
+  </section>
+
+  <section class="gallery">
+    <h2 id="workflow-amp-command-diagrams"><span class="h-ico"><i data-lucide="layers" class="ico"></i></span><span class="h-text">Workflow &amp; Command Diagrams</span></h2>
+    <figure>
+      <img src="assets/De3tQ_QlFi_/00-18-cli-commands-init-preview-render.jpg" alt="CLI terminal demonstrating npx hyperframes init, preview, and render commands.">
+      <figcaption>00:20 — 3-Command CLI Workflow: Project scaffolding, real-time browser preview with live reload, and headless MP4 compilation.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/De3tQ_QlFi_/00-27-under-the-hood-headless-chrome-ffmpeg.jpg" alt="Under the hood explanation: HTML file with timing data attributes, Headless Chrome frame stepping, and FFmpeg encoding.">
+      <figcaption>00:27 — Rendering Mechanics: Headless Chrome frame seeking paired with FFmpeg ensures deterministic frame accuracy.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/De3tQ_QlFi_/00-41-requirements-and-what-you-can-build.jpg" alt="Requirements showing Node.js 22+ and FFmpeg alongside output use cases including launch videos, animated charts, and social clips.">
+      <figcaption>00:41 — Production Use Cases: Product launch announcements, PR code walkthroughs, kinetic data charts, and social reels.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2 id="verbatim-breakdown"><span class="h-ico"><i data-lucide="file-text" class="ico"></i></span><span class="h-text">Verbatim Breakdown</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Time / Source</th>
+          <th>Spoken Transcript (English)</th>
+          <th>On-Screen Display / Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>00:00 - 00:04</td>
+          <td>"HeyGen's free tool turns plain HTML into real videos."</td>
+          <td>github.com/heygen-com/hyperframes (Public &bull; 70,909 stars &bull; 6.4k forks)<br>About: Write HTML. Render video. Built for agents.<br>Tags: ai-agents, animation, claude-code, ffmpeg, framework, gsap, html, html-to-video, mcp, motion-graphics, puppeteer, rendering</td>
+        </tr>
+        <tr>
+          <td>00:05 - 00:09</td>
+          <td>"Using Claude Code, Codex or Cursor, just ask your agent to make a video."</td>
+          <td>01 &bull; What it does &bull; heygen-com/hyperframes &bull; 71k<br>Quick Start:<br>Using Claude Code, Codex, Cursor, or another coding agent? Run:<br><code>npx hyperframes skills update</code> once, then ask your agent to make a video.<br>With an AI coding agent: for Claude Code, install versioned plugin:<br><code>claude plugin marketplace add heygen-com/hyperframes</code><br><code>claude plugin install hyperframes@hyperframes</code></td>
+        </tr>
+        <tr>
+          <td>00:10 - 00:14</td>
+          <td>"Launch videos, animated charts, social clips with captions and music."</td>
+          <td>Skills:<br>/figma: bring Figma into a video &mdash; rendered assets, brand tokens, components, storyboard<br>/slideshow: A presentation, pitch deck or interactive deck<br>/remotion-to-hyperframes: Bringing existing video code or footage into HyperFrames (Remotion first; also Motion Canvas, Lottie, Three.js, canvas, other tools)</td>
+        </tr>
+        <tr>
+          <td>00:15 - 00:20</td>
+          <td>"Or do it yourself: three commands start a project, preview it in your browser, and render an MP4."</td>
+          <td>02 &bull; Try it &bull; heygen-com/hyperframes &bull; 71k<br>Terminal (my-video):<br><code>&gt; npx hyperframes init my-video</code><br><code>&gt; cd my-video</code><br><code>&gt; npx hyperframes preview   # preview in browser with live reload</code><br><code>&gt; npx hyperframes render    # render to MP4</code></td>
+        </tr>
+        <tr>
+          <td>00:21 - 00:30</td>
+          <td>"Each video is an HTML file with tags for timing. Headless Chrome steps through every frame and FFmpeg encodes them, so the same input gives the same video."</td>
+          <td>03 &bull; How it works<br>Under the hood:<br>&bull; A video is an HTML file<br>&bull; Data attributes set timing and tracks<br>&bull; Headless Chrome seeks every frame<br>&bull; FFmpeg encodes: same input, same video</td>
+        </tr>
+        <tr>
+          <td>00:31 - 00:38</td>
+          <td>"In early April it had 6 stars. A week later, over 5,000. Now, nearly 71,000."</td>
+          <td>04 &bull; Traction<br>GitHub stars since March:<br>Mar 8: 6 stars &rarr; 6,201 &rarr; 69,060 &rarr; 70,909 stars</td>
+        </tr>
+        <tr>
+          <td>00:39 - 00:46</td>
+          <td>"The catch: you need Node 22 and FFmpeg installed. But it's Apache licensed, with no per-render fees."</td>
+          <td>05 &bull; The catch<br>Requirements: Node.js 22+, FFmpeg<br>What You Can Build:<br>&bull; Product launch videos and feature announcements<br>&bull; PR walkthroughs with animated code diffs, narration, and captions<br>&bull; Data visualizations, chart races, and map animations<br>&bull; Social videos with kinetic captions, overlays, and music<br>License: Apache-2.0 &bull; No per-render fees</td>
+        </tr>
+        <tr>
+          <td>00:47 - 00:52</td>
+          <td>"Want your agent making videos? Comment LINK and I'll send it."</td>
+          <td>heygen-com / hyperframes &bull; 71k TypeScript<br>Comment LINK and I'll reply with it.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2 id="key-architectural-distinctions"><span class="h-ico"><i data-lucide="target" class="ico"></i></span><span class="h-text">Key Architectural Distinctions</span></h2>
+    <ul>
+      <li><strong>HyperFrames vs. Remotion:</strong> Remotion relies on React component trees, whereas HyperFrames is framework-agnostic HTML/CSS/JS, enabling direct manipulation by AI coding agents via standard DOM APIs and GSAP.</li>
+      <li><strong>Determinism:</strong> Eliminates video diffusion hallucinations; ideal for exact typography, branding hex codes, and technical UI captures.</li>
+      <li><strong>Zero Marginal Cloud Cost:</strong> Runs on local CPU/GPU or self-hosted AWS Lambda / Docker clusters without external API subscriptions.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 id="try-this"><span class="h-ico"><i data-lucide="sparkles" class="ico"></i></span><span class="h-text">Try This</span></h2>
+    <ol>
+      <li>Verify your local environment has Node.js 22+ and FFmpeg (<code>node -v</code>, <code>ffmpeg -version</code>).</li>
+      <li>Run <code>npx hyperframes init test-explainer &amp;&amp; cd test-explainer</code> to create a boilerplate project.</li>
+      <li>Launch the development preview with <code>npx hyperframes preview</code> to observe hot reloading as you tweak CSS transitions.</li>
+      <li>Compile the production asset via <code>npx hyperframes render</code>, checking that the generated MP4 matches the exact viewport dimensions.</li>
+    </ol>
+  </section>
+
+  
+  <nav class="pager">
+    <a href="De1BifbTDCl-claude-code-openai-voice-remotion-automated-reel-engine.html" class="pager-prev"><i data-lucide="arrow-left" class="ico"></i> <span>Previous: Claude Code Openai Voice Remotion Automa</span></a>
+    <a href="De6cx6MRxbZ-programmatic-reels-engine-claude-skills.html" class="pager-next"><span>Next: Programmatic Reels Engine Claude Skills</span> <i data-lucide="arrow-right" class="ico"></i></a>
+  </nav>
+
+</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+<script src="../../_assets/search-index.js"></script>
+<script src="../../_assets/course.js"></script>
+</body>
+</html>
